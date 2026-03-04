@@ -387,3 +387,23 @@ body {
   background-size: 400px auto;
   background-attachment: fixed;
 }
+
+/* ===== FIX OVERFLOW MOBILE ===== */
+html, body { overflow-x: hidden; max-width: 100%; }
+* { box-sizing: border-box; }
+img { max-width: 100%; height: auto; }
+
+/* Newsletter index : QR passe en dessous sur mobile */
+@media (max-width: 700px) {
+  .nl-flex-wrap {
+    flex-direction: column !important;
+  }
+  .qr-col {
+    border-left: none !important;
+    padding-left: 0 !important;
+    width: 100% !important;
+    text-align: center;
+  }
+  .newsletter-form { max-width: 100% !important; }
+}
+/* ===== /FIX OVERFLOW MOBILE ===== */

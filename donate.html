@@ -221,7 +221,7 @@
                 <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="mailto:rahmaislamiccentre@gmail.com">rahmaislamiccentre@gmail.com</a></span></div>
             </div>
         </div>
-        <div class="footer-bottom">
+                <div class="footer-bottom">
                 <span>Copyright &copy; 2026 Rahma Islamic Centre. All rights reserved.</span>
                 <span>Powered by Devodez Solutions</span>
             </div>
@@ -229,30 +229,28 @@
     </footer>
     <script src="shared.js"></script>
     <script>
-    /* ── Widget Don ── */
-    var doneCur = 'CAD';
+    var _cur = 'CAD';
     function setCur(c) {
-        doneCur = c;
-        document.getElementById('curTag').textContent = c;
+        _cur = c;
+        var tag = document.getElementById('curTag'); if (tag) tag.textContent = c;
         ['CAD','USD'].forEach(function(x) {
-            var b = document.getElementById('btn'+x);
-            b.classList.toggle('active', x === c);
+            var b = document.getElementById('btn' + x); if (!b) return;
+            b.style.background  = x===c ? 'rgba(201,168,76,0.15)' : 'transparent';
+            b.style.borderColor = x===c ? 'var(--gold)' : 'rgba(255,255,255,0.15)';
+            b.style.color       = x===c ? 'var(--gold)' : 'rgba(255,255,255,0.5)';
         });
     }
     function setAmt(v, el) {
-        document.getElementById('donateAmt').value = v;
-        document.querySelectorAll('.amt-btn').forEach(function(b) { b.classList.remove('selected'); });
+        var inp = document.getElementById('donateAmt'); if (inp) inp.value = v;
+        document.querySelectorAll('.amount-pill').forEach(function(p) { p.classList.remove('selected'); });
         el.classList.add('selected');
     }
-    function clearAmts() {
-        document.querySelectorAll('.amt-btn').forEach(function(b) { b.classList.remove('selected'); });
-    }
     function processDonate() {
-        var amt = parseFloat(document.getElementById('donateAmt').value);
+        var inp = document.getElementById('donateAmt');
+        var amt = inp ? parseFloat(inp.value) : 0;
         if (!amt || amt <= 0) { alert('Please enter a valid amount.'); return; }
-        alert('Thank you! ' + doneCur + ' $' + amt.toFixed(2) + '\n\nContact: rahmaislamiccentre@gmail.com');
+        alert('Thank you! ' + _cur + ' $' + amt.toFixed(2) + '\n\nContact: rahmaislamiccentre@gmail.com');
     }
     </script>
-
 </body>
 </html>
