@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donate — Rahma Islamic Centre</title>
+    <title>Gallery — Rahma Islamic Centre</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,37 +11,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .donate-section { background: var(--cream); padding: 100px 24px; }
-        .donate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: start; }
-        .donate-left h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; color: var(--navy); margin-bottom: 20px; }
-        .donate-left p { font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
-        .donate-img { width: 100%; margin-bottom: 36px; }
-        .donate-img img { width: 100%; display: block; }
-        .impact-list { list-style: none; margin: 10px 0 0; }
-        .impact-list li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid rgba(201,168,76,0.15); font-size: 0.92rem; color: var(--muted); }
-        .impact-list li:last-child { border-bottom: none; }
-        .impact-list li i { color: var(--gold); margin-top: 3px; flex-shrink: 0; }
-        /* Form box */
-        .donate-form-box { background: var(--navy); padding: 50px 44px; position: sticky; top: 100px; }
-        .donate-form-box h3 { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600; color: var(--white); letter-spacing: 0.1em; margin-bottom: 6px; }
-        .donate-form-box .form-sub { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-bottom: 30px; }
-        .currency-row { display: flex; gap: 8px; margin-bottom: 20px; }
-        .cur-btn { flex: 1; padding: 10px; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.12em; cursor: pointer; transition: all 0.3s; }
-        .cur-btn.active { background: rgba(201,168,76,0.15); border-color: var(--gold); color: var(--gold); }
-        .amounts-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 16px; }
-        .amt-btn { padding: 14px 8px; border: 1px solid rgba(255,255,255,0.12); background: transparent; color: rgba(255,255,255,0.7); font-family: 'Cinzel', serif; font-size: 0.82rem; cursor: pointer; transition: all 0.3s; }
-        .amt-btn:hover { border-color: var(--gold); color: var(--gold); }
-        .amt-btn.selected { background: rgba(201,168,76,0.15); border-color: var(--gold); color: var(--gold); }
-        .custom-row { display: flex; margin-bottom: 20px; }
-        .cur-tag { background: var(--gold); color: var(--navy); padding: 14px 18px; font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; }
-        .custom-input { flex: 1; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-left: none; color: var(--white); padding: 14px 18px; font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; outline: none; transition: border-color 0.3s; }
-        .custom-input:focus { border-color: var(--gold); }
-        .custom-input::placeholder { color: rgba(255,255,255,0.25); font-size: 1rem; }
-        .donate-submit { width: 100%; background: var(--gold); color: var(--navy); border: none; padding: 18px; font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; margin-bottom: 14px; }
-        .donate-submit:hover { background: var(--gold-light); }
-        .secure-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.35); letter-spacing: 0.08em; }
-        .secure-note i { color: #4ade80; margin-right: 6px; }
-        @media (max-width: 900px) { .donate-grid { grid-template-columns: 1fr; } .donate-form-box { position: static; padding: 36px 28px; } }
+        ._unused_ { background: var(--cream); padding: 100px 24px; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+        .contact-form-box { background: var(--white); padding: 50px 44px; border: 1px solid rgba(201,168,76,0.15); }
+        .contact-form-box h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--navy); margin-bottom: 8px; }
+        .contact-form-box .sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 36px; letter-spacing: 0.03em; }
+        .submit-btn { width: 100%; background: var(--navy); color: var(--white); border: none; padding: 16px; font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+        .submit-btn:hover { background: var(--navy-mid); }
+        .submit-btn.success { background: #2d6a4f; }
+        .contact-info-panel { padding-top: 10px; }
+        .contact-info-panel h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--navy); margin-bottom: 8px; }
+        .contact-info-panel .sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 40px; }
+        .map-section { background: var(--navy); padding: 0; }
+        .map-wrapper { width: 100%; height: 450px; }
+        .map-wrapper iframe { width: 100%; height: 100%; border: 0; display: block; filter: grayscale(30%) invert(5%); }
+        @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 50px; } .contact-form-box { padding: 36px 28px; } }
     </style>
 
     <!-- DROPDOWN NAV CSS -->
@@ -122,17 +106,30 @@
     .nav-drop a:hover i { opacity: 1; }
     </style>
     <!-- /DROPDOWN NAV CSS -->
+
+    <style>
+        .gallery-page { background: var(--cream); padding: 80px 24px; background-image: url('pattern.png'); background-size: 400px; background-repeat: repeat; }
+        .gallery-grid-page { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+        .gallery-item-page { position: relative; overflow: hidden; height: 240px; background: var(--navy-mid); cursor: pointer; }
+        .gallery-item-page img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+        .gallery-item-page:hover img { transform: scale(1.07); }
+        .gallery-item-page .overlay { position: absolute; inset: 0; background: rgba(11,31,58,0.45); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; }
+        .gallery-item-page:hover .overlay { opacity: 1; }
+        .gallery-item-page .overlay i { color: var(--gold); font-size: 2rem; }
+        #lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.93); z-index:9999; align-items:center; justify-content:center; }
+        @media (max-width: 600px) { .gallery-grid-page { grid-template-columns: repeat(2,1fr); } .gallery-item-page { height: 160px; } }
+    </style>
 </head>
 <body>
-    <div id="loader"><div class="loader-text">RAHMA</div><div class="loader-bar"><div class="loader-fill"></div></div></div>
+<div id="loader"><div class="loader-text">RAHMA</div><div class="loader-bar"><div class="loader-fill"></div></div></div>
         <div class="mobile-menu" id="mobileMenu">
         <a href="index.html"  onclick="closeMobile()">Home</a>
         <a href="prayer-times.html"  onclick="closeMobile()">Prayer Times</a>
         <a href="programs.html"  onclick="closeMobile()">Programs &amp; Services</a>
         <a href="education.html"  onclick="closeMobile()">Education</a>
         <a href="events.html"  onclick="closeMobile()">Events</a>
-        <a href="gallery.html"  onclick="closeMobile()">Gallery</a>
-        <a href="contact.html"  onclick="closeMobile()">Contact</a>
+        <a href="gallery.html" class="active" onclick="closeMobile()">Gallery</a>
+        <a href="contact.html" onclick="closeMobile()">Contact</a>
         <a href="donate.html" class="mobile-donate" onclick="closeMobile()">Donate</a>
     </div>
     <nav class="navbar" id="navbar">
@@ -144,61 +141,47 @@
                 <li><a href="programs.html" >Programs &amp; Services</a><div class="nav-drop"><a href="programs.html"><i class="fas fa-th-large"></i>All Programs</a><a href="activities.html"><i class="fas fa-running"></i>Activities &amp; Classes</a><a href="programs.html#foodbank"><i class="fas fa-hand-holding-heart"></i>Food Bank</a><a href="programs.html#counseling"><i class="fas fa-comments"></i>Spiritual Counseling</a></div></li>
                 <li><a href="education.html" >Education</a><div class="nav-drop"><a href="education.html"><i class="fas fa-book-open"></i>All Classes</a><a href="education.html#adult-quran"><i class="fas fa-quran"></i>Adult Quran Class</a><a href="education.html#kids-quran"><i class="fas fa-child"></i>Kids Quran Class</a><a href="education.html#hifdh"><i class="fas fa-star"></i>Hifdh Program</a><a href="education.html#arabic"><i class="fas fa-language"></i>Arabic Class</a></div></li>
                 <li><a href="events.html" >Events</a><div class="nav-drop"><a href="events.html"><i class="fas fa-calendar-star"></i>Upcoming Events</a><a href="events.html#ramadan"><i class="fas fa-moon"></i>Ramadan Programs</a><a href="events.html#eid"><i class="fas fa-gift"></i>Eid Celebrations</a><a href="newsletter.html"><i class="fas fa-envelope"></i>Newsletter</a></div></li>
-                <li><a href="gallery.html" >Gallery</a></li>
-                <li><a href="contact.html" >Contact</a><div class="nav-drop"><a href="contact.html#form"><i class="fas fa-paper-plane"></i>Send a Message</a><a href="contact.html#location"><i class="fas fa-map-marker-alt"></i>Location &amp; Hours</a></div></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="contact.html">Contact</a><div class="nav-drop"><a href="contact.html#form"><i class="fas fa-paper-plane"></i>Send a Message</a><a href="contact.html#location"><i class="fas fa-map-marker-alt"></i>Location &amp; Hours</a></div></li>
             </ul>
-            <a href="donate.html" class="nav-donate" style="background:var(--gold);color:var(--navy);">Donate</a>
+            <a href="donate.html" class="nav-donate">Donate</a>
             <div class="hamburger" id="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
         </div>
     </nav>
-
     <div class="page-header">
         <div class="page-header-pattern"></div><div class="page-header-overlay"></div>
-        <div class="page-header-content"><span class="page-header-eyebrow">Every Contribution Matters</span><h1>Support <em>Rahma</em></h1></div>
+        <div class="page-header-content">
+            <span class="page-header-eyebrow">Our Community</span>
+            <h1>Community <em>Gallery</em></h1>
+        </div>
     </div>
-
-    <section class="donate-section">
+    <section class="gallery-page">
         <div class="container">
-            <div class="donate-grid">
-                <div class="donate-left reveal">
-                    <div class="donate-img"><img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=700&h=460&fit=crop" alt="Donate"></div>
-                    <span class="section-label">Why Donate</span>
-                    <h2>Be Part of <em>Something Greater</em></h2>
-                    <div class="divider"></div>
-                    <p>At Winnipeg Rahma Islamic Centre, we are dedicated to serving our community by providing a space for worship, education, and social services. Our centre is more than just a place of prayer — it is a hub for learning, a refuge for those in need, and a beacon of unity.</p>
-                    <p>Your generosity, no matter the size, will make a lasting difference for Muslims in Winnipeg.</p>
-                    <ul class="impact-list">
-                        <li><i class="fas fa-check"></i> Expand facilities to accommodate more worshippers</li>
-                        <li><i class="fas fa-check"></i> Offer more educational programs for children and adults</li>
-                        <li><i class="fas fa-check"></i> Support families in need through charity initiatives</li>
-                        <li><i class="fas fa-check"></i> Foster interfaith dialogue and community-building events</li>
-                    </ul>
-                </div>
-                <div class="donate-form-box reveal reveal-delay-2">
-                    <h3>Make a Donation</h3>
-                    <p class="form-sub">All donations directly support our community programs.</p>
-                    <div class="currency-row">
-                        <button class="cur-btn active" id="btnCAD" onclick="setCur('CAD')">CAD</button>
-                        <button class="cur-btn" id="btnUSD" onclick="setCur('USD')">USD</button>
-                    </div>
-                    <div class="amounts-grid">
-                        <button class="amt-btn" onclick="setAmt(10,this)">$10</button>
-                        <button class="amt-btn" onclick="setAmt(25,this)">$25</button>
-                        <button class="amt-btn selected" onclick="setAmt(50,this)">$50</button>
-                        <button class="amt-btn" onclick="setAmt(100,this)">$100</button>
-                        <button class="amt-btn" onclick="setAmt(250,this)">$250</button>
-                        <button class="amt-btn" onclick="setAmt(500,this)">$500</button>
-                    </div>
-                    <div class="custom-row">
-                        <div class="cur-tag" id="curTag">CAD</div>
-                        <input type="number" class="custom-input" id="donateAmt" value="50" placeholder="Custom amount" min="1" oninput="clearAmts()">
-                    </div>
-                    <button class="donate-submit" onclick="processDonate()">Donate Now →</button>
-                    <p class="secure-note"><i class="fas fa-lock"></i>100% Secure &amp; Tax-Deductible</p>
-                </div>
+            <div style="text-align:center;margin-bottom:50px;">
+                <span class="section-label">Moments</span>
+                <h2 class="section-title">Our <em>Memories</em></h2>
+                <p style="color:var(--muted);max-width:600px;margin:0 auto 0;">Upload your photos named gallery1.jpg, gallery2.jpg ... to the site folder.</p>
+            </div>
+            <div class="gallery-grid-page" id="galleryGrid">
+                <div class="gallery-item-page" onclick="openLb(0)"><img src="gallery1.jpg" alt="Community"><div class="overlay"><i class="fas fa-expand-alt"></i></div></div>
+                <div class="gallery-item-page" onclick="openLb(1)"><img src="gallery2.jpg" alt="Prayer"><div class="overlay"><i class="fas fa-expand-alt"></i></div></div>
+                <div class="gallery-item-page" onclick="openLb(2)"><img src="gallery3.jpg" alt="Education"><div class="overlay"><i class="fas fa-expand-alt"></i></div></div>
+                <div class="gallery-item-page" onclick="openLb(3)"><img src="gallery4.jpg" alt="Event"><div class="overlay"><i class="fas fa-expand-alt"></i></div></div>
+                <div class="gallery-item-page" onclick="openLb(4)"><img src="gallery5.jpg" alt="Eid"><div class="overlay"><i class="fas fa-expand-alt"></i></div></div>
+                <div class="gallery-item-page" onclick="openLb(5)"><img src="gallery6.jpg" alt="Youth"><div class="overlay"><i class="fas fa-expand-alt"></i></div></div>
+                <div class="gallery-item-page" onclick="openLb(6)"><img src="gallery7.jpg" alt="Ramadan"><div class="overlay"><i class="fas fa-expand-alt"></i></div></div>
+                <div class="gallery-item-page" onclick="openLb(7)"><img src="gallery8.jpg" alt="Community"><div class="overlay"><i class="fas fa-expand-alt"></i></div></div>
             </div>
         </div>
     </section>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:9999;align-items:center;justify-content:center;">
+        <button onclick="closeLb()" style="position:absolute;top:20px;right:28px;background:none;border:none;color:#fff;font-size:2.5rem;cursor:pointer;">&times;</button>
+        <button onclick="moveLb(-1)" style="position:absolute;left:16px;background:none;border:none;color:rgba(255,255,255,0.7);font-size:3rem;cursor:pointer;padding:16px;">&#8249;</button>
+        <img id="lbImg" src="" alt="" style="max-width:90vw;max-height:85vh;object-fit:contain;border:2px solid rgba(201,168,76,0.4);">
+        <button onclick="moveLb(1)" style="position:absolute;right:16px;background:none;border:none;color:rgba(255,255,255,0.7);font-size:3rem;cursor:pointer;padding:16px;">&#8250;</button>
+    </div>
     <section class="newsletter-section"><div class="container"><div class="newsletter-inner">
         <div class="newsletter-text"><h3>Stay Connected</h3><p>Get updates on events &amp; announcements</p></div>
         <form class="newsletter-form" onsubmit="subscribeNewsletter(event)"><input type="email" class="newsletter-input" placeholder="Your email address" required><button type="submit" class="newsletter-btn">Subscribe</button></form>
@@ -221,15 +204,41 @@
                 <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="mailto:rahmaislamiccentre@gmail.com">rahmaislamiccentre@gmail.com</a></span></div>
             </div>
         </div>
-                        <div class="footer-bottom">
-                <span>Copyright &copy; 2026 Rahma Islamic Centre. All rights reserved.</span>
-                                <span>Powered by Devodez Solutions</span>
+                                        <span>Powered by Devodez Solutions</span>
             </div>
         </div>
     </footer>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="shared.js"></script>
+    <script src="shared.js"></script>
     <script>
-    var _cur='CAD';
-    function setCur(c){_cur=c;['CAD','USD'].forEach(function(x){var b=document.getElementById('btn'+x);if(!b)return;b.classList.toggle('active',x===c);});}
-    function setAmt(v,el){var inp=document.getElementById('donateAmt');if(inp)inp.value=v;document.querySelectorAll('.amt-btn').forEach(function(p){p.classList.remove('selected');});if(el)el.classList.add('selected');}
-    fu
+    /* ── LIGHTBOX ── */
+    var _lbImgs = Array.from(document.querySelectorAll('.gallery-item-page img')).map(function(i){return i.src;});
+    var _lbIdx = 0;
+    function openLb(n) {
+        _lbIdx = n;
+        var lb = document.getElementById('lightbox');
+        var img = document.getElementById('lbImg');
+        if (!lb || !img) return;
+        img.src = _lbImgs[n] || '';
+        lb.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    function closeLb() {
+        var lb = document.getElementById('lightbox');
+        if (lb) lb.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+    function moveLb(dir) {
+        _lbIdx = (_lbIdx + dir + _lbImgs.length) % _lbImgs.length;
+        var img = document.getElementById('lbImg');
+        if (img) img.src = _lbImgs[_lbIdx] || '';
+    }
+    document.addEventListener('keydown', function(e) {
+        var lb = document.getElementById('lightbox');
+        if (!lb || lb.style.display === 'none') return;
+        if (e.key === 'Escape') closeLb();
+        if (e.key === 'ArrowLeft') moveLb(-1);
+        if (e.key === 'ArrowRight') moveLb(1);
+    });
+    </script>
+</body>
+</html>

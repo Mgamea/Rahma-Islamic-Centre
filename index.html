@@ -40,8 +40,8 @@
         .about-img-wrap::before { content: ''; position: absolute; top: -20px; left: -20px; right: 20px; bottom: 20px; border: 1px solid var(--gold); opacity: 0.4; z-index: 0; pointer-events: none; }
         .about-year { position: absolute; bottom: -20px; right: -20px; z-index: 2; background: var(--gold); color: var(--navy); padding: 18px 24px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; text-align: center; line-height: 1.2; }
         .about-year strong { display: block; font-size: 2rem; }
-        .about-text p { font-size: 1.05rem; line-height: 1.85; color: var(--muted); margin-bottom: 20px; }
-        .about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--border); }
+        .about-text p { font-family: 'DM Sans', sans-serif; font-size: 1rem; line-height: 1.85; color: var(--muted); margin-bottom: 20px; font-weight: 300; }
+        .about-stats { display: grid; grid-template-columns: repeat(3, max-content); justify-content: center; gap: 30px; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--border); text-align: center;}
         .stat-item { text-align: center; }
         .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; color: var(--navy); line-height: 1; display: block; }
         .stat-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-top: 8px; display: block; }
@@ -76,8 +76,8 @@
         .secure-tag i { color: #4ade80; margin-right: 6px; }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) { .about-grid, .donate-inner { grid-template-columns: 1fr; gap: 50px; } .about-img-wrap { max-width: 500px; } .about-stats { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 600px) { .about-stats { grid-template-columns: 1fr; } .donate-form-box { padding: 36px 24px; } }
+        @media (max-width: 900px) { .about-grid, .donate-inner { grid-template-columns: 1fr; gap: 50px; } .about-stats { grid-template-columns: repeat(2, max-content); justify-content: center; justify-items: center; }}
+        @media (max-width: 600px) {.about-stats { grid-template-columns: 1fr; stify-items: center;} .donate-form-box { padding: 36px 24px; }}
     </style>
 
     <!-- DROPDOWN NAV CSS -->
@@ -156,6 +156,109 @@
         padding-left: 26px !important;
     }
     .nav-drop a:hover i { opacity: 1; }
+    
+        /* ── OPTION C — Prayer Cards Home (même design que prayer-times) ── */
+        .prayer-cards {
+            display: flex !important;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            margin-bottom: 24px;
+            border: none !important;
+        }
+        .prayer-card-item {
+            flex: 1 1 130px;
+            max-width: 175px;
+            min-width: 120px;
+            background: linear-gradient(145deg, rgba(201,168,76,0.12) 0%, rgba(11,31,58,0.6) 100%);
+            border: 1px solid rgba(201,168,76,0.28) !important;
+            border-right: 1px solid rgba(201,168,76,0.28) !important;
+            border-radius: 20px;
+            padding: 24px 14px 18px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+            overflow: hidden;
+        }
+        .prayer-card-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .prayer-card-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.35);
+            border-color: rgba(201,168,76,0.55) !important;
+            background: linear-gradient(145deg, rgba(201,168,76,0.12) 0%, rgba(11,31,58,0.6) 100%);
+        }
+        /* Icône dans anneau */
+        .prayer-icon-ring {
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: rgba(201,168,76,0.15);
+            border: 1.5px solid rgba(201,168,76,0.4);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px;
+            transition: background 0.25s;
+        }
+        .prayer-card-item:hover .prayer-icon-ring { background: rgba(201,168,76,0.28); }
+        .prayer-icon { font-size: 1.1rem !important; color: var(--gold); opacity: 0.9; margin-bottom: 0 !important; display: inline !important; }
+        .prayer-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.63rem;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        /* Heure en pill */
+        .prayer-time-val {
+            display: inline-block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.45rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, rgba(201,168,76,0.85) 0%, rgba(180,140,50,0.9) 100%);
+            color: #1a1000 !important;
+            padding: 4px 14px 5px;
+            border-radius: 50px;
+            line-height: 1.2;
+            box-shadow: 0 3px 12px rgba(201,168,76,0.3);
+            margin-bottom: 0;
+        }
+        /* Carte active */
+        .prayer-card-item.active-prayer {
+            border-color: var(--gold) !important;
+            background: linear-gradient(145deg, rgba(201,168,76,0.22) 0%, rgba(11,31,58,0.7) 100%);
+            box-shadow: 0 0 0 3px rgba(201,168,76,0.18), 0 8px 28px rgba(0,0,0,0.3);
+        }
+        .prayer-card-item.active-prayer .prayer-icon-ring {
+            background: rgba(201,168,76,0.35);
+            border-color: var(--gold);
+        }
+        .prayer-card-item.active-prayer .prayer-name { color: var(--gold); }
+        .prayer-card-item.active-prayer::after {
+            content: 'Now';
+            position: absolute;
+            top: 10px; right: 10px;
+            background: var(--gold);
+            color: #1a1000;
+            font-family: 'Cinzel', serif;
+            font-size: 0.48rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            padding: 2px 7px;
+            border-radius: 50px;
+            text-transform: uppercase;
+        }
+        @media (max-width: 700px) {
+            .prayer-cards { gap: 8px; }
+            .prayer-card-item { flex: 1 1 100px; min-width: 90px; padding: 16px 8px 12px; border-radius: 14px; }
+            .prayer-icon-ring { width: 36px; height: 36px; margin-bottom: 8px; }
+            .prayer-time-val { font-size: 1.1rem; padding: 3px 10px; }
+        }
     </style>
     <!-- /DROPDOWN NAV CSS -->
 </head>
@@ -165,12 +268,12 @@
 
         <div class="mobile-menu" id="mobileMenu">
         <a href="index.html" class="active" onclick="closeMobile()">Home</a>
-        <a href="prayer-times.html" onclick="closeMobile()">Prayer Times</a>
-        <a href="programs.html" onclick="closeMobile()">Programs & Services</a>
-        <a href="education.html" onclick="closeMobile()">Education</a>
-        <a href="events.html" onclick="closeMobile()">Events</a>
-        <a href="about.html" onclick="closeMobile()">About</a>
-        <a href="contact.html" onclick="closeMobile()">Contact</a>
+        <a href="prayer-times.html"  onclick="closeMobile()">Prayer Times</a>
+        <a href="programs.html"  onclick="closeMobile()">Programs &amp; Services</a>
+        <a href="education.html"  onclick="closeMobile()">Education</a>
+        <a href="events.html"  onclick="closeMobile()">Events</a>
+        <a href="gallery.html"  onclick="closeMobile()">Gallery</a>
+        <a href="contact.html"  onclick="closeMobile()">Contact</a>
         <a href="donate.html" class="mobile-donate" onclick="closeMobile()">Donate</a>
     </div>
 
@@ -181,13 +284,13 @@
                 <div class="logo-text">Rahma Islamic Centre<span>Winnipeg</span></div>
             </a>
                         <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="prayer-times.html">Prayer Times</a><div class="nav-drop"><a href="prayer-times.html#prayer"><i class="fas fa-clock"></i>Today's Prayer Times</a><a href="prayer-times.html#schedule"><i class="fas fa-calendar-alt"></i>Monthly Schedule</a><a href="prayer-times.html#jumuah"><i class="fas fa-mosque"></i>Jumu'ah Info</a></div></li>
-                <li><a href="programs.html">Programs & Services</a><div class="nav-drop"><a href="programs.html"><i class="fas fa-th-large"></i>All Programs</a><a href="activities.html"><i class="fas fa-running"></i>Activities & Classes</a><a href="programs.html#foodbank"><i class="fas fa-hand-holding-heart"></i>Food Bank</a><a href="programs.html#counseling"><i class="fas fa-comments"></i>Spiritual Counseling</a></div></li>
-                <li><a href="education.html">Education</a><div class="nav-drop"><a href="education.html"><i class="fas fa-book-open"></i>All Classes</a><a href="education.html#adult-quran"><i class="fas fa-quran"></i>Adult Quran Class</a><a href="education.html#kids-quran"><i class="fas fa-child"></i>Kids Quran Class</a><a href="education.html#hifdh"><i class="fas fa-star"></i>Hifdh Program</a><a href="education.html#arabic"><i class="fas fa-language"></i>Arabic Class</a></div></li>
-                <li><a href="events.html">Events</a><div class="nav-drop"><a href="events.html"><i class="fas fa-calendar-star"></i>Upcoming Events</a><a href="events.html#ramadan"><i class="fas fa-moon"></i>Ramadan Programs</a><a href="events.html#eid"><i class="fas fa-gift"></i>Eid Celebrations</a><a href="newsletter.html"><i class="fas fa-envelope"></i>Newsletter</a></div></li>
-                <li><a href="about.html">About</a><div class="nav-drop"><a href="about.html#intro"><i class="fas fa-users"></i>Who We Are</a><a href="about.html#mission"><i class="fas fa-bullseye"></i>Our Mission</a><a href="about.html#values"><i class="fas fa-heart"></i>Core Values</a><a href="about.html#gallery"><i class="fas fa-images"></i>Gallery</a></div></li>
-                <li><a href="contact.html">Contact</a><div class="nav-drop"><a href="contact.html#form"><i class="fas fa-paper-plane"></i>Send a Message</a><a href="contact.html#location"><i class="fas fa-map-marker-alt"></i>Location & Hours</a><a href="donate.html"><i class="fas fa-hand-holding-usd"></i>Donate</a></div></li>
+                <li><a href="index.html" class="active">Home</a><div class="nav-drop"><a href="index.html#about"><i class="fas fa-users"></i>Who We Are</a><a href="index.html#mission"><i class="fas fa-bullseye"></i>Our Mission</a><a href="index.html#values"><i class="fas fa-heart"></i>Core Values</a></div></li>
+                <li><a href="prayer-times.html" >Prayer Times</a><div class="nav-drop"><a href="prayer-times.html#prayer"><i class="fas fa-clock"></i>Today's Prayer Times</a><a href="prayer-times.html#schedule"><i class="fas fa-calendar-alt"></i>Monthly Schedule</a><a href="prayer-times.html#jumuah"><i class="fas fa-mosque"></i>Jumu'ah Info</a></div></li>
+                <li><a href="programs.html" >Programs &amp; Services</a><div class="nav-drop"><a href="programs.html"><i class="fas fa-th-large"></i>All Programs</a><a href="activities.html"><i class="fas fa-running"></i>Activities &amp; Classes</a><a href="programs.html#foodbank"><i class="fas fa-hand-holding-heart"></i>Food Bank</a><a href="programs.html#counseling"><i class="fas fa-comments"></i>Spiritual Counseling</a></div></li>
+                <li><a href="education.html" >Education</a><div class="nav-drop"><a href="education.html"><i class="fas fa-book-open"></i>All Classes</a><a href="education.html#adult-quran"><i class="fas fa-quran"></i>Adult Quran Class</a><a href="education.html#kids-quran"><i class="fas fa-child"></i>Kids Quran Class</a><a href="education.html#hifdh"><i class="fas fa-star"></i>Hifdh Program</a><a href="education.html#arabic"><i class="fas fa-language"></i>Arabic Class</a></div></li>
+                <li><a href="events.html" >Events</a><div class="nav-drop"><a href="events.html"><i class="fas fa-calendar-star"></i>Upcoming Events</a><a href="events.html#ramadan"><i class="fas fa-moon"></i>Ramadan Programs</a><a href="events.html#eid"><i class="fas fa-gift"></i>Eid Celebrations</a><a href="newsletter.html"><i class="fas fa-envelope"></i>Newsletter</a></div></li>
+                <li><a href="gallery.html" >Gallery</a></li>
+                <li><a href="contact.html" >Contact</a><div class="nav-drop"><a href="contact.html#form"><i class="fas fa-paper-plane"></i>Send a Message</a><a href="contact.html#location"><i class="fas fa-map-marker-alt"></i>Location &amp; Hours</a></div></li>
             </ul>
             <a href="donate.html" class="nav-donate">Donate</a>
             <div class="hamburger" id="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
@@ -201,7 +304,7 @@
         <div class="hero-pattern"></div>
         <div class="hero-content">
             <p class="hero-eyebrow">  </p>
-            <h1 class="hero-title">Welcome to<br><em>Rahma</em> Islamic Centre</h1>
+            <h1 class="hero-title">Welcome to<br>Winnipeg <em>Rahma</em> Islamic Centre</h1>
             <p class="hero-subtitle">A sanctuary of worship, learning &amp; community</p>
             <div class="hero-ctas">
                 <a href="prayer-times.html" class="btn-primary">Prayer Times</a>
@@ -228,12 +331,12 @@
                 </div>
             </div>
             <div class="prayer-cards">
-                <div class="prayer-card-item" id="card-fajr"><i class="fas fa-moon prayer-icon"></i><div class="prayer-name">Fajr</div><div class="prayer-time-val" id="fajr-time">—</div></div>
-                <div class="prayer-card-item" id="card-dhuhr"><i class="fas fa-sun prayer-icon"></i><div class="prayer-name">Dhuhr</div><div class="prayer-time-val" id="dhuhr-time">—</div></div>
-                <div class="prayer-card-item" id="card-asr"><i class="fas fa-cloud-sun prayer-icon"></i><div class="prayer-name">Asr</div><div class="prayer-time-val" id="asr-time">—</div></div>
-                <div class="prayer-card-item" id="card-maghrib"><i class="fas fa-cloud-moon prayer-icon"></i><div class="prayer-name">Maghrib</div><div class="prayer-time-val" id="maghrib-time">—</div></div>
-                <div class="prayer-card-item" id="card-isha"><i class="fas fa-star prayer-icon"></i><div class="prayer-name">Isha</div><div class="prayer-time-val" id="isha-time">—</div></div>
-                <div class="prayer-card-item"><i class="fas fa-mosque prayer-icon"></i><div class="prayer-name">Jumu'ah</div><div class="prayer-time-val" style="font-size:1.1rem;">12:30 &amp; 1:20 pm</div></div>
+                <div class="prayer-card-item" id="card-fajr"><div class="prayer-icon-ring"><i class="fas fa-moon prayer-icon"></i></div><div class="prayer-name">Fajr</div><div class="prayer-time-val" id="fajr-time">—</div></div>
+                <div class="prayer-card-item" id="card-dhuhr"><div class="prayer-icon-ring"><i class="fas fa-sun prayer-icon"></i></div><div class="prayer-name">Dhuhr</div><div class="prayer-time-val" id="dhuhr-time">—</div></div>
+                <div class="prayer-card-item" id="card-asr"><div class="prayer-icon-ring"><i class="fas fa-cloud-sun prayer-icon"></i></div><div class="prayer-name">Asr</div><div class="prayer-time-val" id="asr-time">—</div></div>
+                <div class="prayer-card-item" id="card-maghrib"><div class="prayer-icon-ring"><i class="fas fa-cloud-moon prayer-icon"></i></div><div class="prayer-name">Maghrib</div><div class="prayer-time-val" id="maghrib-time">—</div></div>
+                <div class="prayer-card-item" id="card-isha"><div class="prayer-icon-ring"><i class="fas fa-star prayer-icon"></i></div><div class="prayer-name">Isha</div><div class="prayer-time-val" id="isha-time">—</div></div>
+                <div class="prayer-card-item"><div class="prayer-icon-ring"><i class="fas fa-mosque prayer-icon"></i></div><div class="prayer-name">Jumu'ah</div><div class="prayer-time-val">1:45 &amp; 2:45 PM</div></div>
             </div>
             <div class="prayer-location-bar">
                 <i class="fas fa-map-marker-alt"></i>
@@ -244,7 +347,7 @@
     </section>
 
     <!-- ABOUT -->
-    <section class="about-section" style="padding:110px 24px;">
+    <section class="about-section" id="about" style="padding:110px 24px;">
         <div class="container">
             <div class="about-grid">
                 <div class="about-img-wrap reveal">
@@ -255,11 +358,13 @@
                     <span class="section-label reveal">Who We Are</span>
                     <h2 class="section-title reveal">A Home for the <em>Muslim Community</em> in Winnipeg</h2>
                     <div class="divider reveal"></div>
-                    <p class="reveal">Winnipeg Rahma Islamic Centre is a vibrant and inclusive Islamic center dedicated to serving the spiritual, educational, and social needs of Muslims in Winnipeg's Kildonan area.</p>
-                    <p class="reveal reveal-delay-1">We are committed to the teachings of the Quran and the Sunnah, striving to promote compassion and unity among our members and the broader community.</p>
+                        <p class="reveal">The Winnipeg Rahma Islamic Centre is a vibrant and inclusive Islamic Center dedicated to serving the spiritual, educational, and social needs of Muslims in Winnipeg. Our centre is a welcoming space for individuals of all ages, background, or level of religious knowledge.</p>
+                        <p class="reveal reveal-delay-1">Our mosque is committed to the teachings of the Quran and the Sunnah of the Prophet Muhammad (peace be upon him). We strive to promote compassion and unity among our members and the broader community.</p>
+                        <p class="reveal reveal-delay-2">With a focus on both religious education and community development, we offer various services to enrich the lives of our members and foster a spirit of brotherhood and sisterhood.</p>
+                    </div>
                     <div class="about-stats reveal reveal-delay-2">
                         <div class="stat-item"><span class="stat-number" data-target="5">0</span><span class="stat-label">Daily Prayers</span></div>
-                        <div class="stat-item"><span class="stat-number" data-target="5">0</span><span class="stat-label">Programs</span></div>
+                        <div class="stat-item"><span class="stat-number" data-target="7">0</span><span class="stat-label">Programs</span></div>
                         <div class="stat-item"><span class="stat-number" data-target="2018">0</span><span class="stat-label"> Year</span></div>
                     </div>
                 </div>
@@ -267,28 +372,8 @@
         </div>
     </section>
 
-    <!-- SERVICES -->
-    <section style="background:var(--white);padding:90px 0;background-image:url('pattern.png');background-size:400px auto;background-repeat:repeat;background-attachment:fixed;">
-        <div class="container" style="padding:0 24px;">
-            <div style="margin-bottom:50px;">
-                <span class="section-label reveal">What We Offer</span>
-                <h2 class="section-title reveal">Programs <em>&amp; Services</em></h2>
-                <div class="divider reveal"></div>
-            </div>
-            <div class="services-grid reveal">
-                <div class="service-item"><div class="service-img"><img src="sisters_-halaqa.webp" alt="Sisters Halaqa"></div><div class="service-body"><span class="service-num">01</span><h3>Sisters' Halaqa</h3><p>A dedicated Quran class for women, exploring its meanings and sharing spiritual reflections in a welcoming environment.</p><a href="activities.html" class="service-arrow">Learn more <i class="fas fa-arrow-right"></i></a></div></div>
-                <div class="service-item"><div class="service-img"><img src="Daily-five.png" alt="Daily Five Prayers"></div><div class="service-body"><span class="service-num">02</span><h3>Daily Five Prayers</h3><p>The masjid is open every day for all five prayers. Jumu'ah at Chalmers Community Centre at 12:30 pm &amp; 1:20 pm.</p><a href="prayer-times.html" class="service-arrow">Prayer times <i class="fas fa-arrow-right"></i></a></div></div>
-                <div class="service-item"><div class="service-img"><img src="kids-quran-class.png" alt="Kids Quran Class"></div><div class="service-body"><span class="service-num">03</span><h3>Kids Quran Class</h3><p>Weekend classes for all ages focusing on recitation, understanding, and memorization of the Holy Quran.</p><a href="activities.html" class="service-arrow">Learn more <i class="fas fa-arrow-right"></i></a></div></div>
-            </div>
-            <div class="services-grid services-grid-2 reveal" style="margin-top:1px;">
-                <div class="service-item"><div class="service-img"><img src="after-school-study-club.png" alt="Study Club"></div><div class="service-body"><span class="service-num">04</span><h3>After School Study Club</h3><p>A supportive environment for students to complete homework and strengthen academic skills.</p><a href="activities.html" class="service-arrow">Learn more <i class="fas fa-arrow-right"></i></a></div></div>
-                <div class="service-item"><div class="service-img"><img src="Quran-Hifz.png" alt="Quran Hifz"></div><div class="service-body"><span class="service-num">05</span><h3>Quran Hifz</h3><p>Structured memorization classes for those dedicated to preserving the Quran in their hearts.</p><a href="activities.html" class="service-arrow">Learn more <i class="fas fa-arrow-right"></i></a></div></div>
-            </div>
-        </div>
-    </section>
-
     <!-- MISSION -->
-    <section class="mission-section">
+    <section class="mission-section" id="mission">
         <div class="mission-pattern"></div>
         <div class="mission-bg-text">RAHMA</div>
         <div class="mission-inner">
@@ -297,6 +382,22 @@
             <div class="mission-divider reveal"><span class="mission-gem">✦</span></div>
             <p class="reveal">"Our mission is to create an environment of spiritual growth, education, and social welfare that nurtures individuals and strengthens the community — inspiring all to live guided by Islamic principles."</p>
             <div style="margin-top:40px;text-align:center;" class="reveal reveal-delay-2"><a href="about.html" class="btn-primary">Learn About Us</a></div>
+        </div>
+    </section>
+
+    <section class="values-section" id="values">
+        <div class="container">
+            <span class="section-label reveal">What Guides Us</span>
+            <h2 class="section-title reveal">Our <em>Core Values</em></h2>
+            <p class="reveal" style="color:var(--muted);max-width:600px;">At the Winnipeg Rahma Islamic Centre, we are guided by the following core values that shape everything we do.</p>
+            <div class="values-grid">
+                <div class="value-item reveal"><div class="value-icon"><i class="fas fa-pray"></i></div><h3>Faith</h3><p>We prioritize nurturing a deep connection with Allah (SWT) through worship, prayer, and reflection on the teachings of Islam.</p></div>
+                <div class="value-item reveal reveal-delay-1"><div class="value-icon"><i class="fas fa-users"></i></div><h3>Community</h3><p>We believe in fostering a sense of brotherhood and sisterhood, where all members feel welcome, supported, and included.</p></div>
+                <div class="value-item reveal reveal-delay-2"><div class="value-icon"><i class="fas fa-book-open"></i></div><h3>Education</h3><p>We are committed to lifelong learning, offering programs that enhance understanding of the Quran, Hadith, and Islamic teachings.</p></div>
+                <div class="value-item reveal reveal-delay-1"><div class="value-icon"><i class="fas fa-hands-helping"></i></div><h3>Service</h3><p>We believe in giving back through charitable acts, support for the needy, and initiatives that benefit the broader society.</p></div>
+                <div class="value-item reveal reveal-delay-2"><div class="value-icon"><i class="fas fa-shield-alt"></i></div><h3>Integrity</h3><p>We strive to uphold the highest moral and ethical standards, reflecting the principles of honesty, fairness, and respect.</p></div>
+                <div class="value-item reveal reveal-delay-3"><div class="value-icon"><i class="fas fa-heart"></i></div><h3>Compassion</h3><p>We encourage kindness and care for others, following the example of the Prophet Muhammad (peace be upon him).</p></div>
+            </div>
         </div>
     </section>
 
@@ -375,7 +476,7 @@
             <div class="footer-col"><h4>Navigation</h4><ul>
                 <li><a href="index.html">Home</a></li><li><a href="prayer-times.html">Prayer Times</a></li>
                 <li><a href="programs.html">Programs &amp; Services</a></li><li><a href="education.html">Education</a></li>
-                <li><a href="events.html">Events</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+                <li><a href="events.html">Events</a></li><li><a href="index.html#about">About</a></li><li><a href="contact.html">Contact</a></li>
             </ul></div>
             <div class="footer-col"><h4>Programs</h4><ul>
                 <li><a href="education.html">Quran Classes</a></li><li><a href="education.html">Arabic Classes</a></li>
@@ -387,129 +488,99 @@
                 <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="mailto:rahmaislamiccentre@gmail.com">rahmaislamiccentre@gmail.com</a></span></div>
             </div>
         </div>
-                <div class="footer-bottom">
-                <span>Copyright &copy; 2026 Rahma Islamic Centre. All rights reserved.</span>
-                <span>Powered by Devodez Solutions</span>
+                                        <span>Powered by Devodez Solutions</span>
             </div>
         </div>
     </footer>
     <script src="shared.js"></script>
     <script>
-    window.addEventListener('DOMContentLoaded', function() {
-
-        /* ── Horloge et date ── */
-        function updateClock() {
-            var now  = new Date();
-            var timeEl = document.getElementById('currentTime');
-            var dateEl = document.getElementById('prayerDate');
-            if (timeEl) timeEl.textContent = now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', hour12:true});
-            if (dateEl) dateEl.textContent  = now.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+    /* ── HORLOGE + DATE — PAGE HOME ── */
+    (function tickClock(){
+        var el = document.getElementById('currentTime');
+        var de = document.getElementById('prayerDate');
+        var now = new Date();
+        if (el) {
+            var h = now.getHours(), m = now.getMinutes();
+            var ampm = h >= 12 ? 'PM' : 'AM';
+            el.textContent = (h%12||12) + ':' + String(m).padStart(2,'0') + ' ' + ampm;
         }
-        updateClock();
-        setInterval(updateClock, 1000);
+        if (de) de.textContent = now.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+        setTimeout(tickClock, 1000);
+    })();
 
-        /* ── Heures de prière — Mawaqit → Aladhan → static ── */
-        var STATIC = {fajr:'6:12 AM', dhuhr:'12:41 PM', asr:'3:34 PM', maghrib:'6:09 PM', isha:'7:38 PM'};
-        var IDS    = {fajr:'fajr-time', dhuhr:'dhuhr-time', asr:'asr-time', maghrib:'maghrib-time', isha:'isha-time'};
-        var CARDS  = {fajr:'card-fajr', dhuhr:'card-dhuhr', asr:'card-asr', maghrib:'card-maghrib', isha:'card-isha'};
-
-        function fmt24(raw) {
+    /* ── PRAYER TIMES — PAGE HOME ── */
+    (function() {
+        function fmtTime(raw) {
             if (!raw) return '—';
             var t = raw.split(' ')[0].split(':');
             var h = parseInt(t[0]), m = t[1];
             return (h % 12 || 12) + ':' + m + ' ' + (h >= 12 ? 'PM' : 'AM');
         }
-
-        function applyTimes(T, prefmt) {
-            var nm = new Date().getHours() * 60 + new Date().getMinutes();
-            var active = 'card-isha';
-            ['fajr','dhuhr','asr','maghrib','isha'].forEach(function(k) {
-                var val = prefmt ? T[k] : fmt24(T[k]);
-                var el  = document.getElementById(IDS[k]);
-                if (el) el.textContent = val;
-                var clean = val.replace(' AM','').replace(' PM','').split(':');
-                var h24 = parseInt(clean[0]);
-                if (val.indexOf('PM') > -1 && h24 < 12) h24 += 12;
-                if (val.indexOf('AM') > -1 && h24 === 12) h24 = 0;
-                if (nm >= h24 * 60 + parseInt(clean[1] || 0)) active = CARDS[k];
-            });
-            Object.keys(CARDS).forEach(function(k) {
-                var el = document.getElementById(CARDS[k]);
-                if (el) el.classList.toggle('active-prayer', CARDS[k] === active);
-            });
-        }
-
-        /* Afficher les heures statiques immédiatement */
-        applyTimes(STATIC, true);
-
-        /* Mawaqit (API officielle Rahma Winnipeg) → Aladhan fallback */
-        (async function() {
-            var timings = null;
+        async function loadHomePrayers() {
+            var T = null;
             try {
                 var r = await fetch('https://mawaqit.net/api/2.0/mosque/by-slug/rahma-islamic-centre-winnipeg/prayer-times');
                 if (r.ok) {
                     var d = await r.json();
-                    if (d.times && d.times.length >= 6) {
-                        timings = {fajr:d.times[0], dhuhr:d.times[2], asr:d.times[3], maghrib:d.times[4], isha:d.times[5]};
-                        applyTimes(timings, false);
-                        return;
-                    }
+                    if (d.times && d.times.length >= 6)
+                        T = {Fajr:d.times[0], Dhuhr:d.times[2], Asr:d.times[3], Maghrib:d.times[4], Isha:d.times[5]};
                 }
             } catch(e) {}
-            /* Fallback Aladhan */
-            try {
-                var now = new Date();
-                var url = 'https://api.aladhan.com/v1/timings/'
-                    + now.getDate() + '-' + (now.getMonth()+1) + '-' + now.getFullYear()
-                    + '?latitude=49.8951&longitude=-97.1384&method=2';
-                var res = await fetch(url, {mode:'cors'});
-                var data = await res.json();
-                if (data.code === 200) {
-                    var t = data.data.timings;
-                    applyTimes({fajr:t.Fajr, dhuhr:t.Dhuhr, asr:t.Asr, maghrib:t.Maghrib, isha:t.Isha}, false);
-                }
-            } catch(e) {}
-        })();
+            if (!T) {
+                try {
+                    var now = new Date();
+                    var url = 'https://api.aladhan.com/v1/timings/'
+                        + now.getDate() + '-' + (now.getMonth()+1) + '-' + now.getFullYear()
+                        + '?latitude=49.8951&longitude=-97.1384&method=2';
+                    var res = await fetch(url, {mode:'cors'});
+                    var data = await res.json();
+                    if (data.code === 200) T = data.data.timings;
+                } catch(e) {}
+            }
+            if (!T) T = {Fajr:'06:12', Dhuhr:'12:41', Asr:'15:34', Maghrib:'18:09', Isha:'19:38'};
 
-        /* ── Compteurs animés ── */
-        function animateCount(el, target) {
-            var s = performance.now();
-            (function u(n) {
-                var p = Math.min((n - s) / 1500, 1), e = 1 - Math.pow(1 - p, 3);
-                el.textContent = Math.round(e * target);
-                if (p < 1) requestAnimationFrame(u);
-            })(performance.now());
+            var map     = {Fajr:'fajr-time', Dhuhr:'dhuhr-time', Asr:'asr-time', Maghrib:'maghrib-time', Isha:'isha-time'};
+            var cardMap = {Fajr:'card-fajr',  Dhuhr:'card-dhuhr', Asr:'card-asr', Maghrib:'card-maghrib', Isha:'card-isha'};
+
+            var nm = new Date().getHours()*60 + new Date().getMinutes();
+            var active = 'Isha';
+            ['Fajr','Dhuhr','Asr','Maghrib','Isha'].forEach(function(k) {
+                var raw = T[k] || T[k.toLowerCase()] || '';
+                var t24 = raw.split(' ')[0];
+                var el = document.getElementById(map[k]);
+                if (el) el.textContent = fmtTime(t24);
+                if (t24) { var p = t24.split(':').map(Number); if (nm >= p[0]*60+p[1]) active = k; }
+            });
+            ['Fajr','Dhuhr','Asr','Maghrib','Isha'].forEach(function(k) {
+                var el = document.getElementById(cardMap[k]);
+                if (el) el.classList.toggle('active-prayer', k === active);
+            });
         }
-        var sObs = new IntersectionObserver(function(entries) {
+        document.addEventListener('DOMContentLoaded', loadHomePrayers);
+    })();
+
+    /* ── COUNTERS ANIMATION ── */
+    document.addEventListener('DOMContentLoaded', function() {
+        var nums = document.querySelectorAll('.stat-number[data-target]');
+        var obs = new IntersectionObserver(function(entries) {
             entries.forEach(function(e) {
-                if (e.isIntersecting) { animateCount(e.target, parseInt(e.target.dataset.target)); sObs.unobserve(e.target); }
+                if (!e.isIntersecting) return;
+                var el = e.target;
+                var target = parseInt(el.getAttribute('data-target'));
+                var start = 0, duration = 1800;
+                var step = function(ts) {
+                    if (!start) start = ts;
+                    var prog = Math.min((ts - start) / duration, 1);
+                    el.textContent = Math.floor(prog * target);
+                    if (prog < 1) requestAnimationFrame(step);
+                    else el.textContent = target;
+                };
+                requestAnimationFrame(step);
+                obs.unobserve(el);
             });
         }, {threshold: 0.5});
-        document.querySelectorAll('[data-target]').forEach(function(el) { sObs.observe(el); });
+        nums.forEach(function(el) { obs.observe(el); });
     });
-
-    /* ── Widget Don ── */
-    var currentCurrency = 'CAD';
-    function setAmount(val, el) {
-        document.getElementById('donateAmt').value = val;
-        document.querySelectorAll('.amount-pill').forEach(function(p) { p.classList.remove('selected'); });
-        el.classList.add('selected');
-    }
-    function setCurrency(cur) {
-        currentCurrency = cur;
-        document.getElementById('currencyTag').textContent = cur;
-        ['CAD','USD'].forEach(function(c) {
-            var b = document.getElementById('btn' + c); if (!b) return;
-            b.style.background    = c===cur ? 'rgba(201,168,76,0.15)' : 'transparent';
-            b.style.borderColor   = c===cur ? 'var(--gold)' : 'rgba(255,255,255,0.15)';
-            b.style.color         = c===cur ? 'var(--gold)' : 'rgba(255,255,255,0.5)';
-        });
-    }
-    function processDonate() {
-        var amt = parseFloat(document.getElementById('donateAmt').value);
-        if (!amt || amt <= 0) { alert('Please enter a valid amount.'); return; }
-        alert('JazakAllah Khayr! ' + currentCurrency + ' $' + amt.toFixed(2));
-    }
     </script>
 </body>
 </html>
