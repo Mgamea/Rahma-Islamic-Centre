@@ -88,7 +88,18 @@
         padding-left: 26px !important;
     }
     .nav-drop a:hover i { opacity: 1; }
-    </style>
+    
+        /* ── MOBILE MENU FALLBACK ── */
+        @media (max-width: 960px) {
+            .nav-links { display: none !important; }
+            .nav-donate { display: none !important; }
+            .hamburger { display: flex !important; flex-direction: column; gap: 6px; cursor: pointer; padding: 4px; }
+            .hamburger span { width: 26px; height: 1.5px; background: #C9A84C; display: block; transition: all 0.3s; }
+        }
+        .mobile-menu { display: none; position: fixed; inset: 0; z-index: 999; background: #1A2744; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+        .mobile-menu.active { display: flex !important; }
+        .mobile-menu a { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #fff; text-decoration: none; letter-spacing: 0.1em; }
+</style>
     <!-- /DROPDOWN NAV CSS -->
 </head>
 <body>
@@ -125,50 +136,104 @@
         <div class="page-header-content"><h1><em>Events</em> & Celebrations</h1></div>
     </div>
 
-    <section style="background:#fff;padding:100px 24px;background-image:url('pattern.png');background-size:400px auto;background-repeat:repeat;background-attachment:fixed;">
-        <div class="container" style="max-width:800px;margin:0 auto;text-align:center">
-            <i class="fas fa-calendar-star" style="font-size:4rem;color:#C9A84C;margin-bottom:30px;display:block"></i>
-            <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;margin-bottom:24px">Stay Tuned for <em style="color:#C9A84C">Upcoming Events</em></h2>
-            <p style="font-size:1.1rem;color:#6b7f95;line-height:1.8;margin-bottom:50px">From Eid celebrations to educational seminars, Ramadan programs to community iftars — we bring our community together throughout the year.</p>
-            
-            <div style="background:linear-gradient(135deg,#0B1F3A,#122a4e);padding:60px 40px;border-radius:12px;margin-bottom:60px">
-                <h3 style="color:#fff;font-size:2rem;margin-bottom:20px">Get Notified About Events</h3>
-                <p style="color:rgba(255,255,255,0.7);margin-bottom:30px">Subscribe to our newsletter or contact us to stay informed.</p>
-                <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-                    <a href="newsletter.html" style="display:inline-block;padding:14px 32px;background:#C9A84C;color:#0B1F3A;text-decoration:none;font-weight:600;border-radius:6px">Subscribe</a>
-                    <a href="contact.html" style="display:inline-block;padding:14px 32px;border:2px solid #C9A84C;color:#C9A84C;text-decoration:none;font-weight:600;border-radius:6px">Contact Us</a>
-                </div>
+        <!-- ══ EID AL-FITR — EN AVANT ══ -->
+    <section id="eid" style="background:linear-gradient(160deg,#0a1220 0%,#0B1F3A 55%,#102040 100%);padding:100px 24px;position:relative;overflow:hidden;scroll-margin-top:80px;">
+        <!-- Lunes décoratives × 6 -->
+        <div style="position:absolute;top:15px;right:6%;font-size:clamp(90px,15vw,160px);color:rgba(201,168,76,0.38);pointer-events:none;transform:rotate(-20deg);font-family:'Segoe UI Emoji',serif;line-height:1;">☽</div>
+        <div style="position:absolute;bottom:10%;left:3%;font-size:clamp(55px,10vw,110px);color:rgba(201,168,76,0.28);pointer-events:none;transform:rotate(35deg) scaleX(-1);font-family:'Segoe UI Emoji',serif;">☽</div>
+        <div style="position:absolute;top:50%;right:20%;font-size:clamp(38px,6vw,76px);color:rgba(201,168,76,0.20);pointer-events:none;transform:rotate(50deg);font-family:'Segoe UI Emoji',serif;">☽</div>
+        <div style="position:absolute;top:14%;left:15%;font-size:clamp(28px,4.5vw,56px);color:rgba(201,168,76,0.18);pointer-events:none;transform:rotate(15deg);font-family:'Segoe UI Emoji',serif;">☽</div>
+        <div style="position:absolute;bottom:28%;left:28%;font-size:clamp(22px,3.5vw,44px);color:rgba(201,168,76,0.15);pointer-events:none;transform:rotate(-55deg) scaleX(-1);font-family:'Segoe UI Emoji',serif;">☽</div>
+        <div style="position:absolute;top:35%;right:8%;font-size:clamp(18px,2.8vw,36px);color:rgba(201,168,76,0.14);pointer-events:none;transform:rotate(70deg);font-family:'Segoe UI Emoji',serif;">☽</div>
+        <div style="position:absolute;inset:0;background:url('pattern.png');background-size:400px;background-repeat:repeat;opacity:0.03;pointer-events:none;"></div>
+        <div class="container" style="max-width:760px;margin:0 auto;text-align:center;position:relative;z-index:2;">
+            <i class="fas fa-star-and-crescent" style="font-size:3.2rem;color:var(--gold);margin-bottom:20px;display:block;opacity:0.9;"></i>
+            <span style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:16px;">UPCOMING EVENT</span>
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,6vw,3.4rem);font-weight:300;color:#fff;margin-bottom:10px;line-height:1.15;">Eid Al-Fitr <em style="color:var(--gold)">Prayer</em></h2>
+            <p style="font-family:'Amiri',serif;font-size:1.5rem;color:rgba(201,168,76,0.75);margin-bottom:24px;letter-spacing:0.05em;">صلاة عيد الفطر</p>
+            <p style="color:rgba(255,255,255,0.6);font-size:1rem;line-height:1.85;margin-bottom:44px;max-width:520px;margin-left:auto;margin-right:auto;">Join us to celebrate the end of Ramadan with the entire Rahma community. Registration is free and open to all — secure your family's spot today.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;">
+                <a href="eid-registration.html" style="display:inline-flex;align-items:center;gap:12px;padding:17px 48px;background:linear-gradient(135deg,#C9A84C,#E8C96A);color:#0B1F3A;text-decoration:none;font-family:'Cinzel',serif;font-size:0.82rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;transition:opacity 0.3s;">
+                    <i class="fas fa-user-plus"></i>&nbsp;Register for Eid Prayer
+                </a>
             </div>
+            <p style="color:rgba(255,255,255,0.3);font-size:0.78rem;margin-top:20px;letter-spacing:0.08em;">FREE · OPEN TO ALL · FAMILY WELCOME</p>
+        </div>
+    </section>
 
-            <div style="background:#FAF6EE;padding:40px;border-radius:8px">
-                <h4 style="font-size:1.4rem;margin-bottom:24px;color:#0B1F3A">Regular Community Events</h4>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px">
-                    <div><i class="fas fa-moon" style="font-size:2.5rem;color:#C9A84C;margin-bottom:12px"></i>
-                    <h5 style="font-size:1rem;margin-bottom:8px">Ramadan Programs</h5>
-                    <p style="font-size:0.85rem;color:#6b7f95">Taraweeh & Iftars</p></div>
-                    
-                    <div><i class="fas fa-gift" style="font-size:2.5rem;color:#C9A84C;margin-bottom:12px"></i>
-                    <h5 style="font-size:1rem;margin-bottom:8px">Eid Celebrations</h5>
-                    <p style="font-size:0.85rem;color:#6b7f95">Community gatherings</p></div>
-                    
-                    <div><i class="fas fa-book-open" style="font-size:2.5rem;color:#C9A84C;margin-bottom:12px"></i>
-                    <h5 style="font-size:1rem;margin-bottom:8px">Educational Seminars</h5>
-                    <p style="font-size:0.85rem;color:#6b7f95">Guest speakers</p></div>
+    <!-- ══ RAMADAN PROGRAMS ══ -->
+    <section id="ramadan" style="background:var(--cream);padding:80px 24px;background-image:url('pattern.png');background-size:400px;background-repeat:repeat;background-attachment:fixed;scroll-margin-top:80px;">
+        <div class="container" style="max-width:900px;margin:0 auto;">
+            <div style="display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:center;">
+                <div style="text-align:center;">
+                    <i class="fas fa-moon" style="font-size:4rem;color:var(--gold);display:block;margin-bottom:16px;"></i>
+                    <span style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);">RAMADAN 1446</span>
+                </div>
+                <div>
+                    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;color:var(--navy);margin-bottom:14px;">Ramadan <em>Programs</em></h2>
+                    <p style="color:var(--muted);font-size:1rem;line-height:1.85;margin-bottom:24px;">Join us throughout the blessed month for Taraweeh prayers, community Iftars, Quran recitation sessions, and special lectures every week.</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+                        <span style="background:var(--navy);color:var(--gold);padding:7px 18px;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;">TARAWEEH PRAYERS</span>
+                        <span style="background:var(--navy);color:var(--gold);padding:7px 18px;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;">COMMUNITY IFTAR</span>
+                        <span style="background:var(--navy);color:var(--gold);padding:7px 18px;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;">QURAN SESSIONS</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <section class="newsletter-section"><div class="container"><div class="newsletter-inner">
+
+    <!-- ══ AUTRES EVENTS ══ -->
+    <section style="background-image:url('pattern.png');background-size:400px;background-repeat:repeat;background-attachment:fixed;background-color:var(--cream);padding:80px 24px;">
+        <div class="container" style="max-width:960px;margin:0 auto;">
+            <div style="text-align:center;margin-bottom:52px;">
+                <span style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:12px;">THROUGHOUT THE YEAR</span>
+                <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;color:var(--navy);">Community <em>Events &amp; Celebrations</em></h2>
+            </div>
+            <!-- Nuages bleus navy -->
+            <div style="display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:flex-start;">
+
+                <!-- Nuage 1 — Educational Seminars -->
+                <div style="background:#0B1F3A;color:#fff;padding:40px 36px 44px;border-radius:60% 40% 55% 45% / 45% 55% 40% 60%;min-width:240px;max-width:290px;text-align:center;box-shadow:0 8px 32px rgba(11,31,58,0.25);flex:1 1 240px;position:relative;">
+                    <i class="fas fa-book-open" style="font-size:2rem;color:var(--gold);margin-bottom:16px;display:block;"></i>
+                    <h4 style="font-family:'Cinzel',serif;font-size:0.88rem;color:var(--gold);margin-bottom:10px;letter-spacing:0.08em;">Educational Seminars</h4>
+                    <p style="font-size:0.88rem;color:rgba(255,255,255,0.7);line-height:1.75;">Guest speakers, workshops on Islamic topics, and community lectures throughout the year.</p>
+                </div>
+
+                <!-- Nuage 2 — Eid & Holidays (plus grand, central) -->
+                <div style="background:#0B1F3A;color:#fff;padding:48px 40px 52px;border-radius:55% 45% 60% 40% / 40% 60% 45% 55%;min-width:260px;max-width:320px;text-align:center;box-shadow:0 10px 40px rgba(11,31,58,0.3);flex:1 1 260px;position:relative;transform:translateY(-16px);">
+                    <i class="fas fa-star-and-crescent" style="font-size:2.2rem;color:var(--gold);margin-bottom:16px;display:block;"></i>
+                    <h4 style="font-family:'Cinzel',serif;font-size:0.88rem;color:var(--gold);margin-bottom:10px;letter-spacing:0.08em;">Eid &amp; Celebrations</h4>
+                    <p style="font-size:0.88rem;color:rgba(255,255,255,0.7);line-height:1.75;">Community gatherings for Eid Al-Fitr, Eid Al-Adha, and other blessed occasions of the year.</p>
+                    <a href="eid-registration.html" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:9px 22px;background:linear-gradient(135deg,#C9A84C,#E8C96A);color:#0B1F3A;text-decoration:none;font-family:'Cinzel',serif;font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;">
+                        Register →
+                    </a>
+                </div>
+
+                <!-- Nuage 3 — Newsletter -->
+                <div style="background:#0B1F3A;color:#fff;padding:40px 36px 44px;border-radius:45% 55% 40% 60% / 60% 40% 55% 45%;min-width:240px;max-width:290px;text-align:center;box-shadow:0 8px 32px rgba(11,31,58,0.25);flex:1 1 240px;position:relative;">
+                    <i class="fas fa-envelope-open-text" style="font-size:2rem;color:var(--gold);margin-bottom:16px;display:block;"></i>
+                    <h4 style="font-family:'Cinzel',serif;font-size:0.88rem;color:var(--gold);margin-bottom:10px;letter-spacing:0.08em;">Newsletter</h4>
+                    <p style="font-size:0.88rem;color:rgba(255,255,255,0.7);line-height:1.75;">Stay informed about upcoming events and announcements from Rahma Islamic Centre.</p>
+                    <a href="newsletter.html" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:9px 22px;background:linear-gradient(135deg,#C9A84C,#E8C96A);color:#0B1F3A;text-decoration:none;font-family:'Cinzel',serif;font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;">
+                        Subscribe →
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+<section class="newsletter-section"><div class="container"><div class="newsletter-inner">
         <div class="newsletter-text"><h3>Stay Connected</h3><p>Get updates on events &amp; announcements</p></div>
         <form class="newsletter-form" onsubmit="subscribeNewsletter(event)"><input type="email" class="newsletter-input" placeholder="Your email address" required><button type="submit" class="newsletter-btn">Subscribe</button></form>
     </div></div></section>
     <footer class="footer"><div class="container">
         <div class="footer-grid">
-            <div class="footer-brand"><span class="logo-text-footer">Rahma Islamic Centre</span><p>A vibrant Islamic center serving Muslims in Winnipeg since 2018.</p><div class="footer-social"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
+            <div class="footer-brand"><span class="logo-text-footer">Rahma Islamic Centre</span><p>A vibrant Islamic center serving Muslims in Winnipeg since 2016.</p><div class="footer-social"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
             <div class="footer-col"><h4>Navigation</h4><ul>
                 <li><a href="index.html">Home</a></li><li><a href="prayer-times.html">Prayer Times</a></li>
                 <li><a href="programs.html">Programs &amp; Services</a></li><li><a href="education.html">Education</a></li>
-                <li><a href="events.html">Events</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+                <li><a href="events.html">Events</a></li><li><a href="contact.html">Contact</a></li>
             </ul></div>
             <div class="footer-col"><h4>Programs</h4><ul>
                 <li><a href="education.html">Quran Classes</a></li><li><a href="education.html">Arabic Classes</a></li>
@@ -177,16 +242,14 @@
             <div class="footer-col"><h4>Contact</h4>
                 <div class="contact-li"><i class="fas fa-map-marker-alt"></i><span>574 Watt St, Winnipeg, MB R2K 4K1</span></div>
                 <div class="contact-li"><i class="fas fa-phone"></i><span>+1 (431) 792-3791</span></div>
-                <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="mailto:rahmaislamiccentre@gmail.com">rahmaislamiccentre@gmail.com</a></span></div>
+                <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="mailto:contact@rahmaonline.org">contact@rahmaonline.org</a></span></div>
             </div>
         </div>
-        
-                        <div class="footer-bottom">
-                <span>Copyright &copy; 2026 Rahma Islamic Centre. All rights reserved.</span>
-                                <span>Powered by Devodez Solutions</span>
-            </div>
+        <div class="                        <div class="footer-bottom">
+            <span>Copyright &copy; 2026 Rahma Islamic Centre. All rights reserved.</span>
+            <span>Powered by Devodez Solutions</span>
         </div>
-    </footer>
+    </div></footer>
     <script src="shared.js"></script>
 </body>
 </html>
