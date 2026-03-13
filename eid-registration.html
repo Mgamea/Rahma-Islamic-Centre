@@ -45,7 +45,8 @@
     .mobile-menu { display:none; position:fixed; inset:0; z-index:999; background:#1A2744; flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
     .mobile-menu.active { display:flex !important; }
     .mobile-menu a { font-family:'Cinzel',serif; font-size:1.3rem; color:#fff; text-decoration:none; letter-spacing:0.1em; }
-</style>
+
+    </style>
     <!-- /DROPDOWN NAV CSS -->
 
     <style>
@@ -528,6 +529,10 @@
             <span class="counter-num" id="cntSession1">—</span>
             <span class="counter-label">Session 1</span>
         </div>
+        <div class="counter-item">
+            <span class="counter-num" id="cntSession2">—</span>
+            <span class="counter-label">Session 2</span>
+        </div>
     </div>
 
     <!-- ═══ REGISTRATION SECTION ═══ -->
@@ -739,131 +744,108 @@
         </div>
     </div></footer>
     <script src="shared.js"></script>
-    
-<script>
-/* ══ EID REGISTRATION — Storage ══ */
+    <script>
+/* ══ EID REGISTRATION ══ */
 const STORAGE_KEY = 'eid-registrations';
 
 function loadRegistrations() {
-  try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; }
-  catch(e) { return []; }
+    try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; }
+    catch(e) { return []; }
 }
-
 function saveRegistrations(data) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
 }
-
-function safeTextContent(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = value;
+function safeText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
 }
-
 function updateCounters() {
-  const regs = loadRegistrations();
-
-  // Totaux
-  safeTextContent('cntRegistered', regs.length);
-
-  const tot = regs.reduce((s, r) =>
-    s + (parseInt(r.adults) || 0) + (parseInt(r.children) || 0), 0
-  );
-  safeTextContent('cntAttendees', tot);
-
-  const s1 = regs.filter(r => r.session === '1').length;
-  const s2 = regs.filter(r => r.session === '2').length;
-
-  safeTextContent('cntSession1', s1);
-  safeTextContent('cntSession2', s2); // ok même si l'élément n'existe pas
+    const regs = loadRegistrations();
+    safeText('cntRegistered', regs.length);
+    const tot = regs.reduce((s, r) => s + (parseInt(r.adults) || 0) + (parseInt(r.children) || 0), 0);
+    safeText('cntAttendees', tot);
+    safeText('cntSession1', regs.filter(r => r.session === '1').length);
+    safeText('cntSession2', regs.filter(r => r.session === '2').length);
 }
-
-document.addEventListener('DOMContentLoaded', () => { updateCounters(); });
+document.addEventListener('DOMContentLoaded', function() {
+    updateCounters();
+});
 
 function selectSession(card) {
-  document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
-  card.classList.add('selected');
-  document.getElementById('selectedSession').value = card.dataset.session;
+    document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    document.getElementById('selectedSession').value = card.dataset.session;
 }
 
 function adjustCount(field, delta) {
-  const el = document.getElementById(field);
-  const min = parseInt(el.min) || 0;
-  const max = parseInt(el.max) || 99;
-  const next = Math.max(min, Math.min(max, (parseInt(el.value) || 0) + delta));
-  el.value = next;
+    const el = document.getElementById(field);
+    const min = parseInt(el.min) || 0;
+    const max = parseInt(el.max) || 99;
+    el.value = Math.max(min, Math.min(max, (parseInt(el.value) || 0) + delta));
 }
 
 function genRef() {
-  return 'EID-' + Math.random().toString(36).substring(2,6).toUpperCase() + Date.now().toString().slice(-4);
+    return 'EID-' + Math.random().toString(36).substring(2,6).toUpperCase() + Date.now().toString().slice(-4);
 }
 
 document.getElementById('eidForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  if (!document.getElementById('selectedSession').value) {
-    alert('Please select a session (Session 1 or Session 2).');
-    return;
-  }
-  if (!document.getElementById('agreeTerms').checked) {
-    alert('Please confirm you will attend in person.');
-    return;
-  }
-
-  // Validation simple des champs obligatoires
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName  = document.getElementById('lastName').value.trim();
-  const email     = document.getElementById('email').value.trim();
-  if (!firstName || !lastName || !email) {
-    alert('Please fill in First Name, Last Name and Email.');
-    return;
-  }
-
-  const btn = document.getElementById('submitBtn');
-  btn.classList.add('loading');
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering…';
-
-  const ref = genRef();
-  const record = {
-    ref, timestamp: new Date().toISOString(),
-    firstName, lastName, email,
-    phone: document.getElementById('phone').value.trim(),
-    session: document.getElementById('selectedSession').value,
-    adults: document.getElementById('adults').value,
-    children: document.getElementById('children').value,
-    accessibility: document.getElementById('accessibility').value,
-    notes: document.getElementById('notes').value.trim(),
-    newsletter: document.getElementById('newsletter').checked
-  };
-
-  try {
-    const regs = loadRegistrations();
-    regs.push(record);
-    saveRegistrations(regs);
-  } catch(err) { console.error('Storage error:', err); }
-
-  setTimeout(function() {
-    document.getElementById('successRef').textContent = '— Registration ' + ref + ' —';
-    document.getElementById('successOverlay').classList.add('show');
-    btn.classList.remove('loading');
-    btn.classList.add('success');
-    updateCounters();
-  }, 800);
+    e.preventDefault();
+    if (!document.getElementById('selectedSession').value) {
+        alert('Please select a session (Session 1 or Session 2).'); return;
+    }
+    if (!document.getElementById('agreeTerms').checked) {
+        alert('Please confirm you will attend in person.'); return;
+    }
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    if (!firstName || !lastName || !email) {
+        alert('Please fill in First Name, Last Name and Email.'); return;
+    }
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering…';
+    const ref = genRef();
+    const record = {
+        ref, timestamp: new Date().toISOString(),
+        firstName, lastName, email,
+        phone:         document.getElementById('phone').value.trim(),
+        session:       document.getElementById('selectedSession').value,
+        adults:        document.getElementById('adults').value,
+        children:      document.getElementById('children').value,
+        accessibility: document.getElementById('accessibility').value,
+        notes:         document.getElementById('notes').value.trim(),
+        newsletter:    document.getElementById('newsletter').checked
+    };
+    try {
+        const regs = loadRegistrations();
+        regs.push(record);
+        saveRegistrations(regs);
+    } catch(err) { console.error('Storage error:', err); }
+    setTimeout(function() {
+        document.getElementById('successRef').textContent = '— Registration ' + ref + ' —';
+        document.getElementById('successOverlay').classList.add('show');
+        btn.classList.remove('loading');
+        btn.classList.add('success');
+        updateCounters();
+    }, 800);
 });
 
 function resetForm() {
-  document.getElementById('eidForm').reset();
-  document.getElementById('adults').value = 1;
-  document.getElementById('children').value = 0;
-  // Sélection par défaut : Session 1
-  document.getElementById('selectedSession').value = '1';
-  document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
-  const s1 = document.querySelector('.session-card[data-session="1"]');
-  if (s1) s1.classList.add('selected');
-  document.getElementById('successOverlay').classList.remove('show');
-  const btn = document.getElementById('submitBtn');
-  btn.classList.remove('loading','success');
-  btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration';
+    document.getElementById('eidForm').reset();
+    document.getElementById('adults').value = 1;
+    document.getElementById('children').value = 0;
+    document.getElementById('selectedSession').value = '1';
+    document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
+    const s1 = document.querySelector('.session-card[data-session="1"]');
+    if (s1) s1.classList.add('selected');
+    document.getElementById('agreeTerms').checked = true;
+    document.getElementById('newsletter').checked = true;
+    document.getElementById('successOverlay').classList.remove('show');
+    const btn = document.getElementById('submitBtn');
+    btn.classList.remove('loading','success');
+    btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration';
 }
-</script>
-
+    </script>
 </body>
 </html>
