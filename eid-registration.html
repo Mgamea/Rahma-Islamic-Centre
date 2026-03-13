@@ -529,10 +529,6 @@
             <span class="counter-num" id="cntSession1">—</span>
             <span class="counter-label">Session 1</span>
         </div>
-        <div class="counter-item">
-            <span class="counter-num" id="cntSession2">—</span>
-            <span class="counter-label">Session 2</span>
-        </div>
     </div>
 
     <!-- ═══ REGISTRATION SECTION ═══ -->
@@ -556,20 +552,18 @@
 
                 <form id="eidForm" novalidate>
                     <!-- Session selection -->
-                    <div class="form-group" style="margin-bottom:24px;">
+                    <div style="display:none"><div class="form-group" style="margin-bottom:24px;">
                         <label style="display:block;margin-bottom:12px;font-weight:500;">Select a Session <span style="color:var(--gold)">*</span></label>
                         <div class="session-picker">
                             <div class="session-card selected" data-session="1" onclick="selectSession(this)">
                                 <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 1</strong>
                                 <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">1:45 PM</span>
                             </div>
-                            <div class="session-card" data-session="2" onclick="selectSession(this)">
-                                <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 2</strong>
-                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">2:45 PM</span>
-                            </div>
-                        </div>
+</div>
                         <input type="hidden" id="selectedSession" value="1">
                     </div>
+
+                    <!-- Name row --></div>
 
                     <!-- Name row -->
                     <div class="form-row">
@@ -735,7 +729,7 @@
             <div class="footer-col"><h4>Contact</h4>
                 <div class="contact-li"><i class="fas fa-map-marker-alt"></i><span>574 Watt St, Winnipeg, MB R2K 4K1</span></div>
                 <div class="contact-li"><i class="fas fa-phone"></i><span>+1 (431) 792-3791</span></div>
-                <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="mailto:contact@rahmaonline.org" style="color:var(--gold);text-decoration:none;">contact@rahmaonline.org</a></span></div>
+                <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="/cdn-cgi/l/email-protection#2e4d41405a4f4d5a6e5c4f46434f41404247404b00415c49" style="color:var(--gold);text-decoration:none;"><span class="__cf_email__" data-cfemail="70131f1e04111304300211181d111f1e1c191e155e1f0217">[email&#160;protected]</span></a></span></div>
             </div>
         </div>
         <div class="footer-bottom">
@@ -743,7 +737,7 @@
             <span>Powered by Devodez Solutions</span>
         </div>
     </div></footer>
-    <script src="shared.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="shared.js"></script>
     <script>
 /* ══ EID REGISTRATION ══ */
 const STORAGE_KEY = 'eid-registrations';
@@ -765,7 +759,6 @@ function updateCounters() {
     const tot = regs.reduce((s, r) => s + (parseInt(r.adults) || 0) + (parseInt(r.children) || 0), 0);
     safeText('cntAttendees', tot);
     safeText('cntSession1', regs.filter(r => r.session === '1').length);
-    safeText('cntSession2', regs.filter(r => r.session === '2').length);
 }
 document.addEventListener('DOMContentLoaded', function() {
     updateCounters();
@@ -790,9 +783,6 @@ function genRef() {
 
 document.getElementById('eidForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    if (!document.getElementById('selectedSession').value) {
-        alert('Please select a session (Session 1 or Session 2).'); return;
-    }
     if (!document.getElementById('agreeTerms').checked) {
         alert('Please confirm you will attend in person.'); return;
     }
