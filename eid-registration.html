@@ -30,10 +30,9 @@
     .nav-drop a i { width: 16px; color: var(--gold); font-size: 0.72rem; opacity: 0.85; flex-shrink: 0; }
     .nav-drop a:hover { background: rgba(201,168,76,0.09) !important; color: var(--gold-light) !important; padding-left: 26px !important; }
     .nav-drop a:hover i { opacity: 1; }
-        .session-card.selected { border-color: var(--gold) !important; background: rgba(201,168,76,0.08); }
+    
+    .session-card.selected { border-color: var(--gold) !important; background: rgba(201,168,76,0.08); }
     .session-card.selected strong { color: var(--gold); }
-
-    /* ── MOBILE MENU FALLBACK ── */
     @media (max-width: 960px) {
         .nav-links { display: none !important; }
         .nav-donate { display: none !important; }
@@ -46,7 +45,6 @@
     .mobile-menu { display: none; position: fixed; inset: 0; z-index: 999; background: #1A2744; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
     .mobile-menu.active { display: flex !important; }
     .mobile-menu a { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #fff; text-decoration: none; letter-spacing: 0.1em; }
-    .mobile-menu a:hover { color: #C9A84C; }
 
     </style>
     <!-- /DROPDOWN NAV CSS -->
@@ -75,8 +73,8 @@
     /* Decorative crescent */
     .hero-crescent {
         position: absolute;
-        top: 20px; right: 7%;
-        font-size: clamp(90px, 16vw, 170px);
+        top: 30px; right: 8%;
+        font-size: clamp(80px, 15vw, 160px);
         color: rgba(201,168,76,0.35);
         pointer-events: none;
         line-height: 1;
@@ -743,14 +741,12 @@
     </div></footer>
     <script src="shared.js"></script>
     <script>
-    /* ══ EID REGISTRATION — Storage (localStorage) ══ */
+    /* ══ EID REGISTRATION — Storage ══ */
     const STORAGE_KEY = 'eid-registrations';
 
     function loadRegistrations() {
-        try {
-            var raw = localStorage.getItem(STORAGE_KEY);
-            return raw ? JSON.parse(raw) : [];
-        } catch(e) { return []; }
+        try { var r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; }
+        catch(e) { return []; }
     }
     function saveRegistrations(data) {
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
@@ -764,7 +760,7 @@
         document.getElementById('cntSession1').textContent = regs.filter(function(r){ return r.session==='1'; }).length;
         document.getElementById('cntSession2').textContent = regs.filter(function(r){ return r.session==='2'; }).length;
     }
-    document.addEventListener('DOMContentLoaded', function(){ updateCounters(); });
+    document.addEventListener('DOMContentLoaded', updateCounters);
 
     function selectSession(card) {
         document.querySelectorAll('.session-card').forEach(function(c){ c.classList.remove('selected'); });
@@ -791,8 +787,7 @@
             alert('Please confirm you will attend in person.'); return;
         }
         var btn = document.getElementById('submitBtn');
-        btn.classList.add('loading');
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering…';
+        btn.classList.add('loading'); btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering…';
         var ref = genRef();
         var record = {
             ref: ref, timestamp: new Date().toISOString(),
