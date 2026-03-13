@@ -743,26 +743,28 @@
     </div></footer>
     <script src="shared.js"></script>
     <script>
-    /* ══ EID REGISTRATION — Storage ══ */
+    /* ══ EID REGISTRATION — Storage (localStorage) ══ */
     const STORAGE_KEY = 'eid-registrations';
 
-    async function loadRegistrations() {
-        try { const r = await window.storage.get(STORAGE_KEY, true); return r ? JSON.parse(r.value) : []; }
-        catch(e) { return []; }
+    function loadRegistrations() {
+        try {
+            var raw = localStorage.getItem(STORAGE_KEY);
+            return raw ? JSON.parse(raw) : [];
+        } catch(e) { return []; }
     }
-    async function saveRegistrations(data) {
-        try { await window.storage.set(STORAGE_KEY, JSON.stringify(data), true); } catch(e) {}
+    function saveRegistrations(data) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
     }
 
-    async function updateCounters() {
-        const regs = await loadRegistrations();
+    function updateCounters() {
+        var regs = loadRegistrations();
         document.getElementById('cntRegistered').textContent = regs.length;
         const tot = regs.reduce(function(s,r){ return s+(parseInt(r.adults)||0)+(parseInt(r.children)||0); },0);
         document.getElementById('cntAttendees').textContent = tot;
         document.getElementById('cntSession1').textContent = regs.filter(function(r){ return r.session==='1'; }).length;
         document.getElementById('cntSession2').textContent = regs.filter(function(r){ return r.session==='2'; }).length;
     }
-    document.addEventListener('DOMContentLoaded', updateCounters);
+    document.addEventListener('DOMContentLoaded', function(){ updateCounters(); });
 
     function selectSession(card) {
         document.querySelectorAll('.session-card').forEach(function(c){ c.classList.remove('selected'); });
@@ -780,7 +782,7 @@
         return 'EID-' + Math.random().toString(36).substring(2,6).toUpperCase() + Date.now().toString().slice(-4);
     }
 
-    document.getElementById('eidForm').addEventListener('submit', async function(e) {
+    document.getElementById('eidForm').addEventListener('submit', function(e) {
         e.preventDefault();
         if (!document.getElementById('selectedSession').value) {
             alert('Please select a session (Session 1 or Session 2).'); return;
@@ -789,7 +791,8 @@
             alert('Please confirm you will attend in person.'); return;
         }
         var btn = document.getElementById('submitBtn');
-        btn.classList.add('loading'); btn.textContent = 'Registering…';
+        btn.classList.add('loading');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering…';
         var ref = genRef();
         var record = {
             ref: ref, timestamp: new Date().toISOString(),
@@ -805,9 +808,9 @@
             newsletter: document.getElementById('newsletter').checked
         };
         try {
-            var regs = await loadRegistrations();
+            var regs = loadRegistrations();
             regs.push(record);
-            await saveRegistrations(regs);
+            saveRegistrations(regs);
         } catch(err) { console.error('Storage error:', err); }
         setTimeout(function() {
             document.getElementById('successRef').textContent = '— Registration ' + ref + ' —';
