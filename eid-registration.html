@@ -36,17 +36,16 @@
     @media (max-width: 960px) {
         .nav-links { display: none !important; }
         .nav-donate { display: none !important; }
-        .hamburger { display: flex !important; flex-direction: column; gap: 6px; cursor: pointer; padding: 4px; }
-        .hamburger span { width: 26px; height: 1.5px; background: #C9A84C; display: block; transition: all 0.3s; }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+        .hamburger { display: flex !important; flex-direction: column; gap:6px; cursor:pointer; padding:4px; }
+        .hamburger span { width:26px; height:1.5px; background:#C9A84C; display:block; transition:all 0.3s; }
+        .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+        .hamburger.active span:nth-child(2) { opacity:0; }
+        .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
     }
-    .mobile-menu { display: none; position: fixed; inset: 0; z-index: 999; background: #1A2744; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
-    .mobile-menu.active { display: flex !important; }
-    .mobile-menu a { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #fff; text-decoration: none; letter-spacing: 0.1em; }
-
-    </style>
+    .mobile-menu { display:none; position:fixed; inset:0; z-index:999; background:#1A2744; flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
+    .mobile-menu.active { display:flex !important; }
+    .mobile-menu a { font-family:'Cinzel',serif; font-size:1.3rem; color:#fff; text-decoration:none; letter-spacing:0.1em; }
+</style>
     <!-- /DROPDOWN NAV CSS -->
 
     <style>
@@ -81,11 +80,11 @@
         transform: rotate(-20deg);
         font-family: 'Segoe UI Emoji', serif;
     }
-    .moon-2 { position:absolute; top:52%; left:3%; font-size:clamp(55px,10vw,110px); color:rgba(201,168,76,0.25); pointer-events:none; transform:rotate(35deg) scaleX(-1); font-family:'Segoe UI Emoji',serif; }
-    .moon-3 { position:absolute; bottom:10%; right:13%; font-size:clamp(42px,7vw,84px); color:rgba(201,168,76,0.20); pointer-events:none; transform:rotate(-40deg); font-family:'Segoe UI Emoji',serif; }
-    .moon-4 { position:absolute; top:18%; left:18%; font-size:clamp(30px,5vw,60px); color:rgba(201,168,76,0.18); pointer-events:none; transform:rotate(15deg); font-family:'Segoe UI Emoji',serif; }
-    .moon-5 { position:absolute; bottom:28%; left:28%; font-size:clamp(24px,3.5vw,48px); color:rgba(201,168,76,0.15); pointer-events:none; transform:rotate(-55deg) scaleX(-1); font-family:'Segoe UI Emoji',serif; }
-    .moon-6 { position:absolute; top:38%; right:28%; font-size:clamp(20px,3vw,40px); color:rgba(201,168,76,0.15); pointer-events:none; transform:rotate(70deg); font-family:'Segoe UI Emoji',serif; }
+    .moon-2{position:absolute;top:52%;left:3%;font-size:clamp(55px,10vw,110px);color:rgba(201,168,76,0.25);pointer-events:none;transform:rotate(35deg) scaleX(-1);font-family:'Segoe UI Emoji',serif;}
+    .moon-3{position:absolute;bottom:10%;right:13%;font-size:clamp(42px,7vw,84px);color:rgba(201,168,76,0.20);pointer-events:none;transform:rotate(-40deg);font-family:'Segoe UI Emoji',serif;}
+    .moon-4{position:absolute;top:18%;left:18%;font-size:clamp(30px,5vw,60px);color:rgba(201,168,76,0.18);pointer-events:none;transform:rotate(15deg);font-family:'Segoe UI Emoji',serif;}
+    .moon-5{position:absolute;bottom:28%;left:28%;font-size:clamp(24px,3.5vw,48px);color:rgba(201,168,76,0.15);pointer-events:none;transform:rotate(-55deg) scaleX(-1);font-family:'Segoe UI Emoji',serif;}
+    .moon-6{position:absolute;top:38%;right:28%;font-size:clamp(20px,3vw,40px);color:rgba(201,168,76,0.15);pointer-events:none;transform:rotate(70deg);font-family:'Segoe UI Emoji',serif;}
     .hero-star-deco {
         position: absolute;
         top: 60px; right: calc(8% + clamp(60px,10vw,120px));
@@ -554,17 +553,17 @@
                     <!-- Session selection -->
                     <div class="form-group" style="margin-bottom:24px;">
                         <label style="display:block;margin-bottom:12px;font-weight:500;">Select a Session <span style="color:var(--gold)">*</span></label>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                            <div class="session-card" data-session="1" onclick="selectSession(this)" style="border:2px solid rgba(201,168,76,0.3);padding:16px;text-align:center;cursor:pointer;transition:all 0.2s;border-radius:4px;">
-                                <strong style="display:block;font-family:'Cinzel',serif;font-size:0.8rem;color:var(--navy);">Session 1</strong>
-                                <span style="font-size:0.85rem;color:var(--muted);">1:45 PM</span>
+                        <div class="session-picker">
+                            <div class="session-card selected" data-session="1" onclick="selectSession(this)">
+                                <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 1</strong>
+                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">1:45 PM</span>
                             </div>
-                            <div class="session-card" data-session="2" onclick="selectSession(this)" style="border:2px solid rgba(201,168,76,0.3);padding:16px;text-align:center;cursor:pointer;transition:all 0.2s;border-radius:4px;">
-                                <strong style="display:block;font-family:'Cinzel',serif;font-size:0.8rem;color:var(--navy);">Session 2</strong>
-                                <span style="font-size:0.85rem;color:var(--muted);">2:45 PM</span>
+                            <div class="session-card" data-session="2" onclick="selectSession(this)">
+                                <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 2</strong>
+                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">2:45 PM</span>
                             </div>
                         </div>
-                        <input type="hidden" id="selectedSession" value="">
+                        <input type="hidden" id="selectedSession" value="1">
                     </div>
 
                     <!-- Name row -->
@@ -631,7 +630,7 @@
 
                     <!-- Checkboxes -->
                     <div class="check-group">
-                        <input type="checkbox" id="agreeTerms" required>
+                        <input type="checkbox" id="agreeTerms" required checked>
                         <label for="agreeTerms">I understand this registration is for the Eid Al-Fitr prayer at Rahma Islamic Centre and I will attend in person. <span style="color:var(--gold)">*</span></label>
                     </div>
                     <div class="check-group">
@@ -760,7 +759,7 @@
         document.getElementById('cntSession1').textContent = regs.filter(function(r){ return r.session==='1'; }).length;
         document.getElementById('cntSession2').textContent = regs.filter(function(r){ return r.session==='2'; }).length;
     }
-    document.addEventListener('DOMContentLoaded', updateCounters);
+    document.addEventListener('DOMContentLoaded', function(){ updateCounters(); });
 
     function selectSession(card) {
         document.querySelectorAll('.session-card').forEach(function(c){ c.classList.remove('selected'); });
