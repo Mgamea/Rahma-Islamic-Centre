@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Eid Al-Fitr Prayer Registration — Rahma Islamic Centre</title>
-<link href="logo.png" rel="icon" type="image/png"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=Cinzel:wght@400;600;700&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<link href="style.css" rel="stylesheet"/>
-<!-- DROPDOWN NAV CSS -->
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Al-Fitr Prayer Registration — Rahma Islamic Centre</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- DROPDOWN NAV CSS -->
+    <style>
     .nav-links li { position: relative; }
     .nav-drop {
         display: block; visibility: hidden; opacity: 0; pointer-events: none;
@@ -45,9 +45,11 @@
     .mobile-menu { display:none; position:fixed; inset:0; z-index:999; background:#1A2744; flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
     .mobile-menu.active { display:flex !important; }
     .mobile-menu a { font-family:'Cinzel',serif; font-size:1.3rem; color:#fff; text-decoration:none; letter-spacing:0.1em; }
-</style>
-<!-- /DROPDOWN NAV CSS -->
-<style>
+
+    </style>
+    <!-- /DROPDOWN NAV CSS -->
+
+    <style>
     /* ═══ EID REGISTRATION PAGE STYLES ═══ */
 
     /* Crescent moon SVG background for the hero */
@@ -458,391 +460,392 @@
     </style>
 </head>
 <body>
-<div id="loader"><div class="loader-text">RAHMA</div><div class="loader-bar"><div class="loader-fill"></div></div></div>
-<div class="mobile-menu" id="mobileMenu">
-<a href="index.html" onclick="closeMobile()">Home</a>
-<a href="prayer-times.html" onclick="closeMobile()">Prayer Times</a>
-<a href="programs.html" onclick="closeMobile()">Programs &amp; Services</a>
-<a href="education.html" onclick="closeMobile()">Education</a>
-<a class="active" href="events.html" onclick="closeMobile()">Events</a>
-<a href="gallery.html" onclick="closeMobile()">Gallery</a>
-<a href="contact.html" onclick="closeMobile()">Contact</a>
-<a class="mobile-donate" href="donate.html" onclick="closeMobile()">Donate</a>
-</div>
-<nav class="navbar" id="navbar">
-<div class="navbar-inner">
-<a class="logo-wrap" href="index.html">
-<img alt="Rahma Logo" class="logo-img" src="logo.png"/>
-<div class="logo-text">Rahma Islamic Centre<span>Winnipeg</span></div>
-</a>
-<ul class="nav-links">
-<li><a href="index.html">Home</a><div class="nav-drop"><a href="index.html#about"><i class="fas fa-users"></i>Who We Are</a><a href="index.html#mission"><i class="fas fa-bullseye"></i>Our Mission</a><a href="index.html#values"><i class="fas fa-heart"></i>Core Values</a></div></li>
-<li><a href="prayer-times.html">Prayer Times</a><div class="nav-drop"><a href="prayer-times.html#prayer"><i class="fas fa-clock"></i>Today's Prayer Times</a><a href="prayer-times.html#schedule"><i class="fas fa-calendar-alt"></i>Monthly Schedule</a><a href="prayer-times.html#jumuah"><i class="fas fa-mosque"></i>Jumu'ah Info</a></div></li>
-<li><a href="programs.html">Programs &amp; Services</a><div class="nav-drop"><a href="programs.html"><i class="fas fa-th-large"></i>All Programs</a><a href="activities.html"><i class="fas fa-running"></i>Activities &amp; Classes</a><a href="programs.html#foodbank"><i class="fas fa-hand-holding-heart"></i>Food Bank</a><a href="programs.html#counseling"><i class="fas fa-comments"></i>Spiritual Counseling</a></div></li>
-<li><a href="education.html">Education</a><div class="nav-drop"><a href="education.html"><i class="fas fa-book-open"></i>All Classes</a><a href="education.html#adult-quran"><i class="fas fa-quran"></i>Adult Quran Class</a><a href="education.html#kids-quran"><i class="fas fa-child"></i>Kids Quran Class</a><a href="education.html#hifdh"><i class="fas fa-star"></i>Hifdh Program</a><a href="education.html#arabic"><i class="fas fa-language"></i>Arabic Class</a></div></li>
-<li><a class="active" href="events.html">Events</a><div class="nav-drop"><a href="events.html"><i class="fas fa-calendar-star"></i>Upcoming Events</a><a href="events.html#ramadan"><i class="fas fa-moon"></i>Ramadan Programs</a><a href="events.html#eid"><i class="fas fa-gift"></i>Eid Celebrations</a><a href="newsletter.html"><i class="fas fa-envelope"></i>Newsletter</a></div></li>
-<li><a href="gallery.html">Gallery</a></li>
-<li><a href="contact.html">Contact</a><div class="nav-drop"><a href="contact.html#form"><i class="fas fa-paper-plane"></i>Send a Message</a><a href="contact.html#location"><i class="fas fa-map-marker-alt"></i>Location &amp; Hours</a></div></li>
-</ul>
-<a class="nav-donate" href="donate.html">Donate</a>
-<div class="hamburger" id="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
-</div>
-</nav>
-<!-- ═══ HERO ═══ -->
-<div class="eid-hero">
-<div class="hero-crescent">☽</div>
-<div class="moon-2">☽</div>
-<div class="moon-3">☽</div>
-<div class="moon-4">☽</div>
-<div class="moon-5">☽</div>
-<div class="moon-6">☽</div>
-<div class="hero-star-deco">✦</div>
-<div class="eid-hero-content reveal">
-<div class="eid-badge"><i class="fas fa-star-and-crescent"></i> Event Registration</div>
-<h1>Eid Al-Fitr <em>Prayer</em></h1>
-<span class="eid-arabic">صلاة عيد الفطر</span>
-<p>Join us to celebrate the end of Ramadan with the Rahma community. Register your family below to secure your spots for this blessed occasion.</p>
-<div class="eid-info-pills">
-<div class="eid-pill"><i class="fas fa-calendar-alt"></i> Date — Friday, March 20, 2026</div>
-<div class="eid-pill"><i class="fas fa-map-marker-alt"></i> 1717 Gateway RD, Winnipeg</div>
-<div class="eid-pill"><i class="fas fa-users"></i> Free admission — All welcome</div>
-</div>
-</div>
-</div>
-<!-- ═══ COUNTER STRIP ═══ -->
-<div class="eid-counter-strip">
-<div class="counter-item">
-<span class="counter-num" id="cntRegistered">—</span>
-<span class="counter-label">Registered</span>
-</div>
-<div class="counter-item">
-<span class="counter-num" id="cntAttendees">—</span>
-<span class="counter-label">Attendees</span>
-</div>
-<div class="counter-item">
-<span class="counter-num" id="cntSession1">—</span>
-<span class="counter-label">Session 1</span>
-</div>
-<div class="counter-item"><span class="counter-num" id="cntSession2">—</span><span class="counter-label">Session 2</span></div></div>
-<!-- ═══ REGISTRATION SECTION ═══ -->
-<section class="reg-section">
-<div class="reg-grid">
-<!-- FORM CARD -->
-<div class="reg-form-card reveal">
-<!-- Success overlay -->
-<div class="success-overlay" id="successOverlay">
-<div class="success-icon"><i class="fas fa-check"></i></div>
-<h3>Registration Confirmed!</h3>
-<p>Taqabbal Allahu minna wa minkum.<br/>We look forward to celebrating Eid with you and your family.</p>
-<p style="font-size:0.82rem;color:var(--muted);margin-top:8px">A confirmation has been recorded. Please arrive 15 minutes early.</p>
-<div class="success-ref" id="successRef">— Registration #EID-XXXX —</div>
-<button onclick="resetForm()" style="margin-top:28px;padding:12px 32px;background:var(--navy);color:var(--white);border:none;font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;border-radius:2px;">Register Another Family</button>
-</div>
-<h2>Register Your <em>Family</em></h2>
-<p class="sub">Complete the form below. All fields marked with * are required.</p>
-<form id="eidForm" novalidate="">
-<!-- Session selection -->
-<div class="form-group" style="margin-bottom:24px;">
-<label style="display:block;margin-bottom:12px;font-weight:500;">Select a Session <span style="color:var(--gold)">*</span></label>
-<div class="session-picker">
-<div class="session-card selected" data-session="1" onclick="selectSession(this)">
-<strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 1</strong>
-<span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">1:45 PM</span>
-</div>
-<div class="session-card" data-session="2" onclick="selectSession(this)">
-<strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 2</strong>
-<span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">2:45 PM</span>
-</div>
-</div>
-<input id="selectedSession" type="hidden" value="1"/>
-</div>
-<!-- Name row -->
-<div class="form-row">
-<div class="form-group">
-<label for="firstName">First Name <span>*</span></label>
-<input id="firstName" name="firstName" placeholder="Ahmad" required="" type="text"/>
-</div>
-<div class="form-group">
-<label for="lastName">Last Name <span>*</span></label>
-<input id="lastName" name="lastName" placeholder="Al-Rashidi" required="" type="text"/>
-</div>
-</div>
-<!-- Contact row -->
-<div class="form-row">
-<div class="form-group">
-<label for="email">Email Address <span>*</span></label>
-<input id="email" name="email" placeholder="your@email.com" required="" type="email"/>
-</div>
-<div class="form-group">
-<label for="phone">Phone Number</label>
-<input id="phone" name="phone" placeholder="+1 (204) 000-0000" type="tel"/>
-</div>
-</div>
-<!-- Family members -->
-<div class="form-row">
-<div class="form-group">
-<label for="adults">Number of Adults <span>*</span></label>
-<div class="family-counter">
-<button onclick="adjustCount('adults', -1)" type="button">−</button>
-<input id="adults" max="20" min="1" name="adults" readonly="" type="number" value="1"/>
-<button onclick="adjustCount('adults', 1)" type="button">+</button>
-</div>
-</div>
-<div class="form-group">
-<label for="children">Number of Children</label>
-<div class="family-counter">
-<button onclick="adjustCount('children', -1)" type="button">−</button>
-<input id="children" max="20" min="0" name="children" readonly="" type="number" value="0"/>
-<button onclick="adjustCount('children', 1)" type="button">+</button>
-</div>
-</div>
-</div>
-<!-- Special needs -->
-<div class="form-group">
-<label for="accessibility">Accessibility / Special Requirements</label>
-<select id="accessibility" name="accessibility">
-<option value="none">No special requirements</option>
-<option value="wheelchair">Wheelchair accessible space needed</option>
-<option value="hearing">Hearing assistance needed</option>
-<option value="elderly">Elderly — seating preference</option>
-<option value="other">Other (please specify below)</option>
-</select>
-</div>
-<!-- Notes -->
-<div class="form-group">
-<label for="notes">Additional Notes</label>
-<textarea id="notes" name="notes" placeholder="Any questions, requests, or information you'd like us to know..." rows="3"></textarea>
-</div>
-<!-- Checkboxes -->
-<div class="check-group">
-<input checked="" id="agreeTerms" required="" type="checkbox"/>
-<label for="agreeTerms">I understand this registration is for the Eid Al-Fitr prayer at Rahma Islamic Centre and I will attend in person. <span style="color:var(--gold)">*</span></label>
-</div>
-<div class="check-group">
-<input checked="" id="newsletter" type="checkbox"/>
-<label for="newsletter">Sign me up for Rahma's newsletter and event updates.</label>
-</div>
-<button class="reg-submit" id="submitBtn" type="submit">
-<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration
-                    </button>
-</form>
-</div>
-<!-- SIDEBAR -->
-<div class="reg-sidebar">
-<!-- Event info -->
-<div class="info-card reveal reveal-delay-1">
-<h3><i class="fas fa-info-circle" style="margin-right:8px;opacity:0.7"></i> Event Details</h3>
-<div class="info-row">
-<div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
-<div>
-<span class="info-text-label">Date</span>
-<span class="info-text-val"><strong>Friday, March 20, 2026</strong><br/>Takbeer will begin at 8:30, and the prayer will be at 9:00</span>
-</div>
-</div>
-<div class="info-row">
-<div class="info-icon"><i class="fas fa-clock"></i></div>
-<div>
-<span class="info-text-label">Prayer time</span>
-<span class="info-text-val">Takbeer at 8:30, and the prayer at 9:00</span>
-</div>
-</div>
-<div class="info-row">
-<div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-<div>
-<span class="info-text-label">Location</span>
-<span class="info-text-val">1717 Gateway RD<br/>Winnipeg, MB R2G 4H1</span>
-</div>
-</div>
-<div class="info-row">
-<div class="info-icon"><i class="fas fa-dollar-sign"></i></div>
-<div>
-<span class="info-text-label">Admission</span>
-<span class="info-text-val"><strong>Free</strong> — open to all</span>
-</div>
-</div>
-<div class="info-row">
-<div class="info-icon"><i class="fas fa-phone"></i></div>
-<div>
-<span class="info-text-label">Inquiries</span>
-<span class="info-text-val"><a href="tel:+14317923791" style="color:rgba(255,255,255,0.7);text-decoration:none">+1 (431) 792-3791</a></span>
-</div>
-</div>
-</div>
-<!-- Guidelines -->
-<div class="guidelines-card reveal reveal-delay-2">
-<h3><i class="fas fa-list-ul" style="margin-right:8px;color:var(--gold)"></i> Guidelines</h3>
-<div class="guideline-item"><i class="fas fa-check"></i>Perform Ghusl (ritual bath) before arriving</div>
-<div class="guideline-item"><i class="fas fa-check"></i>Wear your finest, clean clothes</div>
-<div class="guideline-item"><i class="fas fa-check"></i>Eat something (dates recommended) before leaving</div>
-<div class="guideline-item"><i class="fas fa-check"></i>Arrive at least 15 minutes early</div>
-<div class="guideline-item"><i class="fas fa-check"></i>Bring a prayer rug </div>
-<div class="guideline-item"><i class="fas fa-check"></i>Parking available on Gateway Rec Centre</div>
-</div>
-</div>
-</div>
-</section>
-<!-- NEWSLETTER -->
-<section class="newsletter-section">
-<div class="container">
-<div class="newsletter-inner">
-<div class="newsletter-text"><h3>Stay Connected</h3><p>Get updates on events &amp; announcements</p></div>
-<form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-<input class="newsletter-input" placeholder="Your email address" required="" type="email"/>
-<button class="newsletter-btn" type="submit">Subscribe</button>
-</form>
-</div>
-</div>
-</section>
-<!-- FOOTER -->
-<footer class="footer"><div class="container">
-<div class="footer-grid">
-<div class="footer-brand"><span class="logo-text-footer">Rahma Islamic Centre</span><p>A vibrant Islamic center serving Muslims in Winnipeg since 2016.</p><div class="footer-social"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
-<div class="footer-col"><h4>Navigation</h4><ul>
-<li><a href="index.html">Home</a></li><li><a href="prayer-times.html">Prayer Times</a></li>
-<li><a href="programs.html">Programs &amp; Services</a></li><li><a href="education.html">Education</a></li>
-<li><a href="events.html">Events</a></li><li><a href="contact.html">Contact</a></li>
-</ul></div>
-<div class="footer-col"><h4>Programs</h4><ul>
-<li><a href="education.html">Quran Classes</a></li><li><a href="education.html">Arabic Classes</a></li>
-<li><a href="education.html">Hifdh Program</a></li><li><a href="programs.html">All Programs</a></li>
-</ul></div>
-<div class="footer-col"><h4>Contact</h4>
-<div class="contact-li"><i class="fas fa-map-marker-alt"></i><span>574 Watt St, Winnipeg, MB R2K 4K1</span></div>
-<div class="contact-li"><i class="fas fa-phone"></i><span>+1 (431) 792-3791</span></div>
-<div class="contact-li"><i class="fas fa-envelope"></i><span><a href="mailto:contact@rahmaonline.org" style="color:var(--gold);text-decoration:none;">contact@rahmaonline.org</a></span></div>
-</div>
-</div>
-<div class="footer-bottom">
-<span>Copyright © 2026 Rahma Islamic Centre. All rights reserved.</span>
-<span>Powered by Devodez Solutions</span>
-</div>
-</div></footer>
-<script src="shared.js"></script>
+    <div id="loader"><div class="loader-text">RAHMA</div><div class="loader-bar"><div class="loader-fill"></div></div></div>
 
-<script>
-/* ══ EID REGISTRATION — Storage ══ */
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" onclick="closeMobile()">Home</a>
+        <a href="prayer-times.html" onclick="closeMobile()">Prayer Times</a>
+        <a href="programs.html" onclick="closeMobile()">Programs &amp; Services</a>
+        <a href="education.html" onclick="closeMobile()">Education</a>
+        <a href="events.html" class="active" onclick="closeMobile()">Events</a>
+        <a href="gallery.html" onclick="closeMobile()">Gallery</a>
+        <a href="contact.html" onclick="closeMobile()">Contact</a>
+        <a href="donate.html" class="mobile-donate" onclick="closeMobile()">Donate</a>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="logo-wrap">
+                <img src="logo.png" alt="Rahma Logo" class="logo-img">
+                <div class="logo-text">Rahma Islamic Centre<span>Winnipeg</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a><div class="nav-drop"><a href="index.html#about"><i class="fas fa-users"></i>Who We Are</a><a href="index.html#mission"><i class="fas fa-bullseye"></i>Our Mission</a><a href="index.html#values"><i class="fas fa-heart"></i>Core Values</a></div></li>
+                <li><a href="prayer-times.html">Prayer Times</a><div class="nav-drop"><a href="prayer-times.html#prayer"><i class="fas fa-clock"></i>Today's Prayer Times</a><a href="prayer-times.html#schedule"><i class="fas fa-calendar-alt"></i>Monthly Schedule</a><a href="prayer-times.html#jumuah"><i class="fas fa-mosque"></i>Jumu'ah Info</a></div></li>
+                <li><a href="programs.html">Programs &amp; Services</a><div class="nav-drop"><a href="programs.html"><i class="fas fa-th-large"></i>All Programs</a><a href="activities.html"><i class="fas fa-running"></i>Activities &amp; Classes</a><a href="programs.html#foodbank"><i class="fas fa-hand-holding-heart"></i>Food Bank</a><a href="programs.html#counseling"><i class="fas fa-comments"></i>Spiritual Counseling</a></div></li>
+                <li><a href="education.html">Education</a><div class="nav-drop"><a href="education.html"><i class="fas fa-book-open"></i>All Classes</a><a href="education.html#adult-quran"><i class="fas fa-quran"></i>Adult Quran Class</a><a href="education.html#kids-quran"><i class="fas fa-child"></i>Kids Quran Class</a><a href="education.html#hifdh"><i class="fas fa-star"></i>Hifdh Program</a><a href="education.html#arabic"><i class="fas fa-language"></i>Arabic Class</a></div></li>
+                <li><a href="events.html" class="active">Events</a><div class="nav-drop"><a href="events.html"><i class="fas fa-calendar-star"></i>Upcoming Events</a><a href="events.html#ramadan"><i class="fas fa-moon"></i>Ramadan Programs</a><a href="events.html#eid"><i class="fas fa-gift"></i>Eid Celebrations</a><a href="newsletter.html"><i class="fas fa-envelope"></i>Newsletter</a></div></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contact.html">Contact</a><div class="nav-drop"><a href="contact.html#form"><i class="fas fa-paper-plane"></i>Send a Message</a><a href="contact.html#location"><i class="fas fa-map-marker-alt"></i>Location &amp; Hours</a></div></li>
+            </ul>
+            <a href="donate.html" class="nav-donate">Donate</a>
+            <div class="hamburger" id="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <!-- ═══ HERO ═══ -->
+    <div class="eid-hero">
+        <div class="hero-crescent">☽</div>
+        <div class="moon-2">☽</div>
+        <div class="moon-3">☽</div>
+        <div class="moon-4">☽</div>
+        <div class="moon-5">☽</div>
+        <div class="moon-6">☽</div>
+        <div class="hero-star-deco">✦</div>
+        <div class="eid-hero-content reveal">
+            <div class="eid-badge"><i class="fas fa-star-and-crescent"></i> Event Registration</div>
+            <h1>Eid Al-Fitr <em>Prayer</em></h1>
+            <span class="eid-arabic">صلاة عيد الفطر</span>
+            <p>Join us to celebrate the end of Ramadan with the Rahma community. Register your family below to secure your spots for this blessed occasion.</p>
+            <div class="eid-info-pills">
+                <div class="eid-pill"><i class="fas fa-calendar-alt"></i> Date — Friday, March 20, 2026</div>
+                <div class="eid-pill"><i class="fas fa-map-marker-alt"></i> 1717 Gateway RD, Winnipeg</div>
+                <div class="eid-pill"><i class="fas fa-users"></i> Free admission — All welcome</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ COUNTER STRIP ═══ -->
+    <div class="eid-counter-strip">
+        <div class="counter-item">
+            <span class="counter-num" id="cntRegistered">—</span>
+            <span class="counter-label">Registered</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-num" id="cntAttendees">—</span>
+            <span class="counter-label">Attendees</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-num" id="cntSession1">—</span>
+            <span class="counter-label">Session 1</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-num" id="cntSession2">—</span>
+            <span class="counter-label">Session 2</span>
+        </div>
+    </div>
+
+    <!-- ═══ REGISTRATION SECTION ═══ -->
+    <section class="reg-section">
+        <div class="reg-grid">
+
+            <!-- FORM CARD -->
+            <div class="reg-form-card reveal">
+                <!-- Success overlay -->
+                <div class="success-overlay" id="successOverlay">
+                    <div class="success-icon"><i class="fas fa-check"></i></div>
+                    <h3>Registration Confirmed!</h3>
+                    <p>Taqabbal Allahu minna wa minkum.<br>We look forward to celebrating Eid with you and your family.</p>
+                    <p style="font-size:0.82rem;color:var(--muted);margin-top:8px">A confirmation has been recorded. Please arrive 15 minutes early.</p>
+                    <div class="success-ref" id="successRef">— Registration #EID-XXXX —</div>
+                    <button onclick="resetForm()" style="margin-top:28px;padding:12px 32px;background:var(--navy);color:var(--white);border:none;font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;border-radius:2px;">Register Another Family</button>
+                </div>
+
+                <h2>Register Your <em>Family</em></h2>
+                <p class="sub">Complete the form below. All fields marked with * are required.</p>
+
+                <form id="eidForm" novalidate>
+                    <!-- Session selection -->
+                    <div class="form-group" style="margin-bottom:24px;">
+                        <label style="display:block;margin-bottom:12px;font-weight:500;">Select a Session <span style="color:var(--gold)">*</span></label>
+                        <div class="session-picker">
+                            <div class="session-card selected" data-session="1" onclick="selectSession(this)">
+                                <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 1</strong>
+                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">1:45 PM</span>
+                            </div>
+                            <div class="session-card" data-session="2" onclick="selectSession(this)">
+                                <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 2</strong>
+                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">2:45 PM</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selectedSession" value="1">
+                    </div>
+
+                    <!-- Name row -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name <span>*</span></label>
+                            <input type="text" id="firstName" name="firstName" placeholder="Ahmad" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name <span>*</span></label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Al-Rashidi" required>
+                        </div>
+                    </div>
+
+                    <!-- Contact row -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address <span>*</span></label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 (204) 000-0000">
+                        </div>
+                    </div>
+
+                    <!-- Family members -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="adults">Number of Adults <span>*</span></label>
+                            <div class="family-counter">
+                                <button type="button" onclick="adjustCount('adults', -1)">−</button>
+                                <input type="number" id="adults" name="adults" value="1" min="1" max="20" readonly>
+                                <button type="button" onclick="adjustCount('adults', 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="children">Number of Children</label>
+                            <div class="family-counter">
+                                <button type="button" onclick="adjustCount('children', -1)">−</button>
+                                <input type="number" id="children" name="children" value="0" min="0" max="20" readonly>
+                                <button type="button" onclick="adjustCount('children', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special needs -->
+                    <div class="form-group">
+                        <label for="accessibility">Accessibility / Special Requirements</label>
+                        <select id="accessibility" name="accessibility">
+                            <option value="none">No special requirements</option>
+                            <option value="wheelchair">Wheelchair accessible space needed</option>
+                            <option value="hearing">Hearing assistance needed</option>
+                            <option value="elderly">Elderly — seating preference</option>
+                            <option value="other">Other (please specify below)</option>
+                        </select>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Any questions, requests, or information you'd like us to know..."></textarea>
+                    </div>
+
+                    <!-- Checkboxes -->
+                    <div class="check-group">
+                        <input type="checkbox" id="agreeTerms" required checked>
+                        <label for="agreeTerms">I understand this registration is for the Eid Al-Fitr prayer at Rahma Islamic Centre and I will attend in person. <span style="color:var(--gold)">*</span></label>
+                    </div>
+                    <div class="check-group">
+                        <input type="checkbox" id="newsletter" checked>
+                        <label for="newsletter">Sign me up for Rahma's newsletter and event updates.</label>
+                    </div>
+
+                    <button type="submit" class="reg-submit" id="submitBtn">
+                        <i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration
+                    </button>
+                </form>
+            </div>
+
+            <!-- SIDEBAR -->
+            <div class="reg-sidebar">
+                <!-- Event info -->
+                <div class="info-card reveal reveal-delay-1">
+                    <h3><i class="fas fa-info-circle" style="margin-right:8px;opacity:0.7"></i> Event Details</h3>
+                    <div class="info-row">
+                        <div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div>
+                            <span class="info-text-label">Date</span>
+                            <span class="info-text-val"><strong>Friday, March 20, 2026</strong><br>Takbeer will begin at 8:30, and the prayer will be at 9:00</span>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <span class="info-text-label">Prayer time</span>
+                            <span class="info-text-val"></strong> Takbeer at 8:30, and the prayer at 9:00</span>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <span class="info-text-label">Location</span>
+                            <span class="info-text-val">1717 Gateway RD<br>Winnipeg, MB R2G 4H1</span>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon"><i class="fas fa-dollar-sign"></i></div>
+                        <div>
+                            <span class="info-text-label">Admission</span>
+                            <span class="info-text-val"><strong>Free</strong> — open to all</span>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <span class="info-text-label">Inquiries</span>
+                            <span class="info-text-val"><a href="tel:+14317923791" style="color:rgba(255,255,255,0.7);text-decoration:none">+1 (431) 792-3791</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guidelines -->
+                <div class="guidelines-card reveal reveal-delay-2">
+                    <h3><i class="fas fa-list-ul" style="margin-right:8px;color:var(--gold)"></i> Guidelines</h3>
+                    <div class="guideline-item"><i class="fas fa-check"></i>Perform Ghusl (ritual bath) before arriving</div>
+                    <div class="guideline-item"><i class="fas fa-check"></i>Wear your finest, clean clothes</div>
+                    <div class="guideline-item"><i class="fas fa-check"></i>Eat something (dates recommended) before leaving</div>
+                    <div class="guideline-item"><i class="fas fa-check"></i>Arrive at least 15 minutes early</div>
+                    <div class="guideline-item"><i class="fas fa-check"></i>Bring a prayer rug </div>
+                    <div class="guideline-item"><i class="fas fa-check"></i>Parking available on Gateway Rec Centre</div>
+                </div>
+</div>
+
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-inner">
+                <div class="newsletter-text"><h3>Stay Connected</h3><p>Get updates on events &amp; announcements</p></div>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer"><div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand"><span class="logo-text-footer">Rahma Islamic Centre</span><p>A vibrant Islamic center serving Muslims in Winnipeg since 2016.</p><div class="footer-social"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
+            <div class="footer-col"><h4>Navigation</h4><ul>
+                <li><a href="index.html">Home</a></li><li><a href="prayer-times.html">Prayer Times</a></li>
+                <li><a href="programs.html">Programs &amp; Services</a></li><li><a href="education.html">Education</a></li>
+                <li><a href="events.html">Events</a></li><li><a href="contact.html">Contact</a></li>
+            </ul></div>
+            <div class="footer-col"><h4>Programs</h4><ul>
+                <li><a href="education.html">Quran Classes</a></li><li><a href="education.html">Arabic Classes</a></li>
+                <li><a href="education.html">Hifdh Program</a></li><li><a href="programs.html">All Programs</a></li>
+            </ul></div>
+            <div class="footer-col"><h4>Contact</h4>
+                <div class="contact-li"><i class="fas fa-map-marker-alt"></i><span>574 Watt St, Winnipeg, MB R2K 4K1</span></div>
+                <div class="contact-li"><i class="fas fa-phone"></i><span>+1 (431) 792-3791</span></div>
+                <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="mailto:contact@rahmaonline.org" style="color:var(--gold);text-decoration:none;">contact@rahmaonline.org</a></span></div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>Copyright &copy; 2026 Rahma Islamic Centre. All rights reserved.</span>
+            <span>Powered by Devodez Solutions</span>
+        </div>
+    </div></footer>
+    <script src="shared.js"></script>
+    <script>
+/* ══ EID REGISTRATION ══ */
 const STORAGE_KEY = 'eid-registrations';
 
 function loadRegistrations() {
-  try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; }
-  catch(e) { return []; }
+    try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; }
+    catch(e) { return []; }
 }
-
 function saveRegistrations(data) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
 }
-
-function safeTextContent(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = value;
+function safeText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
 }
-
 function updateCounters() {
-  const regs = loadRegistrations();
-
-  // Totaux
-  safeTextContent('cntRegistered', regs.length);
-
-  const tot = regs.reduce((s, r) =>
-    s + (parseInt(r.adults) || 0) + (parseInt(r.children) || 0), 0
-  );
-  safeTextContent('cntAttendees', tot);
-
-  const s1 = regs.filter(r => r.session === '1').length;
-  const s2 = regs.filter(r => r.session === '2').length;
-
-  safeTextContent('cntSession1', s1);
-  safeTextContent('cntSession2', s2); // ok même si l'élément n'existe pas
+    const regs = loadRegistrations();
+    safeText('cntRegistered', regs.length);
+    const tot = regs.reduce((s, r) => s + (parseInt(r.adults) || 0) + (parseInt(r.children) || 0), 0);
+    safeText('cntAttendees', tot);
+    safeText('cntSession1', regs.filter(r => r.session === '1').length);
+    safeText('cntSession2', regs.filter(r => r.session === '2').length);
 }
-
-document.addEventListener('DOMContentLoaded', () => { updateCounters(); });
+document.addEventListener('DOMContentLoaded', function() {
+    updateCounters();
+});
 
 function selectSession(card) {
-  document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
-  card.classList.add('selected');
-  document.getElementById('selectedSession').value = card.dataset.session;
+    document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    document.getElementById('selectedSession').value = card.dataset.session;
 }
 
 function adjustCount(field, delta) {
-  const el = document.getElementById(field);
-  const min = parseInt(el.min) || 0;
-  const max = parseInt(el.max) || 99;
-  const next = Math.max(min, Math.min(max, (parseInt(el.value) || 0) + delta));
-  el.value = next;
+    const el = document.getElementById(field);
+    const min = parseInt(el.min) || 0;
+    const max = parseInt(el.max) || 99;
+    el.value = Math.max(min, Math.min(max, (parseInt(el.value) || 0) + delta));
 }
 
 function genRef() {
-  return 'EID-' + Math.random().toString(36).substring(2,6).toUpperCase() + Date.now().toString().slice(-4);
+    return 'EID-' + Math.random().toString(36).substring(2,6).toUpperCase() + Date.now().toString().slice(-4);
 }
 
 document.getElementById('eidForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  if (!document.getElementById('selectedSession').value) {
-    alert('Please select a session (Session 1 or Session 2).');
-    return;
-  }
-  if (!document.getElementById('agreeTerms').checked) {
-    alert('Please confirm you will attend in person.');
-    return;
-  }
-
-  // Validation simple des champs obligatoires
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName  = document.getElementById('lastName').value.trim();
-  const email     = document.getElementById('email').value.trim();
-  if (!firstName || !lastName || !email) {
-    alert('Please fill in First Name, Last Name and Email.');
-    return;
-  }
-
-  const btn = document.getElementById('submitBtn');
-  btn.classList.add('loading');
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering…';
-
-  const ref = genRef();
-  const record = {
-    ref, timestamp: new Date().toISOString(),
-    firstName, lastName, email,
-    phone: document.getElementById('phone').value.trim(),
-    session: document.getElementById('selectedSession').value,
-    adults: document.getElementById('adults').value,
-    children: document.getElementById('children').value,
-    accessibility: document.getElementById('accessibility').value,
-    notes: document.getElementById('notes').value.trim(),
-    newsletter: document.getElementById('newsletter').checked
-  };
-
-  try {
-    const regs = loadRegistrations();
-    regs.push(record);
-    saveRegistrations(regs);
-  } catch(err) { console.error('Storage error:', err); }
-
-  setTimeout(function() {
-    document.getElementById('successRef').textContent = '— Registration ' + ref + ' —';
-    document.getElementById('successOverlay').classList.add('show');
-    btn.classList.remove('loading');
-    btn.classList.add('success');
-    updateCounters();
-  }, 800);
+    e.preventDefault();
+    if (!document.getElementById('selectedSession').value) {
+        alert('Please select a session (Session 1 or Session 2).'); return;
+    }
+    if (!document.getElementById('agreeTerms').checked) {
+        alert('Please confirm you will attend in person.'); return;
+    }
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    if (!firstName || !lastName || !email) {
+        alert('Please fill in First Name, Last Name and Email.'); return;
+    }
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering…';
+    const ref = genRef();
+    const record = {
+        ref, timestamp: new Date().toISOString(),
+        firstName, lastName, email,
+        phone:         document.getElementById('phone').value.trim(),
+        session:       document.getElementById('selectedSession').value,
+        adults:        document.getElementById('adults').value,
+        children:      document.getElementById('children').value,
+        accessibility: document.getElementById('accessibility').value,
+        notes:         document.getElementById('notes').value.trim(),
+        newsletter:    document.getElementById('newsletter').checked
+    };
+    try {
+        const regs = loadRegistrations();
+        regs.push(record);
+        saveRegistrations(regs);
+    } catch(err) { console.error('Storage error:', err); }
+    setTimeout(function() {
+        document.getElementById('successRef').textContent = '— Registration ' + ref + ' —';
+        document.getElementById('successOverlay').classList.add('show');
+        btn.classList.remove('loading');
+        btn.classList.add('success');
+        updateCounters();
+    }, 800);
 });
 
 function resetForm() {
-  document.getElementById('eidForm').reset();
-  document.getElementById('adults').value = 1;
-  document.getElementById('children').value = 0;
-  // Sélection par défaut : Session 1
-  document.getElementById('selectedSession').value = '1';
-  document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
-  const s1 = document.querySelector('.session-card[data-session="1"]');
-  if (s1) s1.classList.add('selected');
-  document.getElementById('successOverlay').classList.remove('show');
-  const btn = document.getElementById('submitBtn');
-  btn.classList.remove('loading','success');
-  btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration';
+    document.getElementById('eidForm').reset();
+    document.getElementById('adults').value = 1;
+    document.getElementById('children').value = 0;
+    document.getElementById('selectedSession').value = '1';
+    document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
+    const s1 = document.querySelector('.session-card[data-session="1"]');
+    if (s1) s1.classList.add('selected');
+    document.getElementById('agreeTerms').checked = true;
+    document.getElementById('newsletter').checked = true;
+    document.getElementById('successOverlay').classList.remove('show');
+    const btn = document.getElementById('submitBtn');
+    btn.classList.remove('loading','success');
+    btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration';
 }
-</script>
-
+    </script>
 </body>
 </html>
