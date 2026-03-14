@@ -208,7 +208,7 @@
     }
     .reg-grid {
         display: grid;
-        grid-template-columns: 1fr 420px;
+        grid-template-columns: 1fr 380px;
         gap: 60px;
         align-items: start;
         max-width: 1100px;
@@ -397,7 +397,7 @@
     .reg-form-card { position: relative; overflow: hidden; }
 
     /* ─── SIDEBAR ─── */
-    .reg-sidebar { position: sticky; top: 100px; }
+    .reg-sidebar { position: relative; }
     .info-card {
         background: var(--navy);
         padding: 36px 32px; margin-bottom: 20px;
@@ -477,7 +477,7 @@
     .admin-link-bar a:hover { color: var(--gold); }
 
     /* ─── RESPONSIVE ─── */
-    @media (max-width: 1000px) {
+    @media (max-width: 768px) {
         .reg-grid { grid-template-columns: 1fr; gap: 40px; }
         .reg-sidebar { position: static; }
     }
@@ -593,13 +593,12 @@
                         <div class="session-picker">
                             <div class="session-card selected" data-session="1" onclick="selectSession(this)">
                                 <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 1</strong>
-                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">Takbeer 8:30 · Prayer 8:45 AM</span>
+                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">Takbeer 8:30 — Prayer 8:45</span>
                             </div>
-                            <div class="session-card" data-session="2" onclick="selectSession(this)">
+                          <div class="session-card" data-session="2" onclick="selectSession(this)">
                                 <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 2</strong>
                                 <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">Takbeer 9:45 · Prayer 10:00 AM</span>
                             </div>
-                          <!--  <div class="session-card" data-session="2" onclick="selectSession(this)">-->
                              <!--    <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 2</strong>-->
                              <!--    <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">Takbeer 9:45 — Prayer 10:00</span>-->
                             </div>-->
@@ -718,8 +717,8 @@
                         <div>
                             <span class="info-text-label">Prayer time</span>
                             <span class="info-text-val">
-                                <strong>Session 1</strong> — Takbeer 8:30 AM · Prayer 8:45 AM<br>
-                                <strong>Session 2</strong> — Takbeer 9:45 AM · Prayer 10:00 AM
+                                <strong>Session 1</strong> — Takbeer 8:30, Prayer 8:45 AM<br>
+                                <strong>Session 2</strong> — Takbeer 9:45, Prayer 10:00 AM
                             </span>
                         </div>
                     </div>
@@ -790,7 +789,7 @@
             <div class="footer-col"><h4>Contact</h4>
                 <div class="contact-li"><i class="fas fa-map-marker-alt"></i><span>574 Watt St, Winnipeg, MB R2K 4K1</span></div>
                 <div class="contact-li"><i class="fas fa-phone"></i><span>+1 (431) 792-3791</span></div>
-                <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="/cdn-cgi/l/email-protection#80e3efeef4e1e3f4c0f2e1e8ede1efeeece9eee5aeeff2e7" style="color:var(--gold);text-decoration:none;"><span class="__cf_email__" data-cfemail="9dfef2f3e9fcfee9ddeffcf5f0fcf2f3f1f4f3f8b3f2effa">[email&#160;protected]</span></a></span></div>
+                <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="/cdn-cgi/l/email-protection#593a36372d383a2d192b3831343836373530373c77362b3e" style="color:var(--gold);text-decoration:none;"><span class="__cf_email__" data-cfemail="36555958425755427644575e5b5759585a5f585318594451">[email&#160;protected]</span></a></span></div>
             </div>
         </div>
         <div class="footer-bottom">
