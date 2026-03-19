@@ -558,12 +558,12 @@
                     <div class="form-group" style="margin-bottom:24px;">
                         <label style="display:block;margin-bottom:10px;font-weight:500;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Select a Session <span style="color:var(--gold)">*</span></label>
                         <div class="session-picker">
-                            <div class="session-card" data-session="1" id="sessionCard1" style="opacity:0.4;pointer-events:none;cursor:not-allowed;position:relative;">
+                            <div class="session-card" data-session="1" id="sessionCard1" style="opacity:0.4;pointer-events:none;cursor:not-allowed;position:relative;border-color:rgba(201,168,76,0.2)!important;background:#fafaf8!important;">
                                 <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 1</strong>
                                 <span style="display:block;font-size:0.82rem;color:var(--muted);margin-top:4px;">Takbeer 8:30 · Prayer 8:45 AM</span>
                                 <span style="position:absolute;top:6px;right:8px;font-size:0.65rem;font-family:'Cinzel',serif;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;">Full</span>
                             </div>
-                            <div class="session-card" data-session="2" id="sessionCard2" style="opacity:0.4;pointer-events:none;cursor:not-allowed;position:relative;">
+                            <div class="session-card" data-session="2" id="sessionCard2" style="opacity:0.4;pointer-events:none;cursor:not-allowed;position:relative;border-color:rgba(201,168,76,0.2)!important;background:#fafaf8!important;">
                                 <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 2</strong>
                                 <span style="display:block;font-size:0.82rem;color:var(--muted);margin-top:4px;">Takbeer 10:00 · Prayer 10:15 AM</span>
                             </div>
@@ -846,10 +846,8 @@ function resetForm() {
     document.getElementById('eidForm').reset();
     document.getElementById('adults').value = 1;
     document.getElementById('children').value = 0;
-    document.getElementById('selectedSession').value = '1';
+    document.getElementById('selectedSession').value = '';
     document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
-    const s1 = document.querySelector('.session-card[data-session="1"]');
-    if (s1) s1.classList.add('selected');
     document.getElementById('newsletter').checked = true;
     document.getElementById('successOverlay').classList.remove('show');
     const btn = document.getElementById('submitBtn');
