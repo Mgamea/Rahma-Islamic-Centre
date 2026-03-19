@@ -558,16 +558,17 @@
                     <div class="form-group" style="margin-bottom:24px;">
                         <label style="display:block;margin-bottom:10px;font-weight:500;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Select a Session <span style="color:var(--gold)">*</span></label>
                         <div class="session-picker">
-                            <div class="session-card selected" data-session="1" id="sessionCard1" onclick="selectSession(this)">
+                            <div class="session-card selected" data-session="1" class="session-card" data-session="1" id="sessionCard1" style="opacity:0.4;pointer-events:none;cursor:not-allowed;position:relative;">
                                 <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 1</strong>
                                 <span style="display:block;font-size:0.82rem;color:var(--muted);margin-top:4px;">Takbeer 8:30 · Prayer 8:45 AM</span>
+                                <span style="position:absolute;top:6px;right:8px;font-size:0.65rem;font-family:'Cinzel',serif;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;">Full</span>
                             </div>
-                            <div class="session-card" data-session="2" id="sessionCard2" onclick="selectSession(this)">
+                            <div class="session-card" data-session="2" id="sessionCard2" style="opacity:0.4;pointer-events:none;cursor:not-allowed;position:relative;">
                                 <strong style="font-family:'Cinzel',serif;font-size:0.82rem;">Session 2</strong>
-                                <span style="display:block;font-size:0.82rem;color:var(--muted);margin-top:4px;">Takbeer 9:45 · Prayer 10:00 AM</span>
+                                <span style="display:block;font-size:0.82rem;color:var(--muted);margin-top:4px;">Takbeer 10:00 · Prayer 10:15 AM</span>
                             </div>
                         </div>
-                        <input type="hidden" id="selectedSession" value="1">
+                        <input type="hidden" id="selectedSession" value="">
                     </div>
 
                     <!-- Name row -->
@@ -666,7 +667,7 @@
                             <span class="info-text-label">Prayer time</span>
                             <span class="info-text-val">
                                 <strong>Session 1</strong> — Takbeer 8:30 · Prayer 8:45 AM<br>
-                                <strong>Session 2</strong> — Takbeer 9:45 · Prayer 10:00 AM
+                                <strong>Session 2</strong> — Takbeer 10:00 · Prayer 10:15 AM
                             </span>
                         </div>
                     </div>
