@@ -555,34 +555,34 @@
             var h = parseInt(t[0]), m = t[1];
             return (h % 12 || 12) + ':' + m + ' ' + (h >= 12 ? 'PM' : 'AM');
         }
+        /* Mawaqit times[] : [0]=Fajr [1]=Shuruq [2]=Dhuhr [3]=Asr [4]=Maghrib [5]=Isha */
+        function parseMawaqit(d) {
+            if (!d || !d.times || d.times.length < 6) return null;
+            return {Fajr:d.times[0], Dhuhr:d.times[2], Asr:d.times[3], Maghrib:d.times[4], Isha:d.times[5]};
+        }
         async function loadHomePrayers() {
             var T = null;
-            /* 1) Mawaqit — données directes depuis la page (JSON embarqué) */
-            try {
-                var r = await fetch('https://mawaqit.net/fr/rahma-wpg', {mode:'cors'});
-                if (r.ok) {
-                    var html = await r.text();
-                    var match = html.match(/var\s+confData\s*=\s*(\{[\s\S]*?\});/);
-                    if (match) {
-                        var conf = JSON.parse(match[1]);
-                        if (conf.times && conf.times.length >= 6)
-                            T = {Fajr:conf.times[0], Dhuhr:conf.times[2], Asr:conf.times[3], Maghrib:conf.times[4], Isha:conf.times[5]};
-                    }
-                }
-            } catch(e) {}
-            /* 2) Aladhan API — Winnipeg, méthode ISNA (method=2) */
-            if (!T) {
+            /* Mawaqit — endpoint JSON + proxy CORS en fallback */
+            var urls = [
+                'https://mawaqit.net/fr/rahma-wpg?_format=json',
+                'https://mawaqit.net/fr/rahma-wpg',
+                'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://mawaqit.net/fr/rahma-wpg?_format=json')
+            ];
+            for (var i = 0; i < urls.length && !T; i++) {
                 try {
-                    var now = new Date();
-                    var url = 'https://api.aladhan.com/v1/timings/'
-                        + now.getDate() + '-' + (now.getMonth()+1) + '-' + now.getFullYear()
-                        + '?latitude=49.8951&longitude=-97.1384&method=2';
-                    var res = await fetch(url);
-                    var data = await res.json();
-                    if (data.code === 200) T = data.data.timings;
+                    var r = await fetch(urls[i], {headers:{'Accept':'application/json','X-Requested-With':'XMLHttpRequest'}});
+                    if (!r.ok) continue;
+                    var ct = r.headers.get('content-type') || '';
+                    if (ct.includes('json')) {
+                        T = parseMawaqit(await r.json());
+                    } else {
+                        var html = await r.text();
+                        var m1 = html.match(/"times"\s*:\s*(\["[^"]+(?:","[^"]+")+\])/);
+                        if (m1) { try { T = parseMawaqit({times: JSON.parse(m1[1])}); } catch(e2){} }
+                    }
                 } catch(e) {}
             }
-            /* 3) Valeurs statiques de secours */
+            /* Secours statique */
             if (!T) T = {Fajr:'06:12', Dhuhr:'13:05', Asr:'16:15', Maghrib:'19:45', Isha:'21:10'};
 
             var map     = {Fajr:'fajr-time', Dhuhr:'dhuhr-time', Asr:'asr-time', Maghrib:'maghrib-time', Isha:'isha-time'};
