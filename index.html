@@ -524,14 +524,14 @@
             <div class="footer-col"><h4>Contact</h4>
                 <div class="contact-li"><i class="fas fa-map-marker-alt"></i><span>574 Watt St, Winnipeg, MB R2K 4K1</span></div>
                 <div class="contact-li"><i class="fas fa-phone"></i><span>+1 (431) 792-3791</span></div>
-                <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="mailto:contact@rahmaonline.org" style="color:var(--gold);text-decoration:none;">contact@rahmaonline.org</a></span></div>
+                <div class="contact-li"><i class="fas fa-envelope"></i><span><a href="/cdn-cgi/l/email-protection#e4878b8a90858790a496858c89858b8a888d8a81ca8b9683" style="color:var(--gold);text-decoration:none;"><span class="__cf_email__" data-cfemail="8cefe3e2f8edeff8ccfeede4e1ede3e2e0e5e2e9a2e3feeb">[email&#160;protected]</span></a></span></div>
             </div>
         </div>
                                         <span>Powered by Devodez Solutions</span>
             </div>
         </div>
     </footer>
-    <script src="shared.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="shared.js"></script>
     <script>
     /* ── HORLOGE + DATE — PAGE HOME ── */
     (function tickClock(){
@@ -558,7 +558,7 @@
         async function loadHomePrayers() {
             var T = null;
             try {
-                var r = await fetch('https://mawaqit.net/api/2.0/mosque/by-slug/rahma-islamic-centre-winnipeg/prayer-times');
+                var r = await fetch('https://mawaqit.net/api/2.0/mosque/by-slug/rahma-wpg/prayer-times');
                 if (r.ok) {
                     var d = await r.json();
                     if (d.times && d.times.length >= 6)
@@ -612,14 +612,7 @@
                     var prog = Math.min((ts - start) / duration, 1);
                     el.textContent = Math.floor(prog * target);
                     if (prog < 1) requestAnimationFrame(step);
-                    else el.textContent = target;
-                };
-                requestAnimationFrame(step);
-                obs.unobserve(el);
-            });
-        }, { threshold: 0.3 });
-        nums.forEach(function(n) { obs.observe(n); });
-    });
-</script>
+                    else el.textCon
+    </script>
 </body>
 </html>
