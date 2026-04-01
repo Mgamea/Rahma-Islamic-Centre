@@ -400,17 +400,30 @@ function applyPrayers(T, src) {
 }
 async function loadToday() {
     var T = null, src = 'static';
+    /* 1) Mawaqit — extraction du JSON embarqué dans la page */
     try {
-        var r = await fetch('https://mawaqit.net/api/2.0/mosque/by-slug/rahma-wpg/prayer-times');
-        if (r.ok) { var d = await r.json(); if (d.times && d.times.length >= 6) { T = {Fajr:d.times[0],Dhuhr:d.times[2],Asr:d.times[3],Maghrib:d.times[4],Isha:d.times[5]}; src = 'mawaqit'; } }
+        var r = await fetch('https://mawaqit.net/fr/rahma-wpg', {mode:'cors'});
+        if (r.ok) {
+            var html = await r.text();
+            var match = html.match(/var\s+confData\s*=\s*(\{[\s\S]*?\});/);
+            if (match) {
+                var conf = JSON.parse(match[1]);
+                if (conf.times && conf.times.length >= 6) {
+                    T = {Fajr:conf.times[0], Dhuhr:conf.times[2], Asr:conf.times[3], Maghrib:conf.times[4], Isha:conf.times[5]};
+                    src = 'mawaqit';
+                }
+            }
+        }
     } catch(e) {}
+    /* 2) Aladhan API — Winnipeg coordonnées exactes */
     if (!T) { try {
         var now = new Date();
         var url = 'https://api.aladhan.com/v1/timings/'+now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear()+'?latitude=49.8951&longitude=-97.1384&method=2';
-        var res = await fetch(url,{mode:'cors'}); var data = await res.json();
+        var res = await fetch(url); var data = await res.json();
         if (data.code===200) { T = data.data.timings; src = 'aladhan'; }
     } catch(e) {} }
-    if (!T) { T = {Fajr:'06:12',Dhuhr:'12:41',Asr:'15:34',Maghrib:'18:09',Isha:'19:38'}; }
+    /* 3) Secours statique */
+    if (!T) { T = {Fajr:'06:12',Dhuhr:'13:05',Asr:'16:15',Maghrib:'19:45',Isha:'21:10'}; }
     applyPrayers(T, src); return T;
 }
 async function loadMonth(month, year) {
