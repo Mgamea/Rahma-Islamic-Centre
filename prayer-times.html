@@ -303,17 +303,41 @@
             </div>
         </div>
 
-        <!-- Widget Mawaqit officiel — heures en temps réel -->
-        <div style="width:100%;margin-bottom:24px;border-radius:16px;overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,0.5);">
-            <iframe
-                src="https://mawaqit.net/fr/w/rahma-wpg"
-                width="100%"
-                height="220"
-                frameborder="0"
-                scrolling="no"
-                style="display:block;width:100%;border:none;background:#0b1f3a;"
-                title="Rahma Masjid Prayer Times — Mawaqit"
-            ></iframe>
+        <!-- Badge source -->
+        <div id="apiBadge" class="api-badge"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#9ca3af;margin-right:8px;"></span>Chargement…</div>
+
+        <!-- 5 cartes de prières -->
+        <div class="tp-grid">
+            <div class="tp-card" id="tp-fajr">
+                <div class="tp-icon-ring"><i class="fas fa-moon"></i></div>
+                <h3>Fajr</h3>
+                <div class="tp-time loading" id="t-fajr">--:--</div>
+                <div class="tp-iqamah loading" id="iq-fajr">Iqamah: --:--</div>
+            </div>
+            <div class="tp-card" id="tp-dhuhr">
+                <div class="tp-icon-ring"><i class="fas fa-sun"></i></div>
+                <h3>Dhuhr</h3>
+                <div class="tp-time loading" id="t-dhuhr">--:--</div>
+                <div class="tp-iqamah loading" id="iq-dhuhr">Iqamah: --:--</div>
+            </div>
+            <div class="tp-card" id="tp-asr">
+                <div class="tp-icon-ring"><i class="fas fa-cloud-sun"></i></div>
+                <h3>Asr</h3>
+                <div class="tp-time loading" id="t-asr">--:--</div>
+                <div class="tp-iqamah loading" id="iq-asr">Iqamah: --:--</div>
+            </div>
+            <div class="tp-card" id="tp-maghrib">
+                <div class="tp-icon-ring"><i class="fas fa-cloud-moon"></i></div>
+                <h3>Maghrib</h3>
+                <div class="tp-time loading" id="t-maghrib">--:--</div>
+                <div class="tp-iqamah loading" id="iq-maghrib">Iqamah: --:--</div>
+            </div>
+            <div class="tp-card" id="tp-isha">
+                <div class="tp-icon-ring"><i class="fas fa-star-and-crescent"></i></div>
+                <h3>Isha</h3>
+                <div class="tp-time loading" id="t-isha">--:--</div>
+                <div class="tp-iqamah loading" id="iq-isha">Iqamah: --:--</div>
+            </div>
         </div>
 
         <div class="jumuah-box">
@@ -374,7 +398,68 @@
 })();
 /* ── MONTHLY TABLE via Aladhan (calendrier uniquement) ── */
 function fmtTime(raw) { if (!raw) return '—'; var t = raw.split(' ')[0].split(':'); var h = parseInt(t[0]), m = t[1]; return (h%12||12) + ':' + m + ' ' + (h>=12?'PM':'AM'); }
-async function loadMonth(month, year) {
+function addM(t, m) { var p = t.split(':').map(Number), tot = p[0]*60 + p[1] + m; return String(Math.floor(tot/60)%24).padStart(2,'0') + ':' + String(tot%60).padStart(2,'0'); }
+
+/* ── BADGE SOURCE ── */
+function setBadge(src) {
+    var b = document.getElementById('apiBadge'); if (!b) return;
+    var colors = {mawaqit:'#4ade80', static:'#9ca3af'};
+    var labels = {mawaqit:'Mawaqit.net — Rahma Masjid ✓', static:'Horaires statiques'};
+    b.innerHTML = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+colors[src]+';margin-right:8px;"></span>'+labels[src];
+}
+
+/* ── APPLIQUER LES HORAIRES AUX CARTES ── */
+function applyPrayers(T, src) {
+    setBadge(src);
+    var IQ = {Fajr:20, Dhuhr:20, Asr:15, Maghrib:5, Isha:15};
+    var keys = ['Fajr','Dhuhr','Asr','Maghrib','Isha'];
+    var tIds = {Fajr:'t-fajr', Dhuhr:'t-dhuhr', Asr:'t-asr', Maghrib:'t-maghrib', Isha:'t-isha'};
+    var iIds = {Fajr:'iq-fajr', Dhuhr:'iq-dhuhr', Asr:'iq-asr', Maghrib:'iq-maghrib', Isha:'iq-isha'};
+    var cIds = {Fajr:'tp-fajr', Dhuhr:'tp-dhuhr', Asr:'tp-asr', Maghrib:'tp-maghrib', Isha:'tp-isha'};
+    var nm = new Date().getHours()*60 + new Date().getMinutes();
+    var active = 'tp-isha';
+    keys.forEach(function(k) {
+        var raw = T[k] || T[k.toLowerCase()] || '';
+        var t24 = raw.split(' ')[0];
+        var el = document.getElementById(tIds[k]);
+        if (el) { el.textContent = fmtTime(t24); el.classList.remove('loading'); }
+        var iq = document.getElementById(iIds[k]);
+        if (iq && t24) { iq.textContent = 'Iqamah: ' + fmtTime(addM(t24, IQ[k])); iq.classList.remove('loading'); }
+        if (t24) { var p = t24.split(':').map(Number); if (nm >= p[0]*60+p[1]) active = cIds[k]; }
+    });
+    Object.values(cIds).forEach(function(id) { var el = document.getElementById(id); if (el) el.classList.toggle('active-prayer', id===active); });
+}
+
+/* ── CHARGER LES HORAIRES DEPUIS MAWAQIT ── */
+function parseMawaqit(d) {
+    if (!d || !d.times || d.times.length < 6) return null;
+    /* times[] : [0]=Fajr [1]=Shuruq [2]=Dhuhr [3]=Asr [4]=Maghrib [5]=Isha */
+    return {Fajr:d.times[0], Dhuhr:d.times[2], Asr:d.times[3], Maghrib:d.times[4], Isha:d.times[5]};
+}
+async function loadToday() {
+    var T = null, src = 'static';
+    var urls = [
+        'https://mawaqit.net/fr/rahma-wpg?_format=json',
+        'https://mawaqit.net/fr/rahma-wpg',
+        'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://mawaqit.net/fr/rahma-wpg?_format=json')
+    ];
+    for (var i = 0; i < urls.length && !T; i++) {
+        try {
+            var r = await fetch(urls[i], {headers:{'Accept':'application/json','X-Requested-With':'XMLHttpRequest'}});
+            if (!r.ok) continue;
+            var ct = r.headers.get('content-type') || '';
+            if (ct.includes('json')) {
+                T = parseMawaqit(await r.json()); if (T) src = 'mawaqit';
+            } else {
+                var html = await r.text();
+                var m1 = html.match(/"times"\s*:\s*(\["[^"]+(?:","[^"]+")+\])/);
+                if (m1) { try { var pt = parseMawaqit({times:JSON.parse(m1[1])}); if(pt){T=pt;src='mawaqit';} } catch(e2){} }
+            }
+        } catch(e) {}
+    }
+    if (!T) { T = {Fajr:'06:12',Dhuhr:'13:05',Asr:'16:15',Maghrib:'19:45',Isha:'21:10'}; }
+    applyPrayers(T, src); return T;
+}
     var tbody = document.querySelector('#prayerTable tbody'); if (!tbody) return;
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="color:var(--gold);margin-right:8px"></i>Loading...</td></tr>';
     try {
@@ -393,6 +478,7 @@ async function loadMonth(month, year) {
     } catch(e) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;">Unable to load.</td></tr>'; }
 }
 document.addEventListener('DOMContentLoaded', function() {
+    loadToday();
     var now = new Date();
     var picker = document.getElementById('monthPicker');
     if (picker) {
