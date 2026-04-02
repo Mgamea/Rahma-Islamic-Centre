@@ -163,6 +163,12 @@
         .print-btn { display: flex; align-items: center; gap: 9px; padding: 11px 20px; background: var(--navy); color: var(--gold); border: 1px solid var(--border); font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.12em; cursor: pointer; transition: all 0.3s; }
         .print-btn:hover { background: var(--navy-mid); }
         .table-wrap { overflow-x: auto; border: 1px solid var(--border); }
+        .prayer-table { width: 100%; border-collapse: collapse; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; }
+        .prayer-table thead tr { background: var(--navy); }
+        .prayer-table th { padding: 14px 16px; text-align: left; font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; white-space: nowrap; border-bottom: 2px solid rgba(201,168,76,0.3); }
+        .prayer-table td { padding: 11px 16px; color: var(--navy); border-bottom: 1px solid rgba(0,0,0,0.06); white-space: nowrap; }
+        .prayer-table tbody tr:hover { background: rgba(201,168,76,0.06); }
+        .prayer-table tbody tr:last-child td { border-bottom: none; }
 
         /* ─── RESPONSIVE ─── */
         @media (max-width:850px) { .tp-grid { grid-template-columns: repeat(3,1fr); } .tp-card:nth-child(3){ border-right:none; } .tp-card:nth-child(n+4){ border-top:1px solid var(--border); } .jumuah-box{ grid-template-columns:1fr; } }
@@ -357,6 +363,17 @@
         </div>
         <div class="table-wrap">
             <table class="prayer-table" id="prayerTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Hijri</th>
+                        <th>Fajr</th>
+                        <th>Sunrise</th>
+                        <th>Dhuhr</th>
+                        <th>Asr</th>
+                        <th>Maghrib</th>
+                    </tr>
+                </thead>
                 <tbody><tr><td colspan="7" style="padding:40px;text-align:center;color:var(--muted)">
                     <i class="fas fa-spinner fa-spin" style="font-size:1.4rem;color:var(--gold);display:block;margin-bottom:12px"></i>Loading…
                 </td></tr></tbody>
@@ -367,46 +384,85 @@
     
     <script src="shared.js"></script>
     <script>
-/* ── HORLOGE ── */
-(function tick(){
-    var el = document.getElementById('todayClock');
-    if (el) el.textContent = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', hour12:true});
-    setTimeout(tick, 1000);
-})();
-(function(){
-    var el = document.getElementById('todayDate');
-    if (el) el.textContent = new Date().toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
-})();
-/* ── MONTHLY TABLE via Aladhan (calendrier uniquement) ── */
-function fmtTime(raw) { if (!raw) return '—'; var t = raw.split(' ')[0].split(':'); var h = parseInt(t[0]), m = t[1]; return (h%12||12) + ':' + m + ' ' + (h>=12?'PM':'AM'); }
-function addM(t, m) { var p = t.split(':').map(Number), tot = p[0]*60 + p[1] + m; return String(Math.floor(tot/60)%24).padStart(2,'0') + ':' + String(tot%60).padStart(2,'0'); }
+/* ════════════════════════════════════════════
+   PRAYER TIMES PAGE — clock, date, schedule
+   Runs immediately — no DOMContentLoaded needed
+   because this script is at the bottom of body
+   ════════════════════════════════════════════ */
 
-    var tbody = document.querySelector('#prayerTable tbody'); if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="color:var(--gold);margin-right:8px"></i>Loading...</td></tr>';
+/* ── 1. HORLOGE & DATE ── */
+(function initClock() {
+    function tick() {
+        var now = new Date();
+        var cl = document.getElementById('todayClock');
+        var dt = document.getElementById('todayDate');
+        if (cl) cl.textContent = now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', hour12:true});
+        if (dt) dt.textContent  = now.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+        setTimeout(tick, 1000);
+    }
+    tick();
+})();
+
+/* ── 2. FORMAT HELPERS ── */
+function fmtTime(raw) {
+    if (!raw) return '—';
+    var parts = raw.split(' ')[0].split(':');
+    var h = parseInt(parts[0]), m = parts[1];
+    return (h % 12 || 12) + ':' + m + ' ' + (h >= 12 ? 'PM' : 'AM');
+}
+
+/* ── 3. MONTHLY SCHEDULE ── */
+async function loadMonth(month, year) {
+    var tbody = document.querySelector('#prayerTable tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="color:var(--gold);font-size:1.4rem;display:block;margin-bottom:12px"></i>Loading...</td></tr>';
     try {
-        var res = await fetch('https://api.aladhan.com/v1/calendar/'+year+'/'+month+'?latitude=49.8951&longitude=-97.1384&method=2');
-        var data = await res.json(); if (data.code!==200) throw new Error();
-        var html = '', today = new Date();
+        var url = 'https://api.aladhan.com/v1/calendar/' + year + '/' + month + '?latitude=49.8951&longitude=-97.1384&method=2';
+        var res  = await fetch(url);
+        var data = await res.json();
+        if (data.code !== 200) throw new Error('API error');
+        var html = '';
+        var today = new Date();
         data.data.forEach(function(day) {
-            var g=day.date.gregorian, hj=day.date.hijri, t=day.timings;
-            var dt=new Date(+g.year,g.month.number-1,+g.day);
-            var isFri=dt.getDay()===5, isToday=+g.year===today.getFullYear()&&g.month.number-1===today.getMonth()&&+g.day===today.getDate();
-            var rs=isToday?'background:rgba(201,168,76,0.12);font-weight:600;':(isFri?'background:rgba(201,168,76,0.05);':'');
-            html+='<tr style="'+rs+'"><td>'+g.day+(isFri?' <small style="color:var(--gold)">Jum.</small>':'')+'</td>';
-            html+='<td>'+hj.day+' '+hj.month.en+'</td><td>'+fmtTime(t.Fajr)+'</td><td>'+fmtTime(t.Sunrise)+'</td><td>'+fmtTime(t.Dhuhr)+'</td><td>'+fmtTime(t.Asr)+'</td><td>'+fmtTime(t.Maghrib)+'</td></tr>';
+            var g   = day.date.gregorian;
+            var hj  = day.date.hijri;
+            var t   = day.timings;
+            var dt  = new Date(parseInt(g.year), g.month.number - 1, parseInt(g.day));
+            var isFri    = dt.getDay() === 5;
+            var isToday  = parseInt(g.year) === today.getFullYear()
+                        && g.month.number - 1 === today.getMonth()
+                        && parseInt(g.day)    === today.getDate();
+            var rowStyle = isToday
+                ? 'background:rgba(201,168,76,0.15);font-weight:600;'
+                : isFri ? 'background:rgba(201,168,76,0.05);' : '';
+            html += '<tr style="' + rowStyle + '">';
+            html += '<td>' + g.day + (isFri ? ' <small style="color:var(--gold);font-family:Cinzel,serif;font-size:0.65rem">JUM.</small>' : '') + '</td>';
+            html += '<td>' + hj.day + ' ' + hj.month.en + '</td>';
+            html += '<td>' + fmtTime(t.Fajr)    + '</td>';
+            html += '<td>' + fmtTime(t.Sunrise)  + '</td>';
+            html += '<td>' + fmtTime(t.Dhuhr)    + '</td>';
+            html += '<td>' + fmtTime(t.Asr)      + '</td>';
+            html += '<td>' + fmtTime(t.Maghrib)  + '</td>';
+            html += '</tr>';
         });
         tbody.innerHTML = html;
-    } catch(e) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;">Unable to load.</td></tr>'; }
+    } catch(err) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)">⚠ Unable to load schedule — please check your internet connection.</td></tr>';
+    }
 }
-document.addEventListener('DOMContentLoaded', function() {
-    var now = new Date();
+
+/* ── 4. INIT ── */
+(function init() {
+    var now    = new Date();
     var picker = document.getElementById('monthPicker');
     if (picker) {
         picker.value = now.getMonth() + 1;
-        picker.addEventListener('change', function() { loadMonth(parseInt(picker.value), now.getFullYear()); });
+        picker.addEventListener('change', function() {
+            loadMonth(parseInt(this.value), now.getFullYear());
+        });
     }
     loadMonth(now.getMonth() + 1, now.getFullYear());
-});
+})();
 </script>
     <section class="newsletter-section"><div class="container"><div class="newsletter-inner">
         <div class="newsletter-text"><h3>Stay Connected</h3><p>Get updates on events &amp; announcements</p></div>

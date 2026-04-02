@@ -555,17 +555,16 @@
         var now = new Date();
         if (el) {
             var h = now.getHours(), m = now.getMinutes();
-            var ampm = h >= 12 ? 'PM' : 'AM';
-            el.textContent = (h%12||12) + ':' + String(m).padStart(2,'0') + ' ' + ampm;
+            el.textContent = (h%12||12) + ':' + String(m).padStart(2,'0') + ' ' + (h>=12?'PM':'AM');
         }
         if (de) de.textContent = now.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
         setTimeout(tickClock, 1000);
     })();
 
-
     /* ── COUNTERS ANIMATION ── */
     document.addEventListener('DOMContentLoaded', function() {
         var nums = document.querySelectorAll('.stat-number[data-target]');
+        if (!nums.length) return;
         var obs = new IntersectionObserver(function(entries) {
             entries.forEach(function(e) {
                 if (!e.isIntersecting) return;
@@ -577,7 +576,14 @@
                     var prog = Math.min((ts - start) / duration, 1);
                     el.textContent = Math.floor(prog * target);
                     if (prog < 1) requestAnimationFrame(step);
-                    else el.textCon
+                    else el.textContent = target;
+                };
+                requestAnimationFrame(step);
+                obs.unobserve(el);
+            });
+        }, {threshold: 0.3});
+        nums.forEach(function(n) { obs.observe(n); });
+    });
     </script>
 </body>
 </html>
