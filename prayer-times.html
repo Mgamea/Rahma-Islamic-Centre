@@ -167,6 +167,10 @@
         /* ─── RESPONSIVE ─── */
         @media (max-width:850px) { .tp-grid { grid-template-columns: repeat(3,1fr); } .tp-card:nth-child(3){ border-right:none; } .tp-card:nth-child(n+4){ border-top:1px solid var(--border); } .jumuah-box{ grid-template-columns:1fr; } }
         @media (max-width:520px) { .tp-grid { grid-template-columns: repeat(2,1fr); } .tp-card:nth-child(2n){ border-right:none; } .tp-card:nth-child(n+3){ border-top:1px solid var(--border); } .today-top{ flex-direction:column; align-items:flex-start; } .today-clock-wrap{ text-align:left; } }
+        /* Mawaqit iframe responsive */
+        .mawaqit-iframe-wrap iframe { height: 680px; }
+        @media (max-width: 900px) { .mawaqit-iframe-wrap iframe { height: 750px; } }
+        @media (max-width: 600px) { .mawaqit-iframe-wrap iframe { height: 820px; } }
     </style>
 
     <!-- DROPDOWN NAV CSS -->
@@ -303,15 +307,16 @@
             </div>
         </div>
 
-        <!-- Widget Mawaqit officiel — heures en temps réel -->
-        <div style="width:100%;margin-bottom:24px;border-radius:16px;overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,0.5);">
+        <!-- Widget Mawaqit complet — 5 prières + horloge + Chourouk + Jumu'ah -->
+        <div class="mawaqit-iframe-wrap" style="width:100%;margin-bottom:28px;border-radius:16px;overflow:hidden;box-shadow:0 4px 40px rgba(0,0,0,0.6);">
             <iframe
                 src="https://mawaqit.net/fr/w/rahma-wpg"
                 width="100%"
-                height="220"
+                height="680"
                 frameborder="0"
                 scrolling="no"
-                style="display:block;width:100%;border:none;background:#0b1f3a;"
+                allow="autoplay"
+                style="display:block;width:100%;height:680px;border:none;background:#0a1628;"
                 title="Rahma Masjid Prayer Times — Mawaqit"
             ></iframe>
         </div>
@@ -374,7 +379,8 @@
 })();
 /* ── MONTHLY TABLE via Aladhan (calendrier uniquement) ── */
 function fmtTime(raw) { if (!raw) return '—'; var t = raw.split(' ')[0].split(':'); var h = parseInt(t[0]), m = t[1]; return (h%12||12) + ':' + m + ' ' + (h>=12?'PM':'AM'); }
-async function loadMonth(month, year) {
+function addM(t, m) { var p = t.split(':').map(Number), tot = p[0]*60 + p[1] + m; return String(Math.floor(tot/60)%24).padStart(2,'0') + ':' + String(tot%60).padStart(2,'0'); }
+
     var tbody = document.querySelector('#prayerTable tbody'); if (!tbody) return;
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="color:var(--gold);margin-right:8px"></i>Loading...</td></tr>';
     try {
