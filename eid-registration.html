@@ -3,771 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eid Al-Adha Prayer Registration — Rahma Islamic Centre</title>
+    <title>Eid Prayer Registration — Rahma Islamic Centre</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Cinzel:wght@400;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <!-- QR Code library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-    <style>
-    /* ═══ DROPDOWN NAV ═══ */
-    .nav-links li { position: relative; }
-    .nav-drop { display: block; visibility: hidden; opacity: 0; pointer-events: none; position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-6px); min-width: 210px; background: rgba(11,31,58,0.97); backdrop-filter: blur(20px); border: 1px solid rgba(201,168,76,0.25); border-top: 2px solid var(--gold); z-index: 2000; transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s; padding: 8px 0; }
-    .nav-links li::before { content: ''; position: absolute; top: 100%; left: 0; width: 100%; height: 14px; }
-    .nav-links li:hover > .nav-drop { visibility: visible; opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
-    .nav-drop a { display: flex !important; align-items: center; gap: 10px; padding: 10px 20px; font-family: 'DM Sans', sans-serif !important; font-size: 0.76rem !important; font-weight: 400 !important; color: rgba(255,255,255,0.72) !important; text-transform: uppercase !important; letter-spacing: 0.06em !important; white-space: nowrap; text-decoration: none; transition: all 0.2s !important; border-bottom: 1px solid rgba(201,168,76,0.07); }
-    .nav-drop a:last-child { border-bottom: none; }
-    .nav-drop a::after { display: none !important; }
-    .nav-drop a i { width: 16px; color: var(--gold); font-size: 0.72rem; opacity: 0.85; flex-shrink: 0; }
-    .nav-drop a:hover { background: rgba(201,168,76,0.09) !important; color: var(--gold-light) !important; padding-left: 26px !important; }
-    @media (max-width: 960px) { .nav-links { display: none !important; } .nav-donate { display: none !important; } .hamburger { display: flex !important; flex-direction: column; gap:6px; cursor:pointer; padding:4px; } .hamburger span { width:26px; height:1.5px; background:#C9A84C; display:block; transition:all 0.3s; } .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); } .hamburger.active span:nth-child(2) { opacity:0; } .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); } }
-    .mobile-menu { display:none; position:fixed; inset:0; z-index:999; background:#1A2744; flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
-    .mobile-menu.active { display:flex !important; }
-    .mobile-menu a { font-family:'Cinzel',serif; font-size:1.3rem; color:#fff; text-decoration:none; letter-spacing:0.1em; }
-
-    /* ═══ EID HERO ═══ */
-    .eid-hero { background: linear-gradient(160deg, #0a1220 0%, #0B1F3A 55%, #102040 100%); padding: 160px 24px 100px; position: relative; overflow: hidden; text-align: center; }
-    .eid-hero::before { content: ''; position: absolute; inset: -60%; border: 1px solid rgba(201,168,76,0.1); opacity: 0.06; pointer-events: none; animation: patternSpin 80s linear infinite; transform-origin: center; }
-    @keyframes patternSpin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
-    .hero-crescent { position: absolute; top: 30px; right: 8%; font-size: clamp(80px, 15vw, 160px); color: rgba(201,168,76,0.35); pointer-events: none; line-height: 1; transform: rotate(-20deg); font-family: 'Segoe UI Emoji', serif; }
-    .moon-2{position:absolute;top:52%;left:3%;font-size:clamp(55px,10vw,110px);color:rgba(201,168,76,0.25);pointer-events:none;transform:rotate(35deg) scaleX(-1);font-family:'Segoe UI Emoji',serif;}
-    .moon-3{position:absolute;bottom:10%;right:13%;font-size:clamp(42px,7vw,84px);color:rgba(201,168,76,0.20);pointer-events:none;transform:rotate(-40deg);font-family:'Segoe UI Emoji',serif;}
-    .moon-4{position:absolute;top:18%;left:18%;font-size:clamp(30px,5vw,60px);color:rgba(201,168,76,0.18);pointer-events:none;transform:rotate(15deg);font-family:'Segoe UI Emoji',serif;}
-    .eid-hero-content { position: relative; z-index: 2; }
-    .eid-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); padding: 8px 22px; font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 28px; border-radius: 2px; }
-    .eid-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 300; color: var(--white); line-height: 1.1; margin-bottom: 10px; }
-    .eid-hero h1 em { font-style: italic; color: var(--gold-light); }
-    .eid-arabic { font-size: clamp(1.2rem, 3vw, 2rem); color: rgba(201,168,76,0.65); direction: rtl; letter-spacing: 0.08em; margin-bottom: 30px; display: block; font-family: serif; }
-    .eid-hero p { font-size: 1.05rem; color: rgba(255,255,255,0.6); max-width: 560px; margin: 0 auto 44px; line-height: 1.75; }
-    .eid-info-pills { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .eid-pill { display: flex; align-items: center; gap: 9px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); padding: 10px 20px; border-radius: 50px; font-size: 0.83rem; }
-    .eid-pill i { color: var(--gold); font-size: 0.8rem; }
-
-    /* ═══ COUNTER STRIP ═══ */
-    .eid-counter-strip { background: var(--gold); padding: 0; display: flex; overflow: hidden; }
-    .counter-item { flex: 1; text-align: center; padding: 26px 20px; border-right: 1px solid rgba(11,31,58,0.12); }
-    .counter-item:last-child { border-right: none; }
-    .counter-num { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 600; color: var(--navy); line-height: 1; display: block; }
-    .counter-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(11,31,58,0.65); margin-top: 4px; display: block; }
-
-    /* ═══ REGISTRATION SECTION ═══ */
-    .reg-section { background: var(--cream); padding: 90px 24px; background-image: url('pattern.png'); background-size: 400px auto; background-repeat: repeat; background-attachment: fixed; }
-    .reg-grid { display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: start; max-width: 1100px; margin: 0 auto; }
-    .reg-form-card { background: var(--white); border: 1px solid rgba(201,168,76,0.15); padding: 52px 48px; position: relative; overflow: hidden; }
-    .reg-form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold)); }
-    .reg-form-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--navy); margin-bottom: 6px; }
-    .reg-form-card h2 em { font-style: italic; color: var(--gold); }
-    .reg-form-card .sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 38px; line-height: 1.6; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .form-group { margin-bottom: 18px; }
-    .form-group label { display: block; font-family: 'Cinzel', serif; font-size: 0.66rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
-    .form-group label span { color: var(--gold); margin-left: 2px; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 13px 16px; border: 1px solid rgba(201,168,76,0.2); background: #fafaf8; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.25s, box-shadow 0.25s; border-radius: 2px; appearance: none; }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); background: var(--white); }
-    .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23C9A84C'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
-    .family-counter { display: flex; align-items: center; border: 1px solid rgba(201,168,76,0.2); background: #fafaf8; border-radius: 2px; overflow: hidden; }
-    .family-counter button { width: 44px; height: 44px; background: var(--navy); color: var(--gold); border: none; cursor: pointer; font-size: 1.2rem; transition: background 0.2s; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-    .family-counter button:hover { background: var(--navy-mid); }
-    .family-counter input { flex: 1; text-align: center; border: none !important; box-shadow: none !important; border-radius: 0 !important; background: transparent !important; font-size: 1.1rem; font-weight: 500; padding: 10px 8px !important; }
-
-    /* Session cards */
-    .session-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
-    .session-card { border: 1px solid rgba(201,168,76,0.2); padding: 16px 14px; cursor: pointer; transition: all 0.2s; border-radius: 2px; background: #fafaf8; position: relative; }
-    .session-card:hover:not(.full) { border-color: var(--gold); background: rgba(201,168,76,0.04); }
-    .session-card.selected { border-color: var(--gold); background: rgba(201,168,76,0.08); box-shadow: 0 0 0 2px rgba(201,168,76,0.2); }
-    .session-card.selected::after { content: '✓'; position: absolute; top: 8px; right: 10px; color: var(--gold); font-size: 0.8rem; font-weight: 700; }
-    .session-card.full { opacity: 0.4; pointer-events: none; cursor: not-allowed; }
-    .session-time { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--navy); font-weight: 600; display: block; margin: 4px 0; }
-    .session-label { font-size: 0.76rem; color: var(--muted); margin-top: 3px; display: block; }
-    .session-spots { font-family: 'Cinzel', serif; font-size: 0.58rem; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; display: block; }
-    .session-status { position: absolute; top: 6px; right: 8px; font-size: 0.58rem; font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; }
-    .status-open { color: #27ae60; }
-    .status-full { color: #c0392b; }
-
-    /* Checkboxes */
-    .check-group { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
-    .check-group input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; accent-color: var(--gold); cursor: pointer; padding: 0 !important; }
-    .check-group label { font-family: 'DM Sans', sans-serif; font-size: 0.86rem; color: var(--muted); letter-spacing: 0; text-transform: none; cursor: pointer; line-height: 1.5; }
-
-    /* Submit */
-    .reg-submit { width: 100%; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); color: var(--white); border: none; padding: 17px; font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; border-radius: 2px; margin-top: 6px; }
-    .reg-submit:hover:not(:disabled) { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--navy); }
-    .reg-submit.loading { opacity: 0.7; pointer-events: none; }
-
-    /* ═══ SUCCESS OVERLAY WITH QR ═══ */
-    .success-overlay { display: none; flex-direction: column; align-items: center; text-align: center; padding: 36px 32px 44px; position: absolute; inset: 0; background: var(--white); z-index: 10; overflow-y: auto; }
-    .success-overlay.show { display: flex; }
-    .success-icon { width: 68px; height: 68px; background: linear-gradient(135deg, #2d6a4f, #3d8a67); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; animation: popIn 0.4s cubic-bezier(.175,.885,.32,1.275) both; }
-    @keyframes popIn { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
-    .success-icon i { color: white; font-size: 1.7rem; }
-    .success-overlay h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.85rem; color: var(--navy); margin-bottom: 8px; }
-    .success-overlay > p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; margin-bottom: 4px; max-width: 380px; }
-    .success-ref { font-family: 'Cinzel', serif; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; margin: 12px 0 16px; }
-
-    /* QR Ticket */
-    .qr-ticket { background: var(--navy); border: 2px solid var(--gold); border-radius: 4px; padding: 24px 28px; margin: 4px 0 20px; width: 100%; max-width: 340px; position: relative; overflow: hidden; }
-    .qr-ticket::before { content: '☽'; position: absolute; top: -10px; right: 8px; font-size: 80px; color: rgba(201,168,76,0.06); pointer-events: none; line-height: 1; }
-    .qr-ticket-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid rgba(201,168,76,0.2); }
-    .qr-ticket-logo-text { font-family: 'Cinzel', serif; font-size: 0.62rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; line-height: 1.5; }
-    .qr-session-pill { display: inline-flex; align-items: center; gap: 7px; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); padding: 5px 14px; border-radius: 50px; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
-    .qr-code-box { background: white; padding: 10px; border-radius: 3px; display: inline-block; margin: 0 auto 14px; }
-    #qrcode canvas, #qrcode img { display: block; }
-    .qr-scan-hint { font-size: 0.72rem; color: rgba(255,255,255,0.35); font-family: 'DM Sans', sans-serif; margin-bottom: 14px; line-height: 1.5; }
-    .qr-divider { height: 1px; background: rgba(201,168,76,0.18); margin: 12px 0; }
-    .qr-info-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 12px; }
-    .qr-info-row:last-child { margin-bottom: 0; }
-    .qr-key { font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); flex-shrink: 0; }
-    .qr-val { font-size: 0.8rem; color: rgba(255,255,255,0.82); font-family: 'DM Sans', sans-serif; text-align: right; }
-    .qr-val.gold { color: var(--gold); font-weight: 500; }
-
-    /* Action buttons */
-    .qr-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-    .qr-btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 20px; border-radius: 2px; font-family: 'Cinzel', serif; font-size: 0.64rem; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; border: none; transition: all 0.22s; }
-    .qr-btn-dark { background: var(--navy); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
-    .qr-btn-dark:hover { background: var(--gold); color: var(--navy); }
-    .qr-btn-outline { background: transparent; color: var(--muted); border: 1px solid rgba(201,168,76,0.18); }
-    .qr-btn-outline:hover { border-color: var(--gold); color: var(--navy); }
-    .btn-reset { margin-top: 18px; padding: 10px 26px; background: transparent; color: var(--muted); border: 1px solid rgba(201,168,76,0.15); font-family: 'Cinzel', serif; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
-    .btn-reset:hover { border-color: var(--gold); color: var(--navy); }
-
-    /* Sidebar */
-    .reg-sidebar { position: sticky; top: 100px; }
-    .info-card { background: var(--navy); padding: 36px 32px; margin-bottom: 20px; position: relative; overflow: hidden; }
-    .info-card::before { content: '☽'; position: absolute; bottom: -10px; right: 10px; font-size: 100px; color: rgba(201,168,76,0.06); pointer-events: none; line-height: 1; }
-    .info-card h3 { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid rgba(201,168,76,0.2); }
-    .info-row { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 18px; }
-    .info-row:last-child { margin-bottom: 0; }
-    .info-icon { width: 36px; height: 36px; flex-shrink: 0; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-    .info-icon i { color: var(--gold); font-size: 0.78rem; }
-    .info-text-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 3px; display: block; }
-    .info-text-val { font-size: 0.88rem; color: rgba(255,255,255,0.8); line-height: 1.5; }
-    .info-text-val strong { color: var(--gold-light); }
-    .cap-bar-wrap { margin-top: 16px; }
-    .cap-bar-label { display: flex; justify-content: space-between; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 6px; }
-    .cap-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
-    .cap-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 2px; transition: width 0.7s ease; }
-    .guidelines-card { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.2); padding: 28px; }
-    .guidelines-card h3 { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--navy); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 18px; }
-    .guideline-item { display: flex; gap: 12px; margin-bottom: 13px; font-size: 0.84rem; color: var(--muted); line-height: 1.5; }
-    .guideline-item i { color: var(--gold); font-size: 0.75rem; margin-top: 3px; flex-shrink: 0; }
-
-    /* Toast */
-    #regToast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #c0392b; color: white; padding: 14px 28px; border-radius: 4px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; z-index: 9999; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: opacity 0.4s; opacity: 0; pointer-events: none; white-space: nowrap; }
-    #regToast.visible { opacity: 1; }
-
-    /* Print */
-    #printArea { display: none; }
-    @media print { body > *:not(#printArea) { display: none !important; } #printArea { display: block !important; position: fixed; inset: 0; background: white; padding: 40px; z-index: 99999; } }
-
-    /* Responsive */
-    @media (max-width: 1000px) { .reg-grid { grid-template-columns: 1fr; gap: 40px; } .reg-sidebar { position: static; } }
-    @media (max-width: 640px) { .reg-form-card { padding: 36px 20px; } .form-row { grid-template-columns: 1fr; } .session-picker { grid-template-columns: 1fr; } .eid-counter-strip { flex-wrap: wrap; } .counter-item { flex: 1 1 50%; } }
-    </style>
 </head>
 <body>
-    <div id="loader"><div class="loader-text">RAHMA</div><div class="loader-bar"><div class="loader-fill"></div></div></div>
-    <div id="printArea"></div>
-    <div id="regToast"></div>
 
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html" onclick="closeMobile()">Home</a>
-        <a href="prayer-times.html" onclick="closeMobile()">Prayer Times</a>
-        <a href="programs.html" onclick="closeMobile()">Programs &amp; Services</a>
-        <a href="education.html" onclick="closeMobile()">Education</a>
-        <a href="events.html" class="active" onclick="closeMobile()">Events</a>
-        <a href="gallery.html" onclick="closeMobile()">Gallery</a>
-        <a href="contact.html" onclick="closeMobile()">Contact</a>
-        <a href="donate.html" class="mobile-donate" onclick="closeMobile()">Donate</a>
-    </div>
-
-    <nav class="navbar" id="navbar">
-        <div class="navbar-inner">
-            <a href="index.html" class="logo-wrap">
-                <img src="logo.png" alt="Rahma Logo" class="logo-img">
-                <div class="logo-text">Rahma Islamic Centre<span>Winnipeg</span></div>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a><div class="nav-drop"><a href="index.html#about"><i class="fas fa-users"></i>Who We Are</a><a href="index.html#mission"><i class="fas fa-bullseye"></i>Our Mission</a><a href="index.html#values"><i class="fas fa-heart"></i>Core Values</a></div></li>
-                <li><a href="prayer-times.html">Prayer Times</a><div class="nav-drop"><a href="prayer-times.html#prayer"><i class="fas fa-clock"></i>Today's Prayer Times</a><a href="prayer-times.html#schedule"><i class="fas fa-calendar-alt"></i>Monthly Schedule</a><a href="prayer-times.html#jumuah"><i class="fas fa-mosque"></i>Jumu'ah Info</a></div></li>
-                <li><a href="programs.html">Programs &amp; Services</a><div class="nav-drop"><a href="programs.html"><i class="fas fa-th-large"></i>All Programs</a><a href="activities.html"><i class="fas fa-running"></i>Activities &amp; Classes</a><a href="programs.html#foodbank"><i class="fas fa-hand-holding-heart"></i>Food Bank</a><a href="programs.html#counseling"><i class="fas fa-comments"></i>Spiritual Counseling</a></div></li>
-                <li><a href="education.html">Education</a><div class="nav-drop"><a href="education.html"><i class="fas fa-book-open"></i>All Classes</a><a href="education.html#adult-quran"><i class="fas fa-quran"></i>Adult Quran Class</a><a href="education.html#kids-quran"><i class="fas fa-child"></i>Kids Quran Class</a><a href="education.html#hifdh"><i class="fas fa-star"></i>Hifdh Program</a><a href="education.html#arabic"><i class="fas fa-language"></i>Arabic Class</a></div></li>
-                <li><a href="events.html" class="active">Events</a><div class="nav-drop"><a href="events.html"><i class="fas fa-calendar-star"></i>Upcoming Events</a><a href="events.html#ramadan"><i class="fas fa-moon"></i>Ramadan Programs</a><a href="events.html#eid"><i class="fas fa-gift"></i>Eid Celebrations</a><a href="newsletter.html"><i class="fas fa-envelope"></i>Newsletter</a></div></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="contact.html">Contact</a><div class="nav-drop"><a href="contact.html#form"><i class="fas fa-paper-plane"></i>Send a Message</a><a href="contact.html#location"><i class="fas fa-map-marker-alt"></i>Location &amp; Hours</a></div></li>
-            </ul>
-            <a href="donate.html" class="nav-donate">Donate</a>
-            <div class="hamburger" id="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
-        </div>
-    </nav>
-
-    <!-- HERO -->
-    <div class="eid-hero">
-        <div class="hero-crescent">&#9789;</div>
-        <div class="moon-2">&#9789;</div>
-        <div class="moon-3">&#9789;</div>
-        <div class="moon-4">&#9789;</div>
-        <div class="eid-hero-content reveal">
-            <div class="eid-badge"><i class="fas fa-star-and-crescent"></i> Event Registration</div>
-            <h1>Eid Al-Adha <em>Prayer</em></h1>
-            <p>Join us to celebrate Eid Al-Adha with the Rahma community. Register your family below to secure your spots for this blessed occasion.</p>
-            <div class="eid-info-pills">
-                <div class="eid-pill"><i class="fas fa-calendar-alt"></i> Wednesday, May 27, 2026</div>
-                <div class="eid-pill"><i class="fas fa-map-marker-alt"></i> 1717 Gateway RD, Winnipeg</div>
-                <div class="eid-pill"><i class="fas fa-users"></i> Free admission &mdash; All welcome</div>
+    <main class="registration-container" style="max-width: 800px; margin: 40px auto; padding: 20px;">
+        <div class="registration-card">
+            <div class="card-header" style="text-align: center; margin-bottom: 30px;">
+                <h1 style="font-family: 'Cinzel', serif; color: var(--navy);">Eid Al-Fitr 2026</h1>
+                <p style="color: var(--gold);">Friday, March 20, 2026</p>
             </div>
-        </div>
-    </div>
 
-    <!-- COUNTER STRIP -->
-    <div class="eid-counter-strip">
-        <div class="counter-item"><span class="counter-num" id="cntRegistered">0</span><span class="counter-label">Registered</span></div>
-        <div class="counter-item"><span class="counter-num" id="cntAttendees">0</span><span class="counter-label">Attendees</span></div>
-        <div class="counter-item"><span class="counter-num" id="cntSession1">0</span><span class="counter-label">Session 1</span></div>
-    </div>
-
-    <!-- REGISTRATION SECTION -->
-    <section class="reg-section">
-        <div class="reg-grid">
-
-            <!-- FORM CARD -->
-            <div class="reg-form-card reveal">
-
-                <div class="success-overlay" id="successOverlay">
-                    <div class="success-icon"><i class="fas fa-check"></i></div>
-                    <h3>Registration Confirmed!</h3>
-                    <p>Taqabbal Allahu minna wa minkum.<br>We look forward to celebrating Eid with your family.</p>
-                    
-                    <div class="qr-ticket" id="qrTicket">
-                        <div class="qr-ticket-header">
-                            <i class="fas fa-star-and-crescent" style="color:var(--gold);font-size:1.3rem;flex-shrink:0;"></i>
-                            <div class="qr-ticket-logo-text">
-                                Rahma Islamic Centre<br>
-                                <span style="color:rgba(255,255,255,0.35);font-size:0.48rem;letter-spacing:0.08em;">EID AL-FITR PRAYER &bull; WINNIPEG 2026</span>
-                            </div>
-                        </div>
-
-                        <div style="text-align:center;">
-                            <div class="qr-session-pill" id="qrSessionPill">
-                                <i class="fas fa-clock"></i> 9:00 AM Session
-                            </div><br>
-                            <div class="qr-code-box">
-                                <img id="displayQr" src="" alt="QR Code" style="width:150px; height:150px; border:4px solid #fff; margin: 10px 0;">
-                            </div>
-                            <p class="qr-scan-hint">
-                                <i class="fas fa-mobile-alt" style="color:var(--gold);margin-right:4px;"></i>
-                                Present this pass at the entrance
-                            </p>
-                        </div>
-
-                        <div class="qr-divider"></div>
-
-                        <div>
-                            <div class="qr-info-row"><span class="qr-key">Name</span><span class="qr-val" id="qrName"></span></div>
-                            <div class="qr-info-row"><span class="qr-key">Attendees</span><span class="qr-val" id="qrAttendees"></span></div>
-                            <div class="qr-info-row"><span class="qr-key">Reference</span><span class="qr-val gold" id="qrRefDisplay"></span></div>
+            <form id="eidForm">
+                <div class="form-group" style="margin-bottom:24px;">
+                    <label style="display:block;margin-bottom:10px;font-weight:500;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Prayer Session <span style="color:var(--gold)">*</span></label>
+                    <div class="session-picker" style="grid-template-columns: 1fr;">
+                        <div class="session-card selected" id="sessionCard1">
+                            <strong style="font-family:'Cinzel',serif;font-size:1rem;">Eid Prayer</strong>
+                            <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">Takbeer 8:30 AM · Prayer 9:00 AM</span>
                         </div>
                     </div>
-
-                    <div class="qr-actions">
-                        <button class="qr-btn qr-btn-dark" onclick="downloadQR()">
-                            <i class="fas fa-download"></i> Save QR
-                        </button>
-                        <button class="qr-btn qr-btn-outline" onclick="window.print()">
-                            <i class="fas fa-print"></i> Print Ticket
-                        </button>
-                    </div>
-                    <button class="btn-reset" onclick="resetForm()">Register Another Family</button>
+                    <input type="hidden" id="selectedSession" value="1">
                 </div>
 
-                <h2>Register Your <em>Family</em></h2>
-                <p class="sub">Complete the form below. All fields marked with * are required.</p>
-
-                <form id="eidForm" novalidate>
-
-                    <!-- SESSION SELECTION -->
-                    <div class="form-group" style="margin-bottom:24px;">
-                        <label style="display:block;margin-bottom:10px;font-weight:500;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Prayer Session <span style="color:var(--gold)">*</span></label>
-                        <div class="session-picker" style="grid-template-columns: 1fr;">
-                            <div class="session-card selected" data-session="1" id="sessionCard1">
-                                <strong style="font-family:'Cinzel',serif;font-size:1rem;">Eid Al-Adha Prayer</strong>
-                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">Takbeer 8:30 AM · Prayer 9:00 AM</span>
-                                <span style="position:absolute;top:10px;right:15px;color:var(--gold);"><i class="fas fa-check-circle"></i></span>
-                            </div>
-                        </div>
-                        <input type="hidden" id="selectedSession" value="1">
-                    </div>
-
-                    <div class="form-group" style="background: rgba(201,168,76,0.05); padding: 20px; border: 1px dashed var(--gold); border-radius: 4px; margin-bottom: 25px;">
-                        <label style="font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy); margin-bottom:8px; display:block;">Support the Centre (Optional)</label>
-                        <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 15px; line-height:1.4;">Your contribution helps cover the event costs and supporting the Rahma community.</p>
-                        <select id="donationAmount" name="donationAmount" style="background-color: #fff;">
-                            <option value="0">No donation at this time</option>
-                            <option value="10">$10 — Sadaqah</option>
-                            <option value="20">$20 — Family Support</option>
-                            <option value="50">$50 — Community Sponsor</option>
-                            <option value="other">Other Amount</option>
-                        </select>
-                    </div>
-
-                    <!-- NAME -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName">First Name <span>*</span></label>
-                            <input type="text" id="firstName" placeholder="Ahmad" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name <span>*</span></label>
-                            <input type="text" id="lastName" placeholder="Al-Rashidi" required>
-                        </div>
-                    </div>
-
-                    <!-- CONTACT -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email Address <span>*</span></label>
-                            <input type="email" id="email" placeholder="your@email.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" placeholder="+1 (204) 000-0000">
-                        </div>
-                    </div>
-
-                    <!-- FAMILY COUNT -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Number of Adults <span>*</span></label>
-                            <div class="family-counter">
-                                <button type="button" onclick="adjustCount('adults',-1)">&#8722;</button>
-                                <input type="number" id="adults" value="1" min="1" max="20" readonly>
-                                <button type="button" onclick="adjustCount('adults',1)">+</button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Number of Children</label>
-                            <div class="family-counter">
-                                <button type="button" onclick="adjustCount('children',-1)">&#8722;</button>
-                                <input type="number" id="children" value="0" min="0" max="20" readonly>
-                                <button type="button" onclick="adjustCount('children',1)">+</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ACCESSIBILITY -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="form-group">
-                        <label for="accessibility">Accessibility / Special Requirements</label>
-                        <select id="accessibility">
-                            <option value="none">No special requirements</option>
-                            <option value="wheelchair">Wheelchair accessible space needed</option>
-                            <option value="hearing">Hearing assistance needed</option>
-                            <option value="elderly">Elderly &mdash; seating preference</option>
-                            <option value="other">Other (please specify below)</option>
-                        </select>
+                        <label>First Name *</label>
+                        <input type="text" id="firstName" required placeholder="Enter first name">
                     </div>
-
-                    <!-- NOTES -->
                     <div class="form-group">
-                        <label for="notes">Additional Notes</label>
-                        <textarea id="notes" rows="3" placeholder="Any questions, requests, or information you'd like us to know..."></textarea>
-                    </div>
-
-                    <!-- CHECKBOXES -->
-                    <div class="check-group">
-                        <input type="checkbox" id="agreeTerms" required>
-                        <label for="agreeTerms">I understand this registration is for the Eid Al-Adha prayer at Rahma Islamic Centre and I will attend in person. <span style="color:var(--gold)">*</span></label>
-                    </div>
-                    <div class="check-group">
-                        <input type="checkbox" id="newsletter" checked>
-                        <label for="newsletter">Sign me up for Rahma&rsquo;s newsletter and event updates.</label>
-                    </div>
-
-                    <button type="submit" class="reg-submit" id="submitBtn">
-                        <i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration
-                    </button>
-                </form>
-            </div>
-
-            <!-- SIDEBAR -->
-            <div class="reg-sidebar">
-                <div class="info-card reveal reveal-delay-1">
-                    <h3><i class="fas fa-info-circle" style="margin-right:8px;opacity:0.7"></i> Event Details</h3>
-                    <div class="info-row">
-                        <div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
-                        <div><span class="info-text-label">Date</span><span class="info-text-val"><strong>Wednesday, May 27, 2026</strong></span></div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-icon"><i class="fas fa-clock"></i></div>
-                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong>Session 1</strong> &mdash; Takbeer 8:30 &bull; Prayer 9:00 AM<br><strong></span></div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <div><span class="info-text-label">Location</span><span class="info-text-val">1717 Gateway RD<br>Winnipeg, MB R2G 4H1</span></div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-icon"><i class="fas fa-dollar-sign"></i></div>
-                        <div><span class="info-text-label">Admission</span><span class="info-text-val"><strong>Free</strong> &mdash; open to all</span></div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-icon"><i class="fas fa-phone"></i></div>
-                        <div><span class="info-text-label">Inquiries</span><span class="info-text-val"><a href="tel:+14317923791" style="color:rgba(255,255,255,0.7);text-decoration:none">+1 (431) 792-3791</a></span></div>
-                    </div>
-                    <div style="border-top:1px solid rgba(201,168,76,0.15);padding-top:16px;margin-top:4px;">
-                        <div class="cap-bar-label"><span>Session 1</span><span id="cap1Pct">—</span></div>
-                        <div class="cap-bar"><div class="cap-fill" id="cap1Bar" style="width:0%"></div></div>
+                        <label>Last Name *</label>
+                        <input type="text" id="lastName" required placeholder="Enter last name">
                     </div>
                 </div>
 
-                <div class="guidelines-card reveal reveal-delay-2">
-                    <h3><i class="fas fa-list-ul" style="margin-right:8px;color:var(--gold)"></i> Guidelines</h3>
-                    <div class="guideline-item"><i class="fas fa-check"></i>Perform Ghusl (ritual bath) before arriving</div>
-                    <div class="guideline-item"><i class="fas fa-check"></i>Wear your finest, clean clothes</div>
-                    <div class="guideline-item"><i class="fas fa-check"></i>Eat something (dates recommended) before leaving</div>
-                    <div class="guideline-item"><i class="fas fa-check"></i>Arrive at least 15 minutes early</div>
-                    <div class="guideline-item"><i class="fas fa-check"></i>Bring a prayer rug</div>
-                    <div class="guideline-item"><i class="fas fa-check"></i>Parking available at Gateway Rec Centre</div>
-                    <div class="guideline-item"><i class="fas fa-qrcode"></i>Have your QR code ready at the entrance</div>
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="email" required placeholder="you@example.com">
                 </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Adults (12+)</label>
+                        <input type="number" id="adults" value="1" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Children (Under 12)</label>
+                        <input type="number" id="children" value="0" min="0">
+                    </div>
+                </div>
+
+                <div class="form-group" style="background: rgba(201,168,76,0.05); padding: 20px; border: 1px dashed var(--gold); border-radius: 4px; margin-top: 20px;">
+                    <label style="font-family:'Cinzel',serif;font-size:0.75rem;color:var(--navy); margin-bottom:8px; display:block; text-transform: uppercase;">Support the Centre (Optional)</label>
+                    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">Your contribution helps cover event costs.</p>
+                    <select id="donationAmount" style="width: 100%; padding: 10px;">
+                        <option value="0">No donation at this time</option>
+                        <option value="10">$10 — Sadaqah</option>
+                        <option value="20">$20 — Family Support</option>
+                        <option value="50">$50 — Community Sponsor</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label style="display: flex; align-items: center; gap: 10px; font-size: 0.85rem; cursor: pointer;">
+                        <input type="checkbox" id="agreeTerms" required> I confirm my family will attend in person.
+                    </label>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn-submit" style="width:100%; margin-top: 20px; padding: 15px; background: var(--navy); color: white; border: none; font-family: 'Cinzel', serif; cursor: pointer;">
+                    Complete Registration
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <div class="success-overlay" id="successOverlay" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:9999; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow-y: auto;">
+        <div style="padding: 40px;">
+            <i class="fas fa-check-circle" style="font-size: 3rem; color: #27ae60; margin-bottom: 20px;"></i>
+            <h2 style="font-family: 'Cinzel', serif;">Registration Confirmed!</h2>
+            <p>Taqabbal Allahu minna wa minkum.</p>
+
+            <div id="qrTicket" style="margin: 30px auto; padding: 20px; border: 2px solid var(--navy); border-radius: 12px; max-width: 320px; background: #fff;">
+                <p style="font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--gold);">Official Entry Pass</p>
+                <img id="displayQr" src="" style="width: 180px; height: 180px; margin: 15px 0;">
+                <h4 id="qrName" style="margin: 10px 0 5px 0;"></h4>
+                <p id="qrAttendees" style="font-size: 0.9rem; color: var(--muted);"></p>
+                <div id="qrRefDisplay" style="font-family: monospace; background: #eee; padding: 5px; border-radius: 4px; display: inline-block; margin-top: 10px; font-weight: bold;"></div>
             </div>
 
-        </div>
-    </section>
-
-    <!-- NEWSLETTER -->
-    <section class="newsletter-section">
-        <div class="container">
-            <div class="newsletter-inner">
-                <div class="newsletter-text"><h3>Stay Connected</h3><p>Get updates on events &amp; announcements</p></div>
-                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                    <input type="email" class="newsletter-input" placeholder="Your email address" required>
-                    <button type="submit" class="newsletter-btn">Subscribe</button>
-                </form>
+            <p style="font-size: 0.8rem; max-width: 300px; margin: 0 auto 20px auto;">A confirmation email with your QR code has been sent. Please show this at the entrance.</p>
+            
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button onclick="window.print()" style="padding: 10px 20px; cursor:pointer;">Print Ticket</button>
+                <button onclick="location.reload()" style="padding: 10px 20px; background: var(--navy); color: white; border:none; cursor:pointer;">Register Another</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- FOOTER -->
-    <footer class="footer"><div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand"><span class="logo-text-footer">Rahma Islamic Centre</span><p>A vibrant Islamic center serving Muslims in Winnipeg since 2016.</p><div class="footer-social"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
-            <div class="footer-col"><h4>Navigation</h4><ul><li><a href="index.html">Home</a></li><li><a href="prayer-times.html">Prayer Times</a></li><li><a href="programs.html">Programs &amp; Services</a></li><li><a href="education.html">Education</a></li><li><a href="events.html">Events</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-            <div class="footer-col"><h4>Programs</h4><ul><li><a href="education.html">Quran Classes</a></li><li><a href="education.html">Arabic Classes</a></li><li><a href="education.html">Hifdh Program</a></li><li><a href="programs.html">All Programs</a></li></ul></div>
-            <div class="footer-col"><h4>Contact</h4>
-                <div class="contact-li"><i class="fas fa-map-marker-alt"></i><span>574 Watt St, Winnipeg, MB R2K 4K1</span></div>
-                <div class="contact-li"><i class="fas fa-phone"></i><span>+1 (431) 792-3791</span></div>
-                <div class="contact-li"><i class="fas fa-envelope"></i><span>info@rahmacentre.ca</span></div>
-            </div>
-        </div>
-        <div class="footer-bottom"><span>Copyright &copy; 2026 Rahma Islamic Centre. All rights reserved.</span><span>Powered by Devodez Solutions</span></div>
-    </div></footer>
-
-    <script src="shared.js"></script>
     <script>
-/* ═══════════════════════════════════════════════════════
-   EID REGISTRATION v2 — Fully Functional + QR Code
-═══════════════════════════════════════════════════════ */
+        const GS_URL = 'VOTRE_URL_GOOGLE_SCRIPT_ICI';
 
-const STORAGE_KEY   = 'rahma-eid-2026-v2';
-const CAPACITY      = { 1: 500, 2: 500 };
-const GS_URL        = 'https://script.google.com/macros/s/AKfycbwigdnlHkrapjIccpcq5ydTgv8cwxPtd6R7axThYYAjvJV261Ny89bWYLDGtOedjb-cbg/exec';
-const SESSION_INFO  = {
-    '1': { label: 'Session 1', time: 'Takbeer 8:30 · Prayer 9:00 AM', short: '9:00 AM' },
-};
+        function genRef() {
+            return 'EID-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        }
 
-/* ── LocalStorage helpers ───────────────────────────── */
-function loadRegs() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
-}
-function saveReg(rec) {
-    try { const r = loadRegs(); r.push(rec); localStorage.setItem(STORAGE_KEY, JSON.stringify(r)); } catch(e) {}
-}
+        document.getElementById('eidForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
 
-/* ── Text helpers ───────────────────────────────────── */
-function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
-function setHTML(id, v) { const el = document.getElementById(id); if (el) el.innerHTML = v; }
+            const ref = genRef();
+            const record = {
+                ref: ref,
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                adults: document.getElementById('adults').value,
+                children: document.getElementById('children').value,
+                donationAmount: document.getElementById('donationAmount').value,
+                session: "9:00 AM"
+            };
 
-/* ── Update counters + capacity UI ─────────────────── */
-function updateUI(regs) {
-    const s1 = regs.filter(r => String(r.session) === '1').length;
-    const tot = regs.reduce((s, r) => s + (parseInt(r.adults)||0) + (parseInt(r.children)||0), 0);
-
-    setText('cntRegistered', regs.length);
-    setText('cntAttendees', tot);
-    setText('cntSession1', s1);
-
-    updateSession(1, s1);
-}
-
-function updateSession(num, count) {
-    const cap = CAPACITY[num];
-    const rem = cap - count;
-    const pct = Math.min(100, Math.round(count / cap * 100));
-
-    // Counter strip
-    setText('cntSession' + num, count);
-
-    // Capacity bar
-    const bar = document.getElementById('cap' + num + 'Bar');
-    if (bar) bar.style.width = pct + '%';
-    setText('cap' + num + 'Pct', pct + '%');
-
-    // Session card availability
-    const card = document.getElementById('sessionCard' + num);
-    const badge = document.getElementById('badge' + num);
-    const spots = document.getElementById('spots' + num);
-    if (!card) return;
-
-    if (rem <= 0) {
-        card.classList.add('full');
-        if (badge) { badge.textContent = 'Full'; badge.className = 'session-status status-full'; }
-        if (spots) spots.textContent = 'No spots remaining';
-    } else {
-        card.classList.remove('full');
-        if (badge) { badge.textContent = 'Open'; badge.className = 'session-status status-open'; }
-        if (spots) spots.textContent = rem + ' spots available';
-    }
-}
-
-/* ── Load counters (Google Sheets → localStorage fallback) ── */
-async function loadCounters() {
-    try {
-        const r = await fetch(GS_URL, { method: 'GET', mode: 'cors', signal: AbortSignal.timeout(5000) });
-        const json = await r.json();
-        if (json.result === 'success' && Array.isArray(json.data)) { updateUI(json.data); return; }
-    } catch(e) {}
-    updateUI(loadRegs());
-}
-
-/* ── Session selection ──────────────────────────────── */
-function selectSession(card) {
-    if (card.classList.contains('full')) return;
-    document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
-    card.classList.add('selected');
-    document.getElementById('selectedSession').value = card.dataset.session;
-}
-
-/* ── Counter buttons ────────────────────────────────── */
-function adjustCount(field, d) {
-    const el = document.getElementById(field);
-    el.value = Math.max(+el.min || 0, Math.min(+el.max || 99, (+el.value || 0) + d));
-}
-
-/* ── Reference generator ────────────────────────────── */
-function genRef() {
-    const c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let s = '';
-    for (let i = 0; i < 6; i++) s += c[Math.floor(Math.random() * c.length)];
-    return 'EID26-' + s;
-}
-
-/* ── QR code generator ──────────────────────────────── */
-let _qrGenerated = false;
-function generateQR(rec) {
-    const el = document.getElementById('qrcode');
-    el.innerHTML = '';
-    _qrGenerated = false;
-    const payload = JSON.stringify({
-        ref: rec.ref,
-        name: rec.firstName + ' ' + rec.lastName,
-        session: rec.session,
-        adults: rec.adults,
-        children: rec.children,
-        event: 'EidAlAdha2026-Rahma-Winnipeg'
-    });
-    new QRCode(el, {
-        text: payload,
-        width: 190, height: 190,
-        colorDark: '#0B1F3A',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.H
-    });
-    _qrGenerated = true;
-}
-
-/* ── Populate ticket overlay ────────────────────────── */
-function populateTicket(rec) {
-    const si = SESSION_INFO[String(rec.session)] || { label: 'Session ' + rec.session, time: '—', short: '—' };
-    const adults = parseInt(rec.adults) || 1;
-    const children = parseInt(rec.children) || 0;
-    const attendeeStr = adults + (children > 0 ? ' adult' + (adults > 1 ? 's' : '') + ' + ' + children + ' child' + (children > 1 ? 'ren' : '') : ' adult' + (adults > 1 ? 's' : ''));
-
-    setText('successRef', 'Registration ' + rec.ref);
-    setText('qrRef', rec.ref);
-    setText('qrName', rec.firstName + ' ' + rec.lastName);
-    setText('qrSession', si.label);
-    setText('qrTime', si.time);
-    setText('qrAttendees', attendeeStr);
-    setHTML('qrSessionPill', '<i class="fas fa-clock"></i> ' + si.label + ' &bull; ' + si.short);
-
-    generateQR(rec);
-}
-
-/* ── Download QR as PNG ─────────────────────────────── */
-function downloadQR() {
-    const canvas = document.querySelector('#qrcode canvas');
-    if (!canvas) { showToast('QR code is not ready yet — please wait a moment.', '#c0392b'); return; }
-    const a = document.createElement('a');
-    a.href = canvas.toDataURL('image/png');
-    a.download = 'Rahma-Eid2026-' + (document.getElementById('qrRef').textContent || 'ticket') + '.png';
-    a.click();
-}
-
-/* ── Print ticket ───────────────────────────────────── */
-function printTicket() {
-    const canvas = document.querySelector('#qrcode canvas');
-    const qrImg = canvas ? canvas.toDataURL('image/png') : '';
-    const ref = document.getElementById('qrRef').textContent || '';
-    const name = document.getElementById('qrName').textContent || '';
-    const session = document.getElementById('qrSession').textContent || '';
-    const time = document.getElementById('qrTime').textContent || '';
-    const attendees = document.getElementById('qrAttendees').textContent || '';
-
-    document.getElementById('printArea').innerHTML = `
-        <div style="font-family:'Georgia',serif;max-width:400px;margin:30px auto;border:2.5px solid #C9A84C;padding:30px;text-align:center;color:#0B1F3A;box-shadow:0 2px 20px rgba(0,0,0,0.1);">
-            <div style="font-size:1.6rem;margin-bottom:2px;">&#9789; Rahma Islamic Centre</div>
-            <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:18px;border-bottom:1px solid #C9A84C;padding-bottom:14px;">Eid Al-Adha Prayer 2026 &bull; Entry Ticket</div>
-            <div style="background:#0B1F3A;color:#C9A84C;padding:7px 18px;border-radius:20px;display:inline-block;font-size:0.7rem;letter-spacing:0.14em;margin-bottom:16px;">${session}</div><br>
-            ${qrImg ? `<img src="${qrImg}" width="180" height="180" style="border:3px solid #0B1F3A;padding:7px;margin-bottom:14px;">` : ''}
-            <p style="font-size:0.7rem;color:#888;margin:0 0 16px;">Present this QR code at the entrance on the day of Eid</p>
-            <hr style="border:none;border-top:1px solid #C9A84C;margin:0 0 14px;">
-            <table style="width:100%;font-size:0.84rem;border-collapse:collapse;">
-                <tr><td style="color:#888;text-align:left;padding:5px 0;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;">Name</td><td style="text-align:right;font-weight:bold;">${name}</td></tr>
-                <tr><td style="color:#888;text-align:left;padding:5px 0;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;">Prayer</td><td style="text-align:right;">${time}</td></tr>
-                <tr><td style="color:#888;text-align:left;padding:5px 0;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;">Attendees</td><td style="text-align:right;">${attendees}</td></tr>
-                <tr><td style="color:#888;text-align:left;padding:5px 0;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;">Reference</td><td style="text-align:right;color:#C9A84C;font-weight:bold;">${ref}</td></tr>
-            </table>
-            <hr style="border:none;border-top:1px solid #C9A84C;margin:14px 0;">
-            <div style="font-size:0.68rem;color:#888;line-height:1.6;">1717 Gateway RD, Winnipeg, MB R2G 4H1<br>Please arrive 15 minutes before prayer time &bull; rahmacentre.ca</div>
-        </div>`;
-    window.print();
-}
-
-/* ── Toast message ──────────────────────────────────── */
-function showToast(msg, color) {
-    const t = document.getElementById('regToast');
-    t.textContent = msg;
-    t.style.background = color || '#c0392b';
-    t.classList.add('visible');
-    clearTimeout(window._toastTimer);
-    window._toastTimer = setTimeout(() => t.classList.remove('visible'), 3600);
-}
-
-/* ── Form submit ────────────────────────────────────── */
-document.getElementById('eidForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // On force la session 1 (9:00 AM) si non sélectionnée car c'est la seule
-    const session = document.getElementById('selectedSession').value || "1";
-
-    if (!document.getElementById('agreeTerms').checked) {
-        showToast('Please confirm you will attend in person.'); return;
-    }
-
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName  = document.getElementById('lastName').value.trim();
-    const email     = document.getElementById('email').value.trim();
-    
-    if (!firstName || !lastName || !email) {
-        showToast('Please fill in First Name, Last Name and Email.'); return;
-    }
-
-    const btn = document.getElementById('submitBtn');
-    btn.classList.add('loading');
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering&hellip;';
-
-    const ref = genRef();
-    const record = {
-        ref, 
-        timestamp: new Date().toISOString(),
-        firstName, 
-        lastName, 
-        email,
-        phone:          document.getElementById('phone').value.trim(),
-        session:        session,
-        adults:         document.getElementById('adults').value,
-        children:       document.getElementById('children').value,
-        donationAmount: document.getElementById('donationAmount').value, // AJOUTÉ
-        notes:          document.getElementById('notes').value.trim(),
-        newsletter:     document.getElementById('newsletter').checked
-    };
-
-    // 1. Appel au script Google (Gestion des doublons et envoi email)
-    // Remplace la partie fetch (vers la ligne 800) par celle-ci
-fetch(GS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
-    body: JSON.stringify(record)
-})
-.then(response => {
-    // Vérification si la réponse est bien du JSON
-    return response.json();
-})
-.then(result => {
-    if (result.status === 'success') {
-        // C'EST ICI QUE CA SE JOUE :
-        function populateTicket(record) {
-                const qrUrl = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + record.ref;
-                document.getElementById('displayQr').src = qrUrl; // Vérifie bien l'ID 'displayQr'
-                document.getElementById('qrName').textContent = record.firstName + ' ' + record.lastName;
-                btn.classList.remove('loading');
-                btn.classList.add('success');
-    } else {
-        alert("Note: " + result.message);
-        btn.classList.remove('loading');
-        btn.innerHTML = 'Try Again';
-    }
-})
-.catch(error => {
-    // Si Google met trop de temps ou bloque, on affiche quand même le ticket localement pour ne pas bloquer l'utilisateur
-    console.warn("Erreur réseau, affichage du ticket local");
-    populateTicket(record);
-    document.getElementById('successOverlay').classList.add('show');
-    btn.classList.remove('loading');
-});
-
-/* ── Fonction pour remplir le ticket avec le QR Code ── */
-function populateTicket(record) {
-    const qrUrl = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + record.ref;
-    
-    // Remplit l'image et les textes dans l'overlay
-    document.getElementById('displayQr').src = qrUrl;
-    document.getElementById('qrName').textContent = record.firstName + ' ' + record.lastName;
-    document.getElementById('qrAttendees').textContent = (parseInt(record.adults) + parseInt(record.children)) + ' Persons';
-    document.getElementById('qrRefDisplay').textContent = record.ref;
-}
-
-/* ── Download QR ── */
-function downloadQR() {
-    const qrSrc = document.getElementById('displayQr').src;
-    const link = document.createElement('a');
-    link.href = qrSrc;
-    link.download = 'Eid_QR_Ticket.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-/* ── Reset form ─────────────────────────────────────── */
-function resetForm() {
-    document.getElementById('eidForm').reset();
-    document.getElementById('adults').value = 1;
-    document.getElementById('children').value = 0;
-    // On remet la session 1 par défaut
-    document.getElementById('selectedSession').value = '1';
-    document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
-    document.getElementById('sessionCard1').classList.add('selected');
-    
-    document.getElementById('successOverlay').classList.remove('show');
-    const btn = document.getElementById('submitBtn');
-    btn.classList.remove('loading', 'success');
-    btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration';
-}
-
-/* ── Init ───────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', () => {
-    // Si tu as une fonction pour charger les compteurs depuis Excel :
-    if(typeof loadCounters === "function") loadCounters();
-});
+            fetch(GS_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(record)
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    // Remplissage du ticket
+                    document.getElementById('displayQr').src = "https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=" + ref;
+                    document.getElementById('qrName').textContent = record.firstName + " " + record.lastName;
+                    document.getElementById('qrAttendees').textContent = (parseInt(record.adults) + parseInt(record.children)) + " Attendees";
+                    document.getElementById('qrRefDisplay').textContent = ref;
+                    
+                    // Affichage de l'overlay
+                    document.getElementById('successOverlay').style.display = 'flex';
+                } else {
+                    alert("Error: " + result.message);
+                    btn.disabled = false;
+                    btn.innerHTML = 'Complete Registration';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Connection error. Please try again.");
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
