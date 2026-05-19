@@ -671,74 +671,64 @@ function showToast(msg, color) {
 document.getElementById('eidForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // On force la session 1 (9:00 AM) si non sélectionnée car c'est la seule
-    const session = document.getElementById('selectedSession').value || "1";
-
-    if (!document.getElementById('agreeTerms').checked) {
-        showToast('Please confirm you will attend in person.'); return;
-    }
-
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName  = document.getElementById('lastName').value.trim();
-    const email     = document.getElementById('email').value.trim();
-    
-    if (!firstName || !lastName || !email) {
-        showToast('Please fill in First Name, Last Name and Email.'); return;
-    }
-
     const btn = document.getElementById('submitBtn');
-    btn.classList.add('loading');
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering&hellip;';
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
 
-    const ref = genRef();
+    btn.classList.add('loading');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+
+    const ref = 'EID-' + Math.random().toString(36).substr(2, 6).toUpperCase();
     const record = {
-        ref, 
-        timestamp: new Date().toISOString(),
-        firstName, 
-        lastName, 
-        email,
-        phone:          document.getElementById('phone').value.trim(),
-        session:        session,
-        adults:         document.getElementById('adults').value,
-        children:       document.getElementById('children').value,
-        donationAmount: document.getElementById('donationAmount').value, // AJOUTÉ
-        notes:          document.getElementById('notes').value.trim(),
-        newsletter:     document.getElementById('newsletter').checked
+        ref: ref,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: document.getElementById('phone').value,
+        adults: document.getElementById('adults').value,
+        children: document.getElementById('children').value,
+        donationAmount: document.getElementById('donationAmount').value,
+        session: "9:00 AM"
     };
 
-    // 1. Appel au script Google (Gestion des doublons et envoi email)
-    // Remplace la partie fetch (vers la ligne 800) par celle-ci
-fetch(GS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
-    body: JSON.stringify(record)
-})
-.then(response => {
-    // Vérification si la réponse est bien du JSON
-    return response.json();
-})
-.then(result => {
-    if (result.status === 'success') {
-        // C'EST ICI QUE CA SE JOUE :
-        function populateTicket(record) {
-                const qrUrl = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + record.ref;
-                document.getElementById('displayQr').src = qrUrl; // Vérifie bien l'ID 'displayQr'
-                document.getElementById('qrName').textContent = record.firstName + ' ' + record.lastName;
-                btn.classList.remove('loading');
-            btn.classList.add('success');
-    } else {
-        alert("Note: " + result.message);
+    fetch(GS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(record)
+    })
+    .then(res => res.json())
+    .then(result => {
+        if (result.status === 'success') {
+            // REMPLISSAGE DU TICKET
+            document.getElementById('displayQr').src = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + ref;
+            document.getElementById('qrName').textContent = firstName + " " + lastName;
+            document.getElementById('qrRefDisplay').textContent = ref;
+            document.getElementById('qrAttendees').textContent = (parseInt(record.adults) + parseInt(record.children)) + " Persons";
+            
+            // AFFICHAGE
+            document.getElementById('successOverlay').classList.add('show');
+            btn.classList.remove('loading');
+        } else {
+            // MESSAGE D'ERREUR (ex: Email déjà utilisé)
+            alert("Error: " + result.message);
+            btn.classList.remove('loading');
+            btn.innerHTML = 'Complete Registration';
+        }
+    })
+    .catch(err => {
+        alert("Connection error. Please try again.");
         btn.classList.remove('loading');
-        btn.innerHTML = 'Try Again';
-    }
-})
-.catch(error => {
-    // Si Google met trop de temps ou bloque, on affiche quand même le ticket localement pour ne pas bloquer l'utilisateur
-    console.warn("Erreur réseau, affichage du ticket local");
-    populateTicket(record);
-    document.getElementById('successOverlay').classList.add('show');
-    btn.classList.remove('loading');
+    });
 });
+
+// Ajoute aussi cette petite fonction pour le bouton "Save QR"
+function downloadQR() {
+    const link = document.createElement('a');
+    link.href = document.getElementById('displayQr').src;
+    link.download = 'Eid_QR_Code.png';
+    link.click();
+}
 
 /* ── Fonction pour remplir le ticket avec le QR Code ── */
 function populateTicket(record) {
