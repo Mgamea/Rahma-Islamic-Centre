@@ -266,10 +266,9 @@
                         <div class="qr-divider"></div>
 
                         <div>
-                            <div class="qr-info-row"><span class="qr-key">Name</span><span class="qr-val" id="qrName">&mdash;</span></div>
-                            <div class="qr-info-row"><span class="qr-key">Prayer Time</span><span class="qr-val gold" id="qrTime">9:00 AM</span></div>
-                            <div class="qr-info-row"><span class="qr-key">Attendees</span><span class="qr-val" id="qrAttendees">&mdash;</span></div>
-                            <div class="qr-info-row"><span class="qr-key">Reference</span><span class="qr-val gold" id="qrRefDisplay">&mdash;</span></div>
+                            <div class="qr-info-row"><span class="qr-key">Name</span><span class="qr-val" id="qrName"></span></div>
+                            <div class="qr-info-row"><span class="qr-key">Attendees</span><span class="qr-val" id="qrAttendees"></span></div>
+                            <div class="qr-info-row"><span class="qr-key">Reference</span><span class="qr-val gold" id="qrRefDisplay"></span></div>
                         </div>
                     </div>
 
@@ -696,36 +695,37 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
     };
 
     // 1. Appel au script Google (Gestion des doublons et envoi email)
-    fetch(GS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
-        body: JSON.stringify(record)
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.status === 'success') {
-            // SI SUCCÈS : On génère le ticket visuel et on l'affiche
-            populateTicket(record); 
-            document.getElementById('successOverlay').classList.add('show');
-            document.getElementById('successOverlay').scrollTop = 0;
-            btn.classList.remove('loading');
-            btn.classList.add('success');
-            
-            // Mise à jour des compteurs locaux
-            if(typeof updateUI === "function") updateUI(loadRegs());
-        } else {
-            // SI DOUBLON OU ERREUR
-            alert("Notice: " + result.message);
-            btn.classList.remove('loading');
-            btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Try Again';
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("Connection error. Please try again.");
+    // Remplace la partie fetch (vers la ligne 800) par celle-ci
+fetch(GS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+    body: JSON.stringify(record)
+})
+.then(response => {
+    // Vérification si la réponse est bien du JSON
+    return response.json();
+})
+.then(result => {
+    if (result.status === 'success') {
+        // C'EST ICI QUE CA SE JOUE :
+        function populateTicket(record) {
+                const qrUrl = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + record.ref;
+                document.getElementById('displayQr').src = qrUrl; // Vérifie bien l'ID 'displayQr'
+                document.getElementById('qrName').textContent = record.firstName + ' ' + record.lastName;
+                btn.classList.remove('loading');
+                btn.classList.add('success');
+    } else {
+        alert("Note: " + result.message);
         btn.classList.remove('loading');
-        btn.innerHTML = 'Complete Registration';
-    });
+        btn.innerHTML = 'Try Again';
+    }
+})
+.catch(error => {
+    // Si Google met trop de temps ou bloque, on affiche quand même le ticket localement pour ne pas bloquer l'utilisateur
+    console.warn("Erreur réseau, affichage du ticket local");
+    populateTicket(record);
+    document.getElementById('successOverlay').classList.add('show');
+    btn.classList.remove('loading');
 });
 
 /* ── Fonction pour remplir le ticket avec le QR Code ── */
