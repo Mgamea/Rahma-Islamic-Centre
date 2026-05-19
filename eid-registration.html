@@ -236,33 +236,30 @@
             <!-- FORM CARD -->
             <div class="reg-form-card reveal">
 
-                <!-- SUCCESS + QR OVERLAY -->
                 <div class="success-overlay" id="successOverlay">
                     <div class="success-icon"><i class="fas fa-check"></i></div>
                     <h3>Registration Confirmed!</h3>
                     <p>Taqabbal Allahu minna wa minkum.<br>We look forward to celebrating Eid with your family.</p>
-                    <div class="success-ref" id="successRef">Registration #EID-XXXXXX</div>
-
-                    <!-- QR TICKET -->
+                    
                     <div class="qr-ticket" id="qrTicket">
                         <div class="qr-ticket-header">
                             <i class="fas fa-star-and-crescent" style="color:var(--gold);font-size:1.3rem;flex-shrink:0;"></i>
                             <div class="qr-ticket-logo-text">
                                 Rahma Islamic Centre<br>
-                                <span style="color:rgba(255,255,255,0.35);font-size:0.48rem;letter-spacing:0.08em;">EID AL-ADHA PRAYER &bull; WINNIPEG 2026</span>
+                                <span style="color:rgba(255,255,255,0.35);font-size:0.48rem;letter-spacing:0.08em;">EID AL-FITR PRAYER &bull; WINNIPEG 2026</span>
                             </div>
                         </div>
 
                         <div style="text-align:center;">
                             <div class="qr-session-pill" id="qrSessionPill">
-                                <i class="fas fa-clock"></i> Session &mdash;
+                                <i class="fas fa-clock"></i> 9:00 AM Session
                             </div><br>
                             <div class="qr-code-box">
-                                <div id="qrcode"></div>
+                                <img id="displayQr" src="" alt="QR Code" style="width:150px; height:150px; border:4px solid #fff; margin: 10px 0;">
                             </div>
                             <p class="qr-scan-hint">
                                 <i class="fas fa-mobile-alt" style="color:var(--gold);margin-right:4px;"></i>
-                                Present at the entrance on Eid day
+                                Present this pass at the entrance
                             </p>
                         </div>
 
@@ -270,18 +267,17 @@
 
                         <div>
                             <div class="qr-info-row"><span class="qr-key">Name</span><span class="qr-val" id="qrName">&mdash;</span></div>
-                            <div class="qr-info-row"><span class="qr-key">Session</span><span class="qr-val gold" id="qrSession">&mdash;</span></div>
-                            <div class="qr-info-row"><span class="qr-key">Prayer</span><span class="qr-val" id="qrTime">&mdash;</span></div>
+                            <div class="qr-info-row"><span class="qr-key">Prayer Time</span><span class="qr-val gold" id="qrTime">9:00 AM</span></div>
                             <div class="qr-info-row"><span class="qr-key">Attendees</span><span class="qr-val" id="qrAttendees">&mdash;</span></div>
-                            <div class="qr-info-row"><span class="qr-key">Reference</span><span class="qr-val gold" id="qrRef">&mdash;</span></div>
+                            <div class="qr-info-row"><span class="qr-key">Reference</span><span class="qr-val gold" id="qrRefDisplay">&mdash;</span></div>
                         </div>
                     </div>
 
                     <div class="qr-actions">
                         <button class="qr-btn qr-btn-dark" onclick="downloadQR()">
-                            <i class="fas fa-download"></i> Download QR
+                            <i class="fas fa-download"></i> Save QR
                         </button>
-                        <button class="qr-btn qr-btn-outline" onclick="printTicket()">
+                        <button class="qr-btn qr-btn-outline" onclick="window.print()">
                             <i class="fas fa-print"></i> Print Ticket
                         </button>
                     </div>
@@ -664,8 +660,8 @@ function showToast(msg, color) {
 document.getElementById('eidForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const session = document.getElementById('selectedSession').value;
-    if (!session) { showToast('Please select a session before continuing.'); return; }
+    // On force la session 1 (9:00 AM) si non sélectionnée car c'est la seule
+    const session = document.getElementById('selectedSession').value || "1";
 
     if (!document.getElementById('agreeTerms').checked) {
         showToast('Please confirm you will attend in person.'); return;
@@ -674,6 +670,7 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
     const firstName = document.getElementById('firstName').value.trim();
     const lastName  = document.getElementById('lastName').value.trim();
     const email     = document.getElementById('email').value.trim();
+    
     if (!firstName || !lastName || !email) {
         showToast('Please fill in First Name, Last Name and Email.'); return;
     }
@@ -684,68 +681,93 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
 
     const ref = genRef();
     const record = {
-        ref, timestamp: new Date().toISOString(),
-        firstName, lastName, email,
-        phone:         document.getElementById('phone').value.trim(),
-        session,
-        adults:        document.getElementById('adults').value,
-        children:      document.getElementById('children').value,
-        accessibility: document.getElementById('accessibility').value,
-        notes:         document.getElementById('notes').value.trim(),
-        newsletter:    document.getElementById('newsletter').checked
+        ref, 
+        timestamp: new Date().toISOString(),
+        firstName, 
+        lastName, 
+        email,
+        phone:          document.getElementById('phone').value.trim(),
+        session:        session,
+        adults:         document.getElementById('adults').value,
+        children:       document.getElementById('children').value,
+        donationAmount: document.getElementById('donationAmount').value, // AJOUTÉ
+        notes:          document.getElementById('notes').value.trim(),
+        newsletter:     document.getElementById('newsletter').checked
     };
 
-    // Save locally
-    saveReg(record);
-
-// 1. On lance la requête au script Google
+    // 1. Appel au script Google (Gestion des doublons et envoi email)
     fetch(GS_URL, {
         method: 'POST',
-        // On enlève "no-cors" pour pouvoir lire la réponse du serveur
         headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
         body: JSON.stringify(record)
     })
-    .then(response => response.json()) // On transforme la réponse en JSON
+    .then(response => response.json())
     .then(result => {
         if (result.status === 'success') {
-            // SI SUCCÈS : On affiche le ticket
-            populateTicket(record);
+            // SI SUCCÈS : On génère le ticket visuel et on l'affiche
+            populateTicket(record); 
             document.getElementById('successOverlay').classList.add('show');
             document.getElementById('successOverlay').scrollTop = 0;
             btn.classList.remove('loading');
             btn.classList.add('success');
-            updateUI(loadRegs());
+            
+            // Mise à jour des compteurs locaux
+            if(typeof updateUI === "function") updateUI(loadRegs());
         } else {
-            // SI ERREUR (ex: Email déjà utilisé) : On alerte l'utilisateur
-            alert("Erreur : " + result.message);
+            // SI DOUBLON OU ERREUR
+            alert("Notice: " + result.message);
             btn.classList.remove('loading');
-            btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Réessayer';
+            btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Try Again';
         }
     })
     .catch(error => {
-        console.error('Erreur technique:', error);
-        alert("Une erreur de connexion est survenue. Veuillez réessayer.");
+        console.error('Error:', error);
+        alert("Connection error. Please try again.");
         btn.classList.remove('loading');
-        btn.innerHTML = 'Réessayer';
+        btn.innerHTML = 'Complete Registration';
     });
+});
+
+/* ── Fonction pour remplir le ticket avec le QR Code ── */
+function populateTicket(record) {
+    const qrUrl = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + record.ref;
+    
+    // Remplit l'image et les textes dans l'overlay
+    document.getElementById('displayQr').src = qrUrl;
+    document.getElementById('qrName').textContent = record.firstName + ' ' + record.lastName;
+    document.getElementById('qrAttendees').textContent = (parseInt(record.adults) + parseInt(record.children)) + ' Persons';
+    document.getElementById('qrRefDisplay').textContent = record.ref;
+}
+
+/* ── Download QR ── */
+function downloadQR() {
+    const qrSrc = document.getElementById('displayQr').src;
+    const link = document.createElement('a');
+    link.href = qrSrc;
+    link.download = 'Eid_QR_Ticket.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
 /* ── Reset form ─────────────────────────────────────── */
 function resetForm() {
     document.getElementById('eidForm').reset();
     document.getElementById('adults').value = 1;
     document.getElementById('children').value = 0;
-    document.getElementById('selectedSession').value = '';
+    // On remet la session 1 par défaut
+    document.getElementById('selectedSession').value = '1';
     document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
-    document.getElementById('newsletter').checked = true;
+    document.getElementById('sessionCard1').classList.add('selected');
+    
     document.getElementById('successOverlay').classList.remove('show');
-    document.getElementById('qrcode').innerHTML = '';
     const btn = document.getElementById('submitBtn');
-    btn.classList.remove('loading');
+    btn.classList.remove('loading', 'success');
     btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration';
 }
 
 /* ── Init ───────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', loadCounters);
-    </script>
-</body>
-</html>
+document.addEventListener('DOMContentLoaded', () => {
+    // Si tu as une fonction pour charger les compteurs depuis Excel :
+    if(typeof loadCounters === "function") loadCounters();
+});
