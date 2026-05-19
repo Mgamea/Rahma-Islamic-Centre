@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eid Al-Fitr Prayer Registration — Rahma Islamic Centre</title>
+    <title>Eid Al-Adha Prayer Registration — Rahma Islamic Centre</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -212,7 +212,7 @@
         <div class="moon-4">&#9789;</div>
         <div class="eid-hero-content reveal">
             <div class="eid-badge"><i class="fas fa-star-and-crescent"></i> Event Registration</div>
-            <h1>Eid Al-Fitr <em>Prayer</em></h1>
+            <h1>Eid Al-Adha <em>Prayer</em></h1>
             <span class="eid-arabic">&#1589;&#1604;&#1575;&#1577; &#1593;&#1610;&#1583; &#1575;&#1604;&#1601;&#1591;&#1585;</span>
             <p>Join us to celebrate the end of Ramadan with the Rahma community. Register your family below to secure your spots for this blessed occasion.</p>
             <div class="eid-info-pills">
@@ -251,7 +251,7 @@
                             <i class="fas fa-star-and-crescent" style="color:var(--gold);font-size:1.3rem;flex-shrink:0;"></i>
                             <div class="qr-ticket-logo-text">
                                 Rahma Islamic Centre<br>
-                                <span style="color:rgba(255,255,255,0.35);font-size:0.48rem;letter-spacing:0.08em;">EID AL-FITR PRAYER &bull; WINNIPEG 2026</span>
+                                <span style="color:rgba(255,255,255,0.35);font-size:0.48rem;letter-spacing:0.08em;">EID AL-ADHA PRAYER &bull; WINNIPEG 2026</span>
                             </div>
                         </div>
 
@@ -382,7 +382,7 @@
                     <!-- CHECKBOXES -->
                     <div class="check-group">
                         <input type="checkbox" id="agreeTerms" required>
-                        <label for="agreeTerms">I understand this registration is for the Eid Al-Fitr prayer at Rahma Islamic Centre and I will attend in person. <span style="color:var(--gold)">*</span></label>
+                        <label for="agreeTerms">I understand this registration is for the Eid Al-Adha prayer at Rahma Islamic Centre and I will attend in person. <span style="color:var(--gold)">*</span></label>
                     </div>
                     <div class="check-group">
                         <input type="checkbox" id="newsletter" checked>
@@ -585,7 +585,7 @@ function generateQR(rec) {
         session: rec.session,
         adults: rec.adults,
         children: rec.children,
-        event: 'EidAlFitr2026-Rahma-Winnipeg'
+        event: 'EidAlAdha2026-Rahma-Winnipeg'
     });
     new QRCode(el, {
         text: payload,
@@ -638,7 +638,7 @@ function printTicket() {
     document.getElementById('printArea').innerHTML = `
         <div style="font-family:'Georgia',serif;max-width:400px;margin:30px auto;border:2.5px solid #C9A84C;padding:30px;text-align:center;color:#0B1F3A;box-shadow:0 2px 20px rgba(0,0,0,0.1);">
             <div style="font-size:1.6rem;margin-bottom:2px;">&#9789; Rahma Islamic Centre</div>
-            <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:18px;border-bottom:1px solid #C9A84C;padding-bottom:14px;">Eid Al-Fitr Prayer 2026 &bull; Entry Ticket</div>
+            <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:18px;border-bottom:1px solid #C9A84C;padding-bottom:14px;">Eid Al-Adha Prayer 2026 &bull; Entry Ticket</div>
             <div style="background:#0B1F3A;color:#C9A84C;padding:7px 18px;border-radius:20px;display:inline-block;font-size:0.7rem;letter-spacing:0.14em;margin-bottom:16px;">${session}</div><br>
             ${qrImg ? `<img src="${qrImg}" width="180" height="180" style="border:3px solid #0B1F3A;padding:7px;margin-bottom:14px;">` : ''}
             <p style="font-size:0.7rem;color:#888;margin:0 0 16px;">Present this QR code at the entrance on the day of Eid</p>
