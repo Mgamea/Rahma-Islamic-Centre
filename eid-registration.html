@@ -216,7 +216,7 @@
             <span class="eid-arabic">&#1589;&#1604;&#1575;&#1577; &#1593;&#1610;&#1583; &#1575;&#1604;&#1601;&#1591;&#1585;</span>
             <p>Join us to celebrate the end of Ramadan with the Rahma community. Register your family below to secure your spots for this blessed occasion.</p>
             <div class="eid-info-pills">
-                <div class="eid-pill"><i class="fas fa-calendar-alt"></i> Friday, March 20, 2026</div>
+                <div class="eid-pill"><i class="fas fa-calendar-alt"></i> Wednesday, May 27, 2026</div>
                 <div class="eid-pill"><i class="fas fa-map-marker-alt"></i> 1717 Gateway RD, Winnipeg</div>
                 <div class="eid-pill"><i class="fas fa-users"></i> Free admission &mdash; All welcome</div>
             </div>
@@ -401,11 +401,11 @@
                     <h3><i class="fas fa-info-circle" style="margin-right:8px;opacity:0.7"></i> Event Details</h3>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
-                        <div><span class="info-text-label">Date</span><span class="info-text-val"><strong>Friday, March 20, 2026</strong></span></div>
+                        <div><span class="info-text-label">Date</span><span class="info-text-val"><strong>Wednesday, May 27, 2026</strong></span></div>
                     </div>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-clock"></i></div>
-                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong>Session 1</strong> &mdash; Takbeer 8:30 &bull; Prayer 8:45 AM<br><strong>Session 2</strong> &mdash; Takbeer 10:00 &bull; Prayer 10:15 AM</span></div>
+                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong>Session 1</strong> &mdash; Takbeer 8:30 &bull; Prayer 8:45 AM<br><strong></span></div>
                     </div>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
@@ -422,8 +422,6 @@
                     <div style="border-top:1px solid rgba(201,168,76,0.15);padding-top:16px;margin-top:4px;">
                         <div class="cap-bar-label"><span>Session 1</span><span id="cap1Pct">—</span></div>
                         <div class="cap-bar"><div class="cap-fill" id="cap1Bar" style="width:0%"></div></div>
-                        <div class="cap-bar-label"><span>Session 2</span><span id="cap2Pct">—</span></div>
-                        <div class="cap-bar"><div class="cap-fill" id="cap2Bar" style="width:0%"></div></div>
                     </div>
                 </div>
 
@@ -481,7 +479,6 @@ const CAPACITY      = { 1: 500, 2: 500 };
 const GS_URL        = 'https://script.google.com/macros/s/AKfycbwigdnlHkrapjIccpcq5ydTgv8cwxPtd6R7axThYYAjvJV261Ny89bWYLDGtOedjb-cbg/exec';
 const SESSION_INFO  = {
     '1': { label: 'Session 1', time: 'Takbeer 8:30 · Prayer 8:45 AM', short: '8:45 AM' },
-    '2': { label: 'Session 2', time: 'Takbeer 10:00 · Prayer 10:15 AM', short: '10:15 AM' }
 };
 
 /* ── LocalStorage helpers ───────────────────────────── */
@@ -499,16 +496,13 @@ function setHTML(id, v) { const el = document.getElementById(id); if (el) el.inn
 /* ── Update counters + capacity UI ─────────────────── */
 function updateUI(regs) {
     const s1 = regs.filter(r => String(r.session) === '1').length;
-    const s2 = regs.filter(r => String(r.session) === '2').length;
     const tot = regs.reduce((s, r) => s + (parseInt(r.adults)||0) + (parseInt(r.children)||0), 0);
 
     setText('cntRegistered', regs.length);
     setText('cntAttendees', tot);
     setText('cntSession1', s1);
-    setText('cntSession2', s2);
 
     updateSession(1, s1);
-    updateSession(2, s2);
 }
 
 function updateSession(num, count) {
