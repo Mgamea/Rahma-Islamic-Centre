@@ -213,7 +213,6 @@
         <div class="eid-hero-content reveal">
             <div class="eid-badge"><i class="fas fa-star-and-crescent"></i> Event Registration</div>
             <h1>Eid Al-Adha <em>Prayer</em></h1>
-            <p style="font-family:'Amiri',serif;font-size:1.5rem;color:rgba(201,168,76,0.75);margin-bottom:24px;letter-spacing:0.05em;">صلاة عيد الأضحى</p>
             <p>Join us to celebrate the end of Ramadan with the Rahma community. Register your family below to secure your spots for this blessed occasion.</p>
             <div class="eid-info-pills">
                 <div class="eid-pill"><i class="fas fa-calendar-alt"></i> Wednesday, May 27, 2026</div>
@@ -297,8 +296,13 @@
                     <!-- SESSION SELECTION -->
                     <div class="form-group" style="margin-bottom:24px;">
                         <label style="display:block;margin-bottom:10px;">Select a Session <span>*</span></label>
+<<<<<<< HEAD
+                        <div class="session-picker">
+                            <div class="session-card" data-session="1" id="sessionCard1" onclick="selectSession(this)">
+=======
                         <div class="session-picker">
                             <div class="session-card" data-session="1" id="sessionCard1">
+>>>>>>> e63b2625c1fa163b96e777a34aef28908af91b7f
                                 <strong style="font-family:'Cinzel',serif;font-size:0.8rem;">Session 1</strong>
                                 <span class="session-time">8:45 AM</span>
                                 <span class="session-label">Takbeer 8:30 &bull; Prayer 8:45 AM</span>
@@ -306,6 +310,7 @@
                                 <span class="session-status status-open" id="badge1">Open</span>
                             </div>
                         </div>
+                        <input type="hidden" id="selectedSession" value="">
                     </div>
 
                     <!-- NAME -->
