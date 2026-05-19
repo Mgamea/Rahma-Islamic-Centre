@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eid Al-Fitr Prayer Registration — Rahma Islamic Centre</title>
+    <title>Eid Al-Adha Prayer Registration — Rahma Islamic Centre</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -212,9 +212,9 @@
         <div class="moon-4">&#9789;</div>
         <div class="eid-hero-content reveal">
             <div class="eid-badge"><i class="fas fa-star-and-crescent"></i> Event Registration</div>
-            <h1>Eid Al-Fitr <em>Prayer</em></h1>
+            <h1>Eid Al-Adha <em>Prayer</em></h1>
             <span class="eid-arabic">&#1589;&#1604;&#1575;&#1577; &#1593;&#1610;&#1583; &#1575;&#1604;&#1601;&#1591;&#1585;</span>
-            <p>Join us to celebrate the end of Ramadan with the Rahma community. Register your family below to secure your spots for this blessed occasion.</p>
+            <p>Join us to celebrate Eid Al-Adha with the Rahma community. Register your family below to secure your spots for this blessed occasion.</p>
             <div class="eid-info-pills">
                 <div class="eid-pill"><i class="fas fa-calendar-alt"></i> Friday, March 20, 2026</div>
                 <div class="eid-pill"><i class="fas fa-map-marker-alt"></i> 1717 Gateway RD, Winnipeg</div>
@@ -228,7 +228,6 @@
         <div class="counter-item"><span class="counter-num" id="cntRegistered">0</span><span class="counter-label">Registered</span></div>
         <div class="counter-item"><span class="counter-num" id="cntAttendees">0</span><span class="counter-label">Attendees</span></div>
         <div class="counter-item"><span class="counter-num" id="cntSession1">0</span><span class="counter-label">Session 1</span></div>
-        <div class="counter-item"><span class="counter-num" id="cntSession2">0</span><span class="counter-label">Session 2</span></div>
     </div>
 
     <!-- REGISTRATION SECTION -->
@@ -251,7 +250,7 @@
                             <i class="fas fa-star-and-crescent" style="color:var(--gold);font-size:1.3rem;flex-shrink:0;"></i>
                             <div class="qr-ticket-logo-text">
                                 Rahma Islamic Centre<br>
-                                <span style="color:rgba(255,255,255,0.35);font-size:0.48rem;letter-spacing:0.08em;">EID AL-FITR PRAYER &bull; WINNIPEG 2026</span>
+                                <span style="color:rgba(255,255,255,0.35);font-size:0.48rem;letter-spacing:0.08em;">EID Al-Adha PRAYER &bull; WINNIPEG 2026</span>
                             </div>
                         </div>
 
@@ -301,17 +300,10 @@
                         <div class="session-picker">
                             <div class="session-card" data-session="1" id="sessionCard1" onclick="selectSession(this)">
                                 <strong style="font-family:'Cinzel',serif;font-size:0.8rem;">Session 1</strong>
-                                <span class="session-time">8:45 AM</span>
-                                <span class="session-label">Takbeer 8:30 &bull; Prayer 8:45 AM</span>
+                                <span class="session-time">9:00 AM</span>
+                                <span class="session-label">Takbeer 8:30 &bull; Prayer 9:00 AM</span>
                                 <span class="session-spots" id="spots1">Loading&hellip;</span>
                                 <span class="session-status status-open" id="badge1">Open</span>
-                            </div>
-                            <div class="session-card" data-session="2" id="sessionCard2" onclick="selectSession(this)">
-                                <strong style="font-family:'Cinzel',serif;font-size:0.8rem;">Session 2</strong>
-                                <span class="session-time">10:15 AM</span>
-                                <span class="session-label">Takbeer 10:00 &bull; Prayer 10:15 AM</span>
-                                <span class="session-spots" id="spots2">Loading&hellip;</span>
-                                <span class="session-status status-open" id="badge2">Open</span>
                             </div>
                         </div>
                         <input type="hidden" id="selectedSession" value="">
@@ -382,7 +374,7 @@
                     <!-- CHECKBOXES -->
                     <div class="check-group">
                         <input type="checkbox" id="agreeTerms" required>
-                        <label for="agreeTerms">I understand this registration is for the Eid Al-Fitr prayer at Rahma Islamic Centre and I will attend in person. <span style="color:var(--gold)">*</span></label>
+                        <label for="agreeTerms">I understand this registration is for the Eid Al-Adha prayer at Rahma Islamic Centre and I will attend in person. <span style="color:var(--gold)">*</span></label>
                     </div>
                     <div class="check-group">
                         <input type="checkbox" id="newsletter" checked>
@@ -405,7 +397,7 @@
                     </div>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-clock"></i></div>
-                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong>Session 1</strong> &mdash; Takbeer 8:30 &bull; Prayer 8:45 AM<br><strong>Session 2</strong> &mdash; Takbeer 10:00 &bull; Prayer 10:15 AM</span></div>
+                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong>Session 1</strong> &mdash; Takbeer 8:30 &bull; Prayer 9:00 AM<br><strong></span></div>
                     </div>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
@@ -422,7 +414,6 @@
                     <div style="border-top:1px solid rgba(201,168,76,0.15);padding-top:16px;margin-top:4px;">
                         <div class="cap-bar-label"><span>Session 1</span><span id="cap1Pct">—</span></div>
                         <div class="cap-bar"><div class="cap-fill" id="cap1Bar" style="width:0%"></div></div>
-                        <div class="cap-bar-label"><span>Session 2</span><span id="cap2Pct">—</span></div>
                         <div class="cap-bar"><div class="cap-fill" id="cap2Bar" style="width:0%"></div></div>
                     </div>
                 </div>
@@ -480,8 +471,7 @@ const STORAGE_KEY   = 'rahma-eid-2026-v2';
 const CAPACITY      = { 1: 500, 2: 500 };
 const GS_URL        = 'https://script.google.com/macros/s/AKfycbwigdnlHkrapjIccpcq5ydTgv8cwxPtd6R7axThYYAjvJV261Ny89bWYLDGtOedjb-cbg/exec';
 const SESSION_INFO  = {
-    '1': { label: 'Session 1', time: 'Takbeer 8:30 · Prayer 8:45 AM', short: '8:45 AM' },
-    '2': { label: 'Session 2', time: 'Takbeer 10:00 · Prayer 10:15 AM', short: '10:15 AM' }
+    '1': { label: 'Session 1', time: 'Takbeer 8:30 · Prayer 9:00 AM', short: '9:00 AM' },
 };
 
 /* ── LocalStorage helpers ───────────────────────────── */
@@ -638,7 +628,7 @@ function printTicket() {
     document.getElementById('printArea').innerHTML = `
         <div style="font-family:'Georgia',serif;max-width:400px;margin:30px auto;border:2.5px solid #C9A84C;padding:30px;text-align:center;color:#0B1F3A;box-shadow:0 2px 20px rgba(0,0,0,0.1);">
             <div style="font-size:1.6rem;margin-bottom:2px;">&#9789; Rahma Islamic Centre</div>
-            <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:18px;border-bottom:1px solid #C9A84C;padding-bottom:14px;">Eid Al-Fitr Prayer 2026 &bull; Entry Ticket</div>
+            <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:18px;border-bottom:1px solid #C9A84C;padding-bottom:14px;">Eid Al-Adha Prayer 2026 &bull; Entry Ticket</div>
             <div style="background:#0B1F3A;color:#C9A84C;padding:7px 18px;border-radius:20px;display:inline-block;font-size:0.7rem;letter-spacing:0.14em;margin-bottom:16px;">${session}</div><br>
             ${qrImg ? `<img src="${qrImg}" width="180" height="180" style="border:3px solid #0B1F3A;padding:7px;margin-bottom:14px;">` : ''}
             <p style="font-size:0.7rem;color:#888;margin:0 0 16px;">Present this QR code at the entrance on the day of Eid</p>
