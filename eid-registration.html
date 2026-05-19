@@ -295,25 +295,26 @@
 
                     <!-- SESSION SELECTION -->
                     <div class="form-group" style="margin-bottom:24px;">
-                        <label style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Session de Prière <span style="color:var(--gold)">*</span></label>
+                        <label style="display:block;margin-bottom:10px;font-weight:500;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Prayer Session <span style="color:var(--gold)">*</span></label>
                         <div class="session-picker" style="grid-template-columns: 1fr;">
                             <div class="session-card selected" data-session="1" id="sessionCard1">
-                                <strong style="font-family:'Cinzel',serif;font-size:1rem;">Prière de l'Aïd</strong>
-                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">Takbeer 8:30 · Prière 9:00 AM</span>
+                                <strong style="font-family:'Cinzel',serif;font-size:1rem;">Eid Al-Fitr Prayer</strong>
+                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">Takbeer 8:30 AM · Prayer 9:00 AM</span>
+                                <span style="position:absolute;top:10px;right:15px;color:var(--gold);"><i class="fas fa-check-circle"></i></span>
                             </div>
                         </div>
                         <input type="hidden" id="selectedSession" value="1">
                     </div>
 
-                    <div class="form-group" style="background: rgba(201,168,76,0.05); padding: 20px; border: 1px dashed var(--gold); border-radius: 4px; margin-bottom: 20px;">
-                        <label style="font-family:'Cinzel',serif;font-size:0.75rem;color:var(--navy);">Soutenir le Centre (Facultatif)</label>
-                        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 10px;">Votre contribution aide à couvrir les frais de l'événement.</p>
-                        <select id="donationAmount" name="donationAmount">
-                            <option value="0">Pas maintenant</option>
-                            <option value="10">$10 - Sadaqah</option>
-                            <option value="20">$20 - Sadaqah</option>
-                            <option value="50">$50 - Soutien Famille</option>
-                            <option value="other">Autre montant</option>
+                    <div class="form-group" style="background: rgba(201,168,76,0.05); padding: 20px; border: 1px dashed var(--gold); border-radius: 4px; margin-bottom: 25px;">
+                        <label style="font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy); margin-bottom:8px; display:block;">Support the Centre (Optional)</label>
+                        <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 15px; line-height:1.4;">Your contribution helps cover the event costs and supporting the Rahma community.</p>
+                        <select id="donationAmount" name="donationAmount" style="background-color: #fff;">
+                            <option value="0">No donation at this time</option>
+                            <option value="10">$10 — Sadaqah</option>
+                            <option value="20">$20 — Family Support</option>
+                            <option value="50">$50 — Community Sponsor</option>
+                            <option value="other">Other Amount</option>
                         </select>
                     </div>
 
