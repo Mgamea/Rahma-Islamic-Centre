@@ -295,22 +295,26 @@
 
                     <!-- SESSION SELECTION -->
                     <div class="form-group" style="margin-bottom:24px;">
-                        <label style="display:block;margin-bottom:10px;">Select a Session <span>*</span></label>
-<<<<<<< HEAD
-                        <div class="session-picker">
-                            <div class="session-card" data-session="1" id="sessionCard1" onclick="selectSession(this)">
-=======
-                        <div class="session-picker">
-                            <div class="session-card" data-session="1" id="sessionCard1">
->>>>>>> e63b2625c1fa163b96e777a34aef28908af91b7f
-                                <strong style="font-family:'Cinzel',serif;font-size:0.8rem;">Session 1</strong>
-                                <span class="session-time">8:45 AM</span>
-                                <span class="session-label">Takbeer 8:30 &bull; Prayer 8:45 AM</span>
-                                <span class="session-spots" id="spots1">Loading&hellip;</span>
-                                <span class="session-status status-open" id="badge1">Open</span>
+                        <label style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Session de Prière <span style="color:var(--gold)">*</span></label>
+                        <div class="session-picker" style="grid-template-columns: 1fr;">
+                            <div class="session-card selected" data-session="1" id="sessionCard1">
+                                <strong style="font-family:'Cinzel',serif;font-size:1rem;">Prière de l'Aïd</strong>
+                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">Takbeer 8:30 · Prière 9:00 AM</span>
                             </div>
                         </div>
-                        <input type="hidden" id="selectedSession" value="">
+                        <input type="hidden" id="selectedSession" value="1">
+                    </div>
+
+                    <div class="form-group" style="background: rgba(201,168,76,0.05); padding: 20px; border: 1px dashed var(--gold); border-radius: 4px; margin-bottom: 20px;">
+                        <label style="font-family:'Cinzel',serif;font-size:0.75rem;color:var(--navy);">Soutenir le Centre (Facultatif)</label>
+                        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 10px;">Votre contribution aide à couvrir les frais de l'événement.</p>
+                        <select id="donationAmount" name="donationAmount">
+                            <option value="0">Pas maintenant</option>
+                            <option value="10">$10 - Sadaqah</option>
+                            <option value="20">$20 - Sadaqah</option>
+                            <option value="50">$50 - Soutien Famille</option>
+                            <option value="other">Autre montant</option>
+                        </select>
                     </div>
 
                     <!-- NAME -->
@@ -693,22 +697,36 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
     // Save locally
     saveReg(record);
 
-    // Send to Google Sheets (fire & forget)
+// 1. On lance la requête au script Google
     fetch(GS_URL, {
-        method: 'POST', mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        // On enlève "no-cors" pour pouvoir lire la réponse du serveur
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
         body: JSON.stringify(record)
-    }).catch(() => {});
-
-    // Show success after brief animation
-    setTimeout(function() {
-        populateTicket(record);
-        document.getElementById('successOverlay').classList.add('show');
-        document.getElementById('successOverlay').scrollTop = 0;
+    })
+    .then(response => response.json()) // On transforme la réponse en JSON
+    .then(result => {
+        if (result.status === 'success') {
+            // SI SUCCÈS : On affiche le ticket
+            populateTicket(record);
+            document.getElementById('successOverlay').classList.add('show');
+            document.getElementById('successOverlay').scrollTop = 0;
+            btn.classList.remove('loading');
+            btn.classList.add('success');
+            updateUI(loadRegs());
+        } else {
+            // SI ERREUR (ex: Email déjà utilisé) : On alerte l'utilisateur
+            alert("Erreur : " + result.message);
+            btn.classList.remove('loading');
+            btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Réessayer';
+        }
+    })
+    .catch(error => {
+        console.error('Erreur technique:', error);
+        alert("Une erreur de connexion est survenue. Veuillez réessayer.");
         btn.classList.remove('loading');
-        updateUI(loadRegs());
-    }, 900);
-});
+        btn.innerHTML = 'Réessayer';
+    });
 
 /* ── Reset form ─────────────────────────────────────── */
 function resetForm() {
