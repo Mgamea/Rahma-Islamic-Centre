@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eid Al-Adha Prayer Registration — Rahma Islamic Centre</title>
+    <title>Eid Al-Fitr Prayer Registration — Rahma Islamic Centre</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -212,10 +212,11 @@
         <div class="moon-4">&#9789;</div>
         <div class="eid-hero-content reveal">
             <div class="eid-badge"><i class="fas fa-star-and-crescent"></i> Event Registration</div>
-            <h1>Eid Al-Adha <em>Prayer</em></h1>
-            <p>Join us to celebrate Eid Al-Adha with the Rahma community. Register your family below to secure your spots for this blessed occasion.</p>
+            <h1>Eid Al-Fitr <em>Prayer</em></h1>
+            <span class="eid-arabic">&#1589;&#1604;&#1575;&#1577; &#1593;&#1610;&#1583; &#1575;&#1604;&#1601;&#1591;&#1585;</span>
+            <p>Join us to celebrate the end of Ramadan with the Rahma community. Register your family below to secure your spots for this blessed occasion.</p>
             <div class="eid-info-pills">
-                <div class="eid-pill"><i class="fas fa-calendar-alt"></i> Wednesday, May 27, 2026</div>
+                <div class="eid-pill"><i class="fas fa-calendar-alt"></i> Friday, March 20, 2026</div>
                 <div class="eid-pill"><i class="fas fa-map-marker-alt"></i> 1717 Gateway RD, Winnipeg</div>
                 <div class="eid-pill"><i class="fas fa-users"></i> Free admission &mdash; All welcome</div>
             </div>
@@ -227,6 +228,7 @@
         <div class="counter-item"><span class="counter-num" id="cntRegistered">0</span><span class="counter-label">Registered</span></div>
         <div class="counter-item"><span class="counter-num" id="cntAttendees">0</span><span class="counter-label">Attendees</span></div>
         <div class="counter-item"><span class="counter-num" id="cntSession1">0</span><span class="counter-label">Session 1</span></div>
+        <div class="counter-item"><span class="counter-num" id="cntSession2">0</span><span class="counter-label">Session 2</span></div>
     </div>
 
     <!-- REGISTRATION SECTION -->
@@ -236,11 +238,14 @@
             <!-- FORM CARD -->
             <div class="reg-form-card reveal">
 
+                <!-- SUCCESS + QR OVERLAY -->
                 <div class="success-overlay" id="successOverlay">
                     <div class="success-icon"><i class="fas fa-check"></i></div>
                     <h3>Registration Confirmed!</h3>
                     <p>Taqabbal Allahu minna wa minkum.<br>We look forward to celebrating Eid with your family.</p>
-                    
+                    <div class="success-ref" id="successRef">Registration #EID-XXXXXX</div>
+
+                    <!-- QR TICKET -->
                     <div class="qr-ticket" id="qrTicket">
                         <div class="qr-ticket-header">
                             <i class="fas fa-star-and-crescent" style="color:var(--gold);font-size:1.3rem;flex-shrink:0;"></i>
@@ -251,11 +256,11 @@
                         </div>
 
                         <div style="text-align:center;">
-                            <div class="qr-session-pill">
-                                <i class="fas fa-clock"></i> 9:00 AM Session
+                            <div class="qr-session-pill" id="qrSessionPill">
+                                <i class="fas fa-clock"></i> Session &mdash;
                             </div><br>
                             <div class="qr-code-box">
-                                <img id="displayQr" src="" alt="QR Code" style="width:150px; height:150px; border:4px solid #fff; margin:10px 0;">
+                                <div id="qrcode"></div>
                             </div>
                             <p class="qr-scan-hint">
                                 <i class="fas fa-mobile-alt" style="color:var(--gold);margin-right:4px;"></i>
@@ -266,29 +271,19 @@
                         <div class="qr-divider"></div>
 
                         <div>
-                            <div class="qr-info-row"><span class="qr-key">Name</span><span class="qr-val" id="qrName"></span></div>
-                            <div class="qr-info-row"><span class="qr-key">Prayer</span><span class="qr-val gold">9:00 AM</span></div>
-                            <div class="qr-info-row"><span class="qr-key">Attendees</span><span class="qr-val" id="qrAttendees"></span></div>
-                            <div class="qr-info-row"><span class="qr-key">Reference</span><span class="qr-val gold" id="qrRefDisplay"></span></div>
+                            <div class="qr-info-row"><span class="qr-key">Name</span><span class="qr-val" id="qrName">&mdash;</span></div>
+                            <div class="qr-info-row"><span class="qr-key">Session</span><span class="qr-val gold" id="qrSession">&mdash;</span></div>
+                            <div class="qr-info-row"><span class="qr-key">Prayer</span><span class="qr-val" id="qrTime">&mdash;</span></div>
+                            <div class="qr-info-row"><span class="qr-key">Attendees</span><span class="qr-val" id="qrAttendees">&mdash;</span></div>
+                            <div class="qr-info-row"><span class="qr-key">Reference</span><span class="qr-val gold" id="qrRef">&mdash;</span></div>
                         </div>
                     </div>
 
                     <div class="qr-actions">
                         <button class="qr-btn qr-btn-dark" onclick="downloadQR()">
-                            <i class="fas fa-download"></i> Save QR
+                            <i class="fas fa-download"></i> Download QR
                         </button>
-                        <button class="qr-btn qr-btn-outline" onclick="window.print()">
-                            <i class="fas fa-print"></i> Print Ticket
-                        </button>
-                    </div>
-                    <button class="btn-reset" onclick="resetForm()">Register Another Family</button>
-                </div>
-
-                    <div class="qr-actions">
-                        <button class="qr-btn qr-btn-dark" onclick="downloadQR()">
-                            <i class="fas fa-download"></i> Save QR
-                        </button>
-                        <button class="qr-btn qr-btn-outline" onclick="window.print()">
+                        <button class="qr-btn qr-btn-outline" onclick="printTicket()">
                             <i class="fas fa-print"></i> Print Ticket
                         </button>
                     </div>
@@ -302,27 +297,24 @@
 
                     <!-- SESSION SELECTION -->
                     <div class="form-group" style="margin-bottom:24px;">
-                        <label style="display:block;margin-bottom:10px;font-weight:500;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Prayer Session <span style="color:var(--gold)">*</span></label>
-                        <div class="session-picker" style="grid-template-columns: 1fr;">
-                            <div class="session-card selected" data-session="1" id="sessionCard1">
-                                <strong style="font-family:'Cinzel',serif;font-size:1rem;">Eid Al-Adha Prayer</strong>
-                                <span style="display:block;font-size:0.85rem;color:var(--muted);margin-top:4px;">Takbeer 8:30 AM · Prayer 9:00 AM</span>
-                                <span style="position:absolute;top:10px;right:15px;color:var(--gold);"><i class="fas fa-check-circle"></i></span>
+                        <label style="display:block;margin-bottom:10px;">Select a Session <span>*</span></label>
+                        <div class="session-picker">
+                            <div class="session-card" data-session="1" id="sessionCard1" onclick="selectSession(this)">
+                                <strong style="font-family:'Cinzel',serif;font-size:0.8rem;">Session 1</strong>
+                                <span class="session-time">8:45 AM</span>
+                                <span class="session-label">Takbeer 8:30 &bull; Prayer 8:45 AM</span>
+                                <span class="session-spots" id="spots1">Loading&hellip;</span>
+                                <span class="session-status status-open" id="badge1">Open</span>
+                            </div>
+                            <div class="session-card" data-session="2" id="sessionCard2" onclick="selectSession(this)">
+                                <strong style="font-family:'Cinzel',serif;font-size:0.8rem;">Session 2</strong>
+                                <span class="session-time">10:15 AM</span>
+                                <span class="session-label">Takbeer 10:00 &bull; Prayer 10:15 AM</span>
+                                <span class="session-spots" id="spots2">Loading&hellip;</span>
+                                <span class="session-status status-open" id="badge2">Open</span>
                             </div>
                         </div>
-                        <input type="hidden" id="selectedSession" value="1">
-                    </div>
-
-                    <div class="form-group" style="background: rgba(201,168,76,0.05); padding: 20px; border: 1px dashed var(--gold); border-radius: 4px; margin-bottom: 25px;">
-                        <label style="font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy); margin-bottom:8px; display:block;">Support the Centre (Optional)</label>
-                        <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 15px; line-height:1.4;">Your contribution helps cover the event costs and supporting the Rahma community.</p>
-                        <select id="donationAmount" name="donationAmount" style="background-color: #fff;">
-                            <option value="0">No donation at this time</option>
-                            <option value="10">$10 — Sadaqah</option>
-                            <option value="20">$20 — Family Support</option>
-                            <option value="50">$50 — Community Sponsor</option>
-                            <option value="other">Other Amount</option>
-                        </select>
+                        <input type="hidden" id="selectedSession" value="">
                     </div>
 
                     <!-- NAME -->
@@ -390,7 +382,7 @@
                     <!-- CHECKBOXES -->
                     <div class="check-group">
                         <input type="checkbox" id="agreeTerms" required>
-                        <label for="agreeTerms">I understand this registration is for the Eid Al-Adha prayer at Rahma Islamic Centre and I will attend in person. <span style="color:var(--gold)">*</span></label>
+                        <label for="agreeTerms">I understand this registration is for the Eid Al-Fitr prayer at Rahma Islamic Centre and I will attend in person. <span style="color:var(--gold)">*</span></label>
                     </div>
                     <div class="check-group">
                         <input type="checkbox" id="newsletter" checked>
@@ -409,11 +401,11 @@
                     <h3><i class="fas fa-info-circle" style="margin-right:8px;opacity:0.7"></i> Event Details</h3>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
-                        <div><span class="info-text-label">Date</span><span class="info-text-val"><strong>Wednesday, May 27, 2026</strong></span></div>
+                        <div><span class="info-text-label">Date</span><span class="info-text-val"><strong>Friday, March 20, 2026</strong></span></div>
                     </div>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-clock"></i></div>
-                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong>Session 1</strong> &mdash; Takbeer 8:30 &bull; Prayer 9:00 AM<br><strong></span></div>
+                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong>Session 1</strong> &mdash; Takbeer 8:30 &bull; Prayer 8:45 AM<br><strong>Session 2</strong> &mdash; Takbeer 10:00 &bull; Prayer 10:15 AM</span></div>
                     </div>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
@@ -430,6 +422,8 @@
                     <div style="border-top:1px solid rgba(201,168,76,0.15);padding-top:16px;margin-top:4px;">
                         <div class="cap-bar-label"><span>Session 1</span><span id="cap1Pct">—</span></div>
                         <div class="cap-bar"><div class="cap-fill" id="cap1Bar" style="width:0%"></div></div>
+                        <div class="cap-bar-label"><span>Session 2</span><span id="cap2Pct">—</span></div>
+                        <div class="cap-bar"><div class="cap-fill" id="cap2Bar" style="width:0%"></div></div>
                     </div>
                 </div>
 
@@ -486,7 +480,8 @@ const STORAGE_KEY   = 'rahma-eid-2026-v2';
 const CAPACITY      = { 1: 500, 2: 500 };
 const GS_URL        = 'https://script.google.com/macros/s/AKfycbwigdnlHkrapjIccpcq5ydTgv8cwxPtd6R7axThYYAjvJV261Ny89bWYLDGtOedjb-cbg/exec';
 const SESSION_INFO  = {
-    '1': { label: 'Session 1', time: 'Takbeer 8:30 · Prayer 9:00 AM', short: '9:00 AM' },
+    '1': { label: 'Session 1', time: 'Takbeer 8:30 · Prayer 8:45 AM', short: '8:45 AM' },
+    '2': { label: 'Session 2', time: 'Takbeer 10:00 · Prayer 10:15 AM', short: '10:15 AM' }
 };
 
 /* ── LocalStorage helpers ───────────────────────────── */
@@ -504,13 +499,16 @@ function setHTML(id, v) { const el = document.getElementById(id); if (el) el.inn
 /* ── Update counters + capacity UI ─────────────────── */
 function updateUI(regs) {
     const s1 = regs.filter(r => String(r.session) === '1').length;
+    const s2 = regs.filter(r => String(r.session) === '2').length;
     const tot = regs.reduce((s, r) => s + (parseInt(r.adults)||0) + (parseInt(r.children)||0), 0);
 
     setText('cntRegistered', regs.length);
     setText('cntAttendees', tot);
     setText('cntSession1', s1);
+    setText('cntSession2', s2);
 
     updateSession(1, s1);
+    updateSession(2, s2);
 }
 
 function updateSession(num, count) {
@@ -587,7 +585,7 @@ function generateQR(rec) {
         session: rec.session,
         adults: rec.adults,
         children: rec.children,
-        event: 'EidAlAdha2026-Rahma-Winnipeg'
+        event: 'EidAlFitr2026-Rahma-Winnipeg'
     });
     new QRCode(el, {
         text: payload,
@@ -640,7 +638,7 @@ function printTicket() {
     document.getElementById('printArea').innerHTML = `
         <div style="font-family:'Georgia',serif;max-width:400px;margin:30px auto;border:2.5px solid #C9A84C;padding:30px;text-align:center;color:#0B1F3A;box-shadow:0 2px 20px rgba(0,0,0,0.1);">
             <div style="font-size:1.6rem;margin-bottom:2px;">&#9789; Rahma Islamic Centre</div>
-            <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:18px;border-bottom:1px solid #C9A84C;padding-bottom:14px;">Eid Al-Adha Prayer 2026 &bull; Entry Ticket</div>
+            <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:18px;border-bottom:1px solid #C9A84C;padding-bottom:14px;">Eid Al-Fitr Prayer 2026 &bull; Entry Ticket</div>
             <div style="background:#0B1F3A;color:#C9A84C;padding:7px 18px;border-radius:20px;display:inline-block;font-size:0.7rem;letter-spacing:0.14em;margin-bottom:16px;">${session}</div><br>
             ${qrImg ? `<img src="${qrImg}" width="180" height="180" style="border:3px solid #0B1F3A;padding:7px;margin-bottom:14px;">` : ''}
             <p style="font-size:0.7rem;color:#888;margin:0 0 16px;">Present this QR code at the entrance on the day of Eid</p>
@@ -671,105 +669,74 @@ function showToast(msg, color) {
 document.getElementById('eidForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const btn = document.getElementById('submitBtn');
+    const session = document.getElementById('selectedSession').value;
+    if (!session) { showToast('Please select a session before continuing.'); return; }
+
+    if (!document.getElementById('agreeTerms').checked) {
+        showToast('Please confirm you will attend in person.'); return;
+    }
+
     const firstName = document.getElementById('firstName').value.trim();
-    const lastName = document.getElementById('lastName').value.trim();
-    const email = document.getElementById('email').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    if (!firstName || !lastName || !email) {
+        showToast('Please fill in First Name, Last Name and Email.'); return;
+    }
 
+    const btn = document.getElementById('submitBtn');
     btn.classList.add('loading');
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering&hellip;';
 
-    const ref = 'EID-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+    const ref = genRef();
     const record = {
-        ref: ref,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phone: document.getElementById('phone').value,
-        adults: document.getElementById('adults').value,
-        children: document.getElementById('children').value,
-        donationAmount: document.getElementById('donationAmount').value,
-        session: "9:00 AM"
+        ref, timestamp: new Date().toISOString(),
+        firstName, lastName, email,
+        phone:         document.getElementById('phone').value.trim(),
+        session,
+        adults:        document.getElementById('adults').value,
+        children:      document.getElementById('children').value,
+        accessibility: document.getElementById('accessibility').value,
+        notes:         document.getElementById('notes').value.trim(),
+        newsletter:    document.getElementById('newsletter').checked
     };
 
+    // Save locally
+    saveReg(record);
+
+    // Send to Google Sheets (fire & forget)
     fetch(GS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(record)
-    })
-    .then(res => res.json())
-    .then(result => {
-        if (result.status === 'success') {
-            // REMPLISSAGE DU TICKET
-            document.getElementById('displayQr').src = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + ref;
-            document.getElementById('qrName').textContent = firstName + " " + lastName;
-            document.getElementById('qrRefDisplay').textContent = ref;
-            document.getElementById('qrAttendees').textContent = (parseInt(record.adults) + parseInt(record.children)) + " Persons";
-            
-            // AFFICHAGE
-            document.getElementById('successOverlay').classList.add('show');
-            btn.classList.remove('loading');
-        } else {
-            // MESSAGE D'ERREUR (ex: Email déjà utilisé)
-            alert("Error: " + result.message);
-            btn.classList.remove('loading');
-            btn.innerHTML = 'Complete Registration';
-        }
-    })
-    .catch(err => {
-        alert("Connection error. Please try again.");
+    }).catch(() => {});
+
+    // Show success after brief animation
+    setTimeout(function() {
+        populateTicket(record);
+        document.getElementById('successOverlay').classList.add('show');
+        document.getElementById('successOverlay').scrollTop = 0;
         btn.classList.remove('loading');
-    });
+        updateUI(loadRegs());
+    }, 900);
 });
-
-// Ajoute aussi cette petite fonction pour le bouton "Save QR"
-function downloadQR() {
-    const link = document.createElement('a');
-    link.href = document.getElementById('displayQr').src;
-    link.download = 'Eid_QR_Code.png';
-    link.click();
-}
-
-/* ── Fonction pour remplir le ticket avec le QR Code ── */
-function populateTicket(record) {
-    const qrUrl = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + record.ref;
-    
-    // Remplit l'image et les textes dans l'overlay
-    document.getElementById('displayQr').src = qrUrl;
-    document.getElementById('qrName').textContent = record.firstName + ' ' + record.lastName;
-    document.getElementById('qrAttendees').textContent = (parseInt(record.adults) + parseInt(record.children)) + ' Persons';
-    document.getElementById('qrRefDisplay').textContent = record.ref;
-}
-
-/* ── Download QR ── */
-function downloadQR() {
-    const qrSrc = document.getElementById('displayQr').src;
-    const link = document.createElement('a');
-    link.href = qrSrc;
-    link.download = 'Eid_QR_Ticket.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
 
 /* ── Reset form ─────────────────────────────────────── */
 function resetForm() {
     document.getElementById('eidForm').reset();
     document.getElementById('adults').value = 1;
     document.getElementById('children').value = 0;
-    // On remet la session 1 par défaut
-    document.getElementById('selectedSession').value = '1';
+    document.getElementById('selectedSession').value = '';
     document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
-    document.getElementById('sessionCard1').classList.add('selected');
-    
+    document.getElementById('newsletter').checked = true;
     document.getElementById('successOverlay').classList.remove('show');
+    document.getElementById('qrcode').innerHTML = '';
     const btn = document.getElementById('submitBtn');
-    btn.classList.remove('loading', 'success');
+    btn.classList.remove('loading');
     btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration';
 }
 
 /* ── Init ───────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', () => {
-    // Si tu as une fonction pour charger les compteurs depuis Excel :
-    if(typeof loadCounters === "function") loadCounters();
-});
+document.addEventListener('DOMContentLoaded', loadCounters);
+    </script>
+</body>
+</html>
