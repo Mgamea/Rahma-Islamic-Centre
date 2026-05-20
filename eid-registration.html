@@ -166,7 +166,40 @@
     /* Responsive */
     @media (max-width: 1000px) { .reg-grid { grid-template-columns: 1fr; gap: 40px; } .reg-sidebar { position: static; } }
     @media (max-width: 640px) { .reg-form-card { padding: 36px 20px; } .form-row { grid-template-columns: 1fr; } .session-picker { grid-template-columns: 1fr; } .eid-counter-strip { flex-wrap: wrap; } .counter-item { flex: 1 1 50%; } }
+    
+    
+    
+    @keyframes floatStars {
+  0% { transform: translateY(0px); opacity: 0.4; }
+  50% { transform: translateY(-20px); opacity: 0.9; }
+  100% { transform: translateY(0px); opacity: 0.4; }
+}
+
+.hero-stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.hero-stars span {
+  position: absolute;
+  color: #C9A84C;
+  animation: floatStars 6s infinite;
+  font-size: 20px;
+}
+
+
+    
+    
     </style>
+
+
+
+
+
 </head>
 <body>
     <div id="loader"><div class="loader-text">RAHMA</div><div class="loader-bar"><div class="loader-fill"></div></div></div>
@@ -369,6 +402,20 @@
                     <div class="form-group">
                         <label for="notes">Additional Notes</label>
                         <textarea id="notes" rows="3" placeholder="Any questions, requests, or information you'd like us to know..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="donation">
+                            🌙 Support Your Masjid (Optional)
+                        </label>
+
+                        <select id="donation">
+                            <option value="0">No donation</option>
+                            <option value="10">$10 - Support Eid setup</option>
+                            <option value="25">$25 - Help families</option>
+                            <option value="50">$50 - Sponsor a family</option>
+                            <option value="100">$100 - Eid contribution</option>
+                        </select>
                     </div>
 
                     <!-- CHECKBOXES -->
@@ -686,7 +733,8 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
         children:      document.getElementById('children').value,
         accessibility: document.getElementById('accessibility').value,
         notes:         document.getElementById('notes').value.trim(),
-        newsletter:    document.getElementById('newsletter').checked
+        newsletter:    document.getElementById('newsletter').checked,
+        donation: document.getElementById('donation').value
     };
 
     // Save locally
