@@ -295,7 +295,7 @@
                 <form id="eidForm" novalidate>
 
                     <!-- SESSION SELECTION -->
-                    <div class="form-group" style="margin-bottom:24px;">
+                    <div class="form-group" style="margin-bottom:24px; display:none;">
                         <label style="display:block;margin-bottom:10px;">Select a Session <span>*</span></label>
                         <div class="session-picker">
                             <div class="session-card" data-session="1" id="sessionCard1" onclick="selectSession(this)">
@@ -725,7 +725,10 @@ function resetForm() {
 }
 
 /* ── Init ───────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', loadCounters);
+document.addEventListener('DOMContentLoaded', function () {
+  loadCounters();
+  document.getElementById('selectedSession').value = "1";
+});
     </script>
 </body>
 </html>
