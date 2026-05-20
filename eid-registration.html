@@ -47,29 +47,6 @@
     .eid-pill { display: flex; align-items: center; gap: 9px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); padding: 10px 20px; border-radius: 50px; font-size: 0.83rem; }
     .eid-pill i { color: var(--gold); font-size: 0.8rem; }
 
-
-
-@keyframes floatStars {
-  0% { transform: translateY(0px); opacity: 0.4; }
-  50% { transform: translateY(-20px); opacity: 0.9; }
-  100% { transform: translateY(0px); opacity: 0.4; }
-}
-
-.hero-stars {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.hero-stars span {
-  position: absolute;
-  color: gold;
-  animation: floatStars 6s infinite;
-}
-
-
-
     /* ═══ COUNTER STRIP ═══ */
     .eid-counter-strip { background: var(--gold); padding: 0; display: flex; overflow: hidden; }
     .counter-item { flex: 1; text-align: center; padding: 26px 20px; border-right: 1px solid rgba(11,31,58,0.12); }
@@ -250,7 +227,7 @@
     <div class="eid-counter-strip">
         <div class="counter-item"><span class="counter-num" id="cntRegistered">0</span><span class="counter-label">Registered</span></div>
         <div class="counter-item"><span class="counter-num" id="cntAttendees">0</span><span class="counter-label">Attendees</span></div>
-        <div class="counter-item"><span class="counter-num" id="cntSession1">0</span><span class="counter-label">Session 1</span></div>
+        <div class="counter-item"><span class="counter-num" id="cntSession1">0</span><span class="counter-label">Session</span></div>
     </div>
 
     <!-- REGISTRATION SECTION -->
@@ -322,7 +299,7 @@
                         <label style="display:block;margin-bottom:10px;">Select a Session <span>*</span></label>
                         <div class="session-picker">
                             <div class="session-card" data-session="1" id="sessionCard1" onclick="selectSession(this)">
-                                <strong style="font-family:'Cinzel',serif;font-size:0.8rem;">Session 1</strong>
+                                <strong style="font-family:'Cinzel',serif;font-size:0.8rem;">session</strong>
                                 <span class="session-time">9:00 AM</span>
                                 <span class="session-label">Takbeer 8:30 &bull; Prayer 9:00 AM</span>
                                 <span class="session-spots" id="spots1">Loading&hellip;</span>
@@ -420,7 +397,7 @@
                     </div>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-clock"></i></div>
-                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong>Session 1</strong> &mdash; Takbeer 8:30 &bull; Prayer 9:00 AM<br><strong></span></div>
+                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong>session</strong> &mdash; Takbeer 8:30 &bull; Prayer 9:00 AM<br><strong></span></div>
                     </div>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
@@ -435,7 +412,7 @@
                         <div><span class="info-text-label">Inquiries</span><span class="info-text-val"><a href="tel:+14317923791" style="color:rgba(255,255,255,0.7);text-decoration:none">+1 (431) 792-3791</a></span></div>
                     </div>
                     <div style="border-top:1px solid rgba(201,168,76,0.15);padding-top:16px;margin-top:4px;">
-                        <div class="cap-bar-label"><span>Session 1</span><span id="cap1Pct">—</span></div>
+                        <div class="cap-bar-label"><span>session</span><span id="cap1Pct">—</span></div>
                         <div class="cap-bar"><div class="cap-fill" id="cap1Bar" style="width:0%"></div></div>
                         <div class="cap-bar"><div class="cap-fill" id="cap2Bar" style="width:0%"></div></div>
                     </div>
@@ -494,7 +471,7 @@ const STORAGE_KEY   = 'rahma-eid-2026-v2';
 const CAPACITY      = { 1: 500, 2: 500 };
 const GS_URL        = 'https://script.google.com/macros/s/AKfycbzPzsMF0FMcokZIfrZKEZhIByH1bU3rolA784UaMtIYNv2BMJISZExNI0iKeyQqjH-d7g/exec';
 const SESSION_INFO  = {
-    '1': { label: 'Session 1', time: 'Takbeer 8:30 · Prayer 9:00 AM', short: '9:00 AM' },
+    '1': { label: 'session', time: 'Takbeer 8:30 · Prayer 9:00 AM', short: '9:00 AM' },
 };
 
 /* ── LocalStorage helpers ───────────────────────────── */
