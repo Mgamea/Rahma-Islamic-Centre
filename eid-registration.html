@@ -409,14 +409,23 @@
                             🌙 Support Your Masjid (Optional)
                         </label>
 
-                        <select id="donation">
+                        <select id="donation" onchange="handleDonationChange()">
                             <option value="0">No donation</option>
-                            <option value="10">$10 - Support Eid setup</option>
-                            <option value="25">$25 - Help families</option>
-                            <option value="50">$50 - Sponsor a family</option>
-                            <option value="100">$100 - Eid contribution</option>
+                            <option value="10">$10</option>
+                            <option value="25">$25</option>
+                            <option value="50">$50</option>
+                            <option value="100">$100</option>
+                            <option value="other">Other amount</option>
                         </select>
                     </div>
+
+                    <!-- Box for costum amount -->
+                    <div id="customDonationBox" style="display:none; margin-top:10px;">
+                        <input type="number" id="customDonation" 
+                            placeholder="Enter amount ($)" min="1">
+                    </div>
+
+
 
                     <!-- CHECKBOXES -->
                     <div class="check-group">
@@ -547,6 +556,22 @@ function updateUI(regs) {
     updateSession(1, s1);
     updateSession(2, s2);
 }
+
+
+
+function handleDonationChange() {
+    const donation = document.getElementById('donation').value;
+    const box = document.getElementById('customDonationBox');
+
+    if (donation === "other") {
+        box.style.display = "block";
+    } else {
+        box.style.display = "none";
+    }
+}
+
+
+
 
 function updateSession(num, count) {
     const cap = CAPACITY[num];
@@ -734,7 +759,9 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
         accessibility: document.getElementById('accessibility').value,
         notes:         document.getElementById('notes').value.trim(),
         newsletter:    document.getElementById('newsletter').checked,
-        donation: document.getElementById('donation').value
+        donation: document.getElementById('donation').value === "other"
+            ? document.getElementById('customDonation').value
+            : document.getElementById('donation').value
     };
 
     // Save locally
