@@ -422,9 +422,18 @@
                     <!-- Box for costum amount -->
                     <div id="customDonationBox" style="display:none; margin-top:10px;">
                         <input type="number" id="customDonation" 
-                            placeholder="Enter amount ($)" min="1">
+                                placeholder="Enter amount ($)" min="1"
+                                style="width:100%; padding:12px; font-size:14px;">
                     </div>
 
+
+                    <!-- bouton ZIFFY -->
+                    <div id="ziffyButtonBox" style="display:none; margin-top:15px;">
+                        <button type="button" onclick="goToZiffy()"
+                            style="width:100%; padding:14px; background:#C9A84C; color:#0B1F3A; border:none; cursor:pointer;">
+                            Continue to Payment
+                        </button>
+                    </div>
 
 
                     <!-- CHECKBOXES -->
@@ -562,12 +571,35 @@ function updateUI(regs) {
 function handleDonationChange() {
     const donation = document.getElementById('donation').value;
     const box = document.getElementById('customDonationBox');
+    const btn = document.getElementById('ziffyButtonBox');
 
     if (donation === "other") {
         box.style.display = "block";
+        btn.style.display = "block";
+    } else if (donation > 0) {
+        box.style.display = "none";
+        btn.style.display = "block";
     } else {
         box.style.display = "none";
+        btn.style.display = "none";
     }
+}
+
+
+function goToZiffy() {
+    let donation = document.getElementById('donation').value;
+
+    if (donation === "other") {
+        donation = document.getElementById('customDonation').value;
+    }
+
+    if (!donation || donation <= 0) {
+        alert("Please enter a valid amount");
+        return;
+    }
+
+    // 🔴 remplace par ton vrai lien Ziffy
+    window.location.href = "https://www.zeffy.com/en-CA/donation-form/donate-to-your-masjid-2" + donation;
 }
 
 
