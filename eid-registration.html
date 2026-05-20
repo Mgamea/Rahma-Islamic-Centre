@@ -321,7 +321,6 @@
                         <button class="qr-btn qr-btn-dark" id="payBtn">
                         <i class="fas fa-credit-card"></i> Pay Donation
                         </button>
-                        ``
                     </div>
                     <button class="btn-reset" onclick="resetForm()">Register Another Family</button>
                 </div>
@@ -563,6 +562,15 @@ function generateQR(rec){
     width:190,
     height:190
   });
+
+// ✅ attendre que le canvas soit créé
+  setTimeout(() => {
+    const canvas = el.querySelector("canvas");
+
+    if(canvas){
+      rec.qrImage = canvas.toDataURL("image/png"); // ✅ IMPORTANT
+    }
+  }, 300);
 }
 
 /* ✅ Populate ticket (FIXED version) */
@@ -647,11 +655,16 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
   saveReg(record);
 
   /* Send to Google Sheets */
+setTimeout(() => {
+
   fetch(GS_URL,{
     method:'POST',
     mode:'no-cors',
     body: JSON.stringify(record)
   });
+
+}, 400);
+
 
   /* Show success */
   setTimeout(()=>{
@@ -683,6 +696,55 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
   },500);
 
 });
+
+/* ── downloadQR ── */
+function downloadQR(){
+
+  const canvas = document.querySelector('#qrcode canvas');
+
+  if(!canvas){
+    showToast("QR not ready yet");
+    return;
+  }
+
+  const link = document.createElement('a');
+  link.href = canvas.toDataURL('image/png');
+  link.download = "EID-TICKET.png";
+
+  link.click();
+}
+
+/* ── print Ticket ── */
+function printTicket(){
+
+  const canvas = document.querySelector('#qrcode canvas');
+  if(!canvas){
+    showToast("QR not ready yet");
+    return;
+  }
+
+  const qrImg = canvas.toDataURL('image/png');
+
+  const name = document.getElementById('qrName').textContent;
+  const session = document.getElementById('qrSession').textContent;
+  const time = document.getElementById('qrTime').textContent;
+  const attendees = document.getElementById('qrAttendees').textContent;
+  const ref = document.getElementById('qrRef').textContent;
+
+  document.getElementById('printArea').innerHTML = `
+    <div style="text-align:center;font-family:Arial;padding:30px;">
+      <h2>Rahma Eid Ticket</h2>
+      ${qrImg}
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Session:</strong> ${session}</p>
+      <p><strong>Prayer:</strong> ${time}</p>
+      <p><strong>Attendees:</strong> ${attendees}</p>
+      <p><strong>Ref:</strong> ${ref}</p>
+    </div>
+  `;
+
+  window.print();
+}
 
 /* ── Reset form ── */
 function resetForm(){
