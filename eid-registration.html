@@ -573,6 +573,20 @@ function showToast(msg){
   }, 3000);
 }
 
+
+
+function toggleCustomDonation(){
+  const val = document.getElementById('donation').value;
+  const div = document.getElementById('customDonationGroup');
+
+  if(!div) return;
+
+  div.style.display = (val === 'other') ? 'block' : 'none';
+}
+
+
+
+
 function adjustCount(type, delta){
   const input = document.getElementById(type);
   if(!input) return;
