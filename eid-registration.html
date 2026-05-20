@@ -735,7 +735,9 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
 let donationValue = document.getElementById('donation').value;
 
 if (donationValue === 'other') {
-  donationValue = document.getElementById('customDonation').value || "0";
+  const val = document.getElementById('customDonation').value;
+
+  donationValue = (val && !isNaN(val) && val > 0) ? val : "0";
 }
 
 if (document.getElementById('donation').value === 'other' &&
@@ -770,10 +772,17 @@ const record = {
 
     // Send to Google Sheets (fire & forget)
     fetch(GS_URL, {
-        method: 'POST', mode: 'no-cors',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(record)
-    }).catch(() => {});
+    })
+    .then(() => {
+        // ✅ succès direct
+    })
+    .catch(() => {
+        // ✅ ne bloque pas le form
+    });
+
 
     // Show success after brief animation
     setTimeout(function() {
