@@ -751,6 +751,8 @@ if (document.getElementById('donation').value === 'other' &&
   return;
 }
 
+const ref = genRef();
+
 const record = {
         ref, 
         timestamp: new Date().toISOString(),
@@ -766,6 +768,7 @@ const record = {
         newsletter: document.getElementById('newsletter').checked,
         donation: donationValue
     };
+``
 
     // Save locally
     saveReg(record);
