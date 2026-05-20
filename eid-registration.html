@@ -732,18 +732,37 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
     btn.classList.add('loading');
     btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering&hellip;';
 
-    const ref = genRef();
-    const record = {
-        ref, timestamp: new Date().toISOString(),
-        firstName, lastName, email,
-        phone:         document.getElementById('phone').value.trim(),
+let donationValue = document.getElementById('donation').value;
+
+if (donationValue === 'other') {
+  donationValue = document.getElementById('customDonation').value || "0";
+}
+
+if (document.getElementById('donation').value === 'other' &&
+    !document.getElementById('customDonation').value) {
+
+  showToast("Please enter your donation amount.");
+
+  btn.classList.remove('loading');
+  btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration';
+
+  return;
+}
+
+const record = {
+        ref, 
+        timestamp: new Date().toISOString(),
+        firstName, 
+        lastName, 
+        email,
+        phone: document.getElementById('phone').value.trim(),
         session,
-        adults:        document.getElementById('adults').value,
-        children:      document.getElementById('children').value,
+        adults: document.getElementById('adults').value,
+        children: document.getElementById('children').value,
         accessibility: document.getElementById('accessibility').value,
-        notes:         document.getElementById('notes').value.trim(),
-        newsletter:    document.getElementById('newsletter').checked,
-        donation:      document.getElementById('donation').value
+        notes: document.getElementById('notes').value.trim(),
+        newsletter: document.getElementById('newsletter').checked,
+        donation: donationValue
     };
 
     // Save locally
