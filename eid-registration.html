@@ -588,6 +588,7 @@ function populateTicket(rec){
   setText('qrSession', "Session " + (rec.session || "1"));
   setText('qrTime', "Takbeer 8:30 • Prayer 9:00 AM");
   setText('qrAttendees', attendees);
+  setText('successRef', "Registration " + rec.ref);
 
   generateQR(rec);
 }
@@ -652,18 +653,33 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
   };
 
   /* Save locally */
-  saveReg(record);
+saveReg(record);
 
-  /* Send to Google Sheets */
+/* ✅ GENERATE + SEND QR */
 setTimeout(() => {
 
-  fetch(GS_URL,{
-    method:'POST',
-    mode:'no-cors',
-    body: JSON.stringify(record)
-  });
+  generateQR(record);
 
-}, 400);
+  // attendre que le QR soit créé
+  setTimeout(() => {
+
+    const canvas = document.querySelector('#qrcode canvas');
+
+    if(canvas){
+      record.qrImage = canvas.toDataURL("image/png");
+    }
+
+    // ✅ ENVOI AVEC QR
+    fetch(GS_URL,{
+      method:'POST',
+      mode:'no-cors',
+      body: JSON.stringify(record)
+    });
+
+  }, 300);
+
+}, 100);
+
 
 
   /* Show success */
