@@ -193,7 +193,7 @@
 
 
     
-    
+ 
     </style>
 
 
@@ -522,102 +522,148 @@
     </div></footer>
 
     <script src="shared.js"></script>
-  <script>
-/* ═══════════════════════════════════════════════════════ */
+ <script>
+/* ═══════════════════════════════════════════════════════
+   SCRIPT CLEAN — SAME LOGIC, FIXED BUGS
+═══════════════════════════════════════════════════════ */
 
 const STORAGE_KEY = 'rahma-eid-2026-v2';
 const GS_URL = 'https://script.google.com/macros/s/AKfycbzPzsMF0FMcokZIfrZKEZhIByH1bU3rolA784UaMtIYNv2BMJISZExNI0iKeyQqjH-d7g/exec';
 
-/* ── Helpers ── */
-function setText(id, v){ const el=document.getElementById(id); if(el) el.textContent=v; }
+/* ── Helper: set text safely ── */
+function setText(id, value){
+  const el = document.getElementById(id);
+  if(el) el.textContent = value;
+}
 
 /* ── LocalStorage ── */
-function loadRegs(){ try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]')}catch(e){return[]}}
-function saveReg(rec){ const r=loadRegs(); r.push(rec); localStorage.setItem(STORAGE_KEY,JSON.stringify(r)); }
+function loadRegs(){
+  try{
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  }catch(e){
+    return [];
+  }
+}
 
-/* ── QR ── */
+function saveReg(rec){
+  const r = loadRegs();
+  r.push(rec);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(r));
+}
+
+/* ── QR Code ── */
 function generateQR(rec){
-  const el=document.getElementById('qrcode');
-  el.innerHTML='';
+  const el = document.getElementById('qrcode');
+  el.innerHTML = '';
+
   new QRCode(el,{
     text: JSON.stringify(rec),
-    width:190,height:190
+    width:190,
+    height:190
   });
 }
 
-/* ── Populate ticket ── */
+/* ✅ Populate ticket (FIXED version) */
 function populateTicket(rec){
-  setText('qrName', rec.firstName+" "+rec.lastName);
+
+  const adults = parseInt(rec.adults) || 1;
+  const children = parseInt(rec.children) || 0;
+
+  const attendees =
+    adults + " adult" + (adults > 1 ? "s" : "") +
+    (children > 0 ? " + " + children + " children" : "");
+
+  setText('qrName', rec.firstName + " " + rec.lastName);
   setText('qrRef', rec.ref);
+  setText('qrSession', "Session " + (rec.session || "1"));
+  setText('qrTime', "Takbeer 8:30 • Prayer 9:00 AM");
+  setText('qrAttendees', attendees);
+
   generateQR(rec);
 }
 
-/* ── Toast ── */
+/* ── Toast message ── */
 function showToast(msg){
-  const t=document.getElementById('regToast');
-  t.textContent=msg;
+  const t = document.getElementById('regToast');
+  t.textContent = msg;
   t.classList.add('visible');
-  setTimeout(()=>t.classList.remove('visible'),3000);
+
+  setTimeout(()=>{
+    t.classList.remove('visible');
+  },3000);
 }
 
-/* ✅ CUSTOM DONATION (FIX IMPORTANT) */
+/* ✅ Toggle custom donation */
 function toggleCustomDonation(){
-  const val=document.getElementById('donation').value;
-  const div=document.getElementById('customDonationGroup');
+  const val = document.getElementById('donation').value;
+  const div = document.getElementById('customDonationGroup');
+
   div.style.display = (val === 'other') ? 'block' : 'none';
 }
 
-/* ── Submit ── */
+/* ── Form submit ── */
 document.getElementById('eidForm').addEventListener('submit', function(e){
   e.preventDefault();
 
-  const firstName=document.getElementById('firstName').value.trim();
-  const lastName=document.getElementById('lastName').value.trim();
-  const email=document.getElementById('email').value.trim();
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName  = document.getElementById('lastName').value.trim();
+  const email     = document.getElementById('email').value.trim();
 
+  /* ✅ Validation FIXED */
   if(!firstName || !lastName || !email){
     showToast("Fill all required fields");
     return;
   }
 
-  let donationValue=document.getElementById('donation').value;
+  /* ✅ Donation logic */
+  let donationValue = document.getElementById('donation').value;
 
-  if(donationValue==="other"){
-    const val=document.getElementById('customDonation').value;
+  if(donationValue === "other"){
+    const val = document.getElementById('customDonation').value;
+
     if(!val){
       showToast("Enter donation amount");
       return;
     }
-    donationValue=val;
+
+    donationValue = val;
   }
 
-  const record={
-    ref: "EID26-"+Math.random().toString(36).substring(2,8).toUpperCase(),
+  /* ✅ FULL record (FIXED) */
+  const record = {
+    ref: "EID26-" + Math.random().toString(36).substring(2,8).toUpperCase(),
     firstName,
     lastName,
     email,
+    session: document.getElementById('selectedSession').value || "1",
+    adults: document.getElementById('adults').value,
+    children: document.getElementById('children').value,
     donation: donationValue
   };
 
+  /* Save locally */
   saveReg(record);
 
+  /* Send to Google Sheets */
   fetch(GS_URL,{
     method:'POST',
     mode:'no-cors',
     body: JSON.stringify(record)
   });
 
+  /* Show success */
   setTimeout(()=>{
+
     populateTicket(record);
     document.getElementById('successOverlay').classList.add('show');
 
-    /* ✅ PAY BUTTON FIX */
-    const payBtn=document.getElementById('payBtn');
+    /* ✅ Pay button */
+    const payBtn = document.getElementById('payBtn');
 
     if(parseFloat(record.donation) > 0){
       payBtn.style.display='inline-flex';
 
-      payBtn.onclick=function(){
+      payBtn.onclick = function(){
         const url =
           "https://www.zeffy.com/en-CA/donation-form/donate-to-your-masjid-2"
           + "?amount=" + record.donation
@@ -636,7 +682,7 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
 
 });
 
-/* ── Reset ── */
+/* ── Reset form ── */
 function resetForm(){
   document.getElementById('eidForm').reset();
   document.getElementById('successOverlay').classList.remove('show');
@@ -644,7 +690,10 @@ function resetForm(){
 
 /* ── Init ── */
 document.addEventListener('DOMContentLoaded', function(){
-  document.getElementById('donation').addEventListener('change', toggleCustomDonation);
+  document.getElementById('donation')
+    .addEventListener('change', toggleCustomDonation);
 });
-
 </script>
+
+</body>
+</html>
