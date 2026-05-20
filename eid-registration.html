@@ -743,7 +743,7 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
         accessibility: document.getElementById('accessibility').value,
         notes:         document.getElementById('notes').value.trim(),
         newsletter:    document.getElementById('newsletter').checked,
-        donation: document.getElementById('donation').value
+        donation:      document.getElementById('donation').value
     };
 
     // Save locally
@@ -786,6 +786,20 @@ document.addEventListener('DOMContentLoaded', function () {
   loadCounters();
   document.getElementById('selectedSession').value = "1";
 });
+
+
+function toggleCustomDonation() {
+  const val = document.getElementById('donation').value;
+  const custom = document.getElementById('customDonationGroup');
+
+  if (val === 'other') {
+    custom.style.display = 'block';
+  } else {
+    custom.style.display = 'none';
+  }
+}
+
+
     </script>
 </body>
 </html>
