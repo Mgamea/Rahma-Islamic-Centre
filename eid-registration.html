@@ -659,8 +659,7 @@ function showToast(msg, color) {
 document.getElementById('eidForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const session = document.getElementById('selectedSession').value;
-    if (!session) { showToast('Please select a session before continuing.'); return; }
+    const session = document.getElementById('selectedSession').value || "1"
 
     if (!document.getElementById('agreeTerms').checked) {
         showToast('Please confirm you will attend in person.'); return;
