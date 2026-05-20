@@ -634,7 +634,7 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
 
   saveReg(record);
 
-  setTimeout(() => {
+  ) => {
 
     generateQR(record);
 
@@ -658,11 +658,71 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
 
   }, 100);
 
+  
+document.getElementById('eidForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName  = document.getElementById('lastName').value.trim();
+  const email     = document.getElementById('email').value.trim();
+
+  if(!firstName || !lastName || !email){
+    showToast("Fill all required fields");
+    return;
+  }
+
+  let donationValue = document.getElementById('donation').value;
+
+  if(donationValue === "other"){
+    const val = document.getElementById('customDonation').value;
+    if(!val){
+      showToast("Enter donation amount");
+      return;
+    }
+    donationValue = val;
+  }
+
+  const record = {
+    ref: "EID26-" + Math.random().toString(36).substring(2,8).toUpperCase(),
+    firstName,
+    lastName,
+    email,
+    session: document.getElementById('selectedSession').value || "1",
+    adults: document.getElementById('adults').value,
+    children: document.getElementById('children').value,
+    donation: donationValue
+  };
+
+  saveReg(record);
+
+  /* ✅ FIX COMPLET (QR + EMAIL + UI) */
   setTimeout(()=>{
 
+    // ✅ 1. show ticket + generate QR
     populateTicket(record);
+
     document.getElementById('successOverlay').classList.add('show');
 
+    // ✅ 2. attendre QR puis envoyer email
+    setTimeout(() => {
+
+      const canvas = document.querySelector('#qrcode canvas');
+
+      if(canvas){
+        try{
+          record.qrImage = canvas.toDataURL("image/png");
+        }catch(e){}
+      }
+
+      fetch(GS_URL,{
+        method:'POST',
+        mode:'no-cors',
+        body: JSON.stringify(record)
+      });
+
+    }, 300);
+
+    // ✅ 3. bouton paiement
     const payBtn = document.getElementById('payBtn');
 
     if(parseFloat(record.donation) > 0){
@@ -686,6 +746,8 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
   },500);
 
 });
+
+
 
 function downloadQR(){
 
