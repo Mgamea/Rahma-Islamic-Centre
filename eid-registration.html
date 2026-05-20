@@ -769,21 +769,16 @@ const record = {
         donation: donationValue
     };
 
-    // Save locally
-    saveReg(record);
+ // Save locally
+saveReg(record);
 
-    // Send to Google Sheets (fire & forget)
-    fetch(GS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(record)
-    })
-    .then(() => {
-        // ✅ succès direct
-    })
-    .catch(() => {
-        // ✅ ne bloque pas le form
-    });
+// Send to Google Sheets (fire & forget)
+fetch(GS_URL, {
+    method: 'POST',
+    mode: 'no-cors',   // ✅ IMPORTANT
+    body: JSON.stringify(record)
+});
+``
 
 
     // Show success after brief animation
