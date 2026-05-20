@@ -318,6 +318,10 @@
                         <button class="qr-btn qr-btn-outline" onclick="printTicket()">
                             <i class="fas fa-print"></i> Print Ticket
                         </button>
+                        <button class="qr-btn qr-btn-dark" id="payBtn">
+                        <i class="fas fa-credit-card"></i> Pay Donation
+                        </button>
+                        ``
                     </div>
                     <button class="btn-reset" onclick="resetForm()">Register Another Family</button>
                 </div>
@@ -778,7 +782,6 @@ fetch(GS_URL, {
     mode: 'no-cors',   // ✅ IMPORTANT
     body: JSON.stringify(record)
 });
-``
 
 // Show success after brief animation
 setTimeout(function() {
