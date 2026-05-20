@@ -780,16 +780,35 @@ fetch(GS_URL, {
 });
 ``
 
+// Show success after brief animation
+setTimeout(function() {
 
-    // Show success after brief animation
-    setTimeout(function() {
-        populateTicket(record);
-        document.getElementById('successOverlay').classList.add('show');
-        document.getElementById('successOverlay').scrollTop = 0;
-        btn.classList.remove('loading');
-        updateUI(loadRegs());
-    }, 900);
-});
+    populateTicket(record);
+
+    document.getElementById('successOverlay').classList.add('show');
+    document.getElementById('successOverlay').scrollTop = 0;
+
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration';
+
+    updateUI(loadRegs());
+
+    // ✅ REDIRECTION ZEFFY AVEC MONTANT + INFOS
+    if (parseFloat(donationValue) > 0) {
+
+        const amount = parseFloat(donationValue);
+
+        const zeffyURL =
+            "https://www.zeffy.com/en-CA/donation-form/donate-to-your-masjid-2"
+            + "?amount=" + amount
+            + "&firstName=" + encodeURIComponent(firstName)
+            + "&lastName=" + encodeURIComponent(lastName)
+            + "&email=" + encodeURIComponent(email);
+
+        window.location.href = zeffyURL; // ✅ redirection propre
+    }
+
+}, 900);
 
 /* ── Reset form ─────────────────────────────────────── */
 function resetForm() {
