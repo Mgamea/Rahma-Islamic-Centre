@@ -374,16 +374,16 @@
                         <div class="form-group">
                             <label>Number of Adults <span>*</span></label>
                             <div class="family-counter">
-                                <button type="button" onclick="adjustCount('adults',-1)">&#8722;</button>
-                                <input type="number" id="adults" value="1" min="1" max="20" readonly>
+                                <button type="button" onclick="adjustCount('adults',-1)">−</button>
+                                <input id="adults">
                                 <button type="button" onclick="adjustCount('adults',1)">+</button>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Number of Children</label>
                             <div class="family-counter">
-                                <button type="button" onclick="adjustCount('children',-1)">&#8722;</button>
-                                <input type="number" id="children" value="0" min="0" max="20" readonly>
+                                <button type="button" onclick="adjustCount('children',-1)">−</button>
+                                <input id="children">
                                 <button type="button" onclick="adjustCount('children',1)">+</button>
                             </div>
                         </div>
@@ -525,6 +525,8 @@
 
   <script>
 
+
+console.log("SCRIPT OK");
 
 const STORAGE_KEY = 'rahma-eid-2026-v2';
 const GS_URL = 'https://script.google.com/macros/s/AKfycbzPzsMF0FMcokZIfrZKEZhIByH1bU3rolA784UaMtIYNv2BMJISZExNI0iKeyQqjH-d7g/exec';
