@@ -523,48 +523,127 @@
     <script src="shared.js"></script>
 
 
-   <script>
-const STORAGE_KEY = 'rahma-eid-2026-v2';
-const GS_URL = 'https://script.google.com/macros/s/AKfycbzPzsMF0FMcokZIfrZKEZhIByH1bU3rolA784UaMtIYNv2BMJISZExNI0iKeyQqjH-d7g/exec';
+  <script>
 
+/* ✅ 1. Helpers → TOUJOURS EN PREMIER */
 function setText(id, value){
   const el = document.getElementById(id);
-  if(el) el.textContent = value;
+  if(!el){
+    console.warn("Element introuvable :", id);
+    return;
+  }
+  el.textContent = value ? value : "—";
 }
+
+function showToast(msg){
+  const t = document.getElementById('regToast');
+  if(!t) return;
+
+  t.textContent = msg;
+  t.classList.add('visible');
+
+  if(window._toastTimer){
+    clearTimeout(window._toastTimer);
+  }
+
+  window._toastTimer = setTimeout(()=>{
+    t.classList.remove('visible');
+  }, 3000);
+}
+
+
+/* ✅ 2. ensuite tes autres fonctions */
+function generateQR(){ ... }
+
+function populateTicket(){ ... }
+
+
+/* ✅ 3. ensuite le submit */
+document.getElementById('eidForm').addEventListener('submit', function(e){
+  ...
+});
+
+
+/* ✅ 4. init à la fin */
+document.addEventListener('DOMContentLoaded', function(){
+  ...
+});
+
+
+
+
+
+/* ── Storage ── */
 
 function loadRegs(){
   try{
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
   }catch(e){
     return [];
   }
 }
 
 function saveReg(rec){
-  const r = loadRegs();
-  r.push(rec);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(r));
+  try{
+    const regs = loadRegs();
+
+    // ✅ éviter doublons (sécurité)
+    const exists = regs.find(r => r.ref === rec.ref);
+    if(!exists){
+      regs.push(rec);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(regs));
+    }
+
+  }catch(e){
+    console.warn("Storage error");
+  }
 }
 
+
+
+
+
+/* ── QR ── */
+
 function generateQR(rec){
+
   const el = document.getElementById('qrcode');
+
+  if(!el) return;
+
+  // ✅ nettoie avant génération
   el.innerHTML = '';
 
+  // ✅ création QR
   new QRCode(el,{
-    text: JSON.stringify(rec),
+    text: rec.ref,
     width:190,
     height:190
   });
 
-  setTimeout(() => {
-    const canvas = el.querySelector("canvas");
+  // ✅ extraire image pour email (très important)
+  setTimeout(()=>{
+
+    const canvas = el.querySelector('canvas');
+
     if(canvas){
       try{
         rec.qrImage = canvas.toDataURL("image/png");
-      }catch(e){}
+      }catch(e){
+        console.warn("QR conversion failed");
+      }
     }
-  }, 300);
+
+  },300);
 }
+
+
+
+
+
+
+/* ── UI ── */
 
 function populateTicket(rec){
 
@@ -575,28 +654,25 @@ function populateTicket(rec){
     adults + " adult" + (adults > 1 ? "s" : "") +
     (children > 0 ? " + " + children + " children" : "");
 
+  // ✅ afficher infos ticket
   setText('qrName', rec.firstName + " " + rec.lastName);
   setText('qrRef', rec.ref);
   setText('qrSession', "Session " + (rec.session || "1"));
   setText('qrTime', "Takbeer 8:30 • Prayer 9:00 AM");
   setText('qrAttendees', attendees);
+
+  // ✅ afficher numéro confirmation
   setText('successRef', "Registration " + rec.ref);
 
+  // ✅ générer QR (visible + email)
   generateQR(rec);
 }
 
-function showToast(msg){
-  const t = document.getElementById('regToast');
-  t.textContent = msg;
-  t.classList.add('visible');
-  setTimeout(()=>{ t.classList.remove('visible'); },3000);
-}
 
-function toggleCustomDonation(){
-  const val = document.getElementById('donation').value;
-  const div = document.getElementById('customDonationGroup');
-  div.style.display = (val === 'other') ? 'block' : 'none';
-}
+
+
+
+/* ── Submit ── */
 
 document.getElementById('eidForm').addEventListener('submit', function(e){
   e.preventDefault();
@@ -634,77 +710,15 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
 
   saveReg(record);
 
-  ) => {
-
-    generateQR(record);
-
-    setTimeout(() => {
-
-      const canvas = document.querySelector('#qrcode canvas');
-
-      if(canvas){
-        try{
-          record.qrImage = canvas.toDataURL("image/png");
-        }catch(e){}
-      }
-
-      fetch(GS_URL,{
-        method:'POST',
-        mode:'no-cors',
-        body: JSON.stringify(record)
-      });
-
-    }, 300);
-
-  }, 100);
-
-  
-document.getElementById('eidForm').addEventListener('submit', function(e){
-  e.preventDefault();
-
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName  = document.getElementById('lastName').value.trim();
-  const email     = document.getElementById('email').value.trim();
-
-  if(!firstName || !lastName || !email){
-    showToast("Fill all required fields");
-    return;
-  }
-
-  let donationValue = document.getElementById('donation').value;
-
-  if(donationValue === "other"){
-    const val = document.getElementById('customDonation').value;
-    if(!val){
-      showToast("Enter donation amount");
-      return;
-    }
-    donationValue = val;
-  }
-
-  const record = {
-    ref: "EID26-" + Math.random().toString(36).substring(2,8).toUpperCase(),
-    firstName,
-    lastName,
-    email,
-    session: document.getElementById('selectedSession').value || "1",
-    adults: document.getElementById('adults').value,
-    children: document.getElementById('children').value,
-    donation: donationValue
-  };
-
-  saveReg(record);
-
-  /* ✅ FIX COMPLET (QR + EMAIL + UI) */
+  /* ✅ flow correct */
   setTimeout(()=>{
 
-    // ✅ 1. show ticket + generate QR
+    // 1. afficher ticket + générer QR
     populateTicket(record);
-
     document.getElementById('successOverlay').classList.add('show');
 
-    // ✅ 2. attendre QR puis envoyer email
-    setTimeout(() => {
+    // 2. attendre QR puis envoyer email
+    setTimeout(()=>{
 
       const canvas = document.querySelector('#qrcode canvas');
 
@@ -720,9 +734,9 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
         body: JSON.stringify(record)
       });
 
-    }, 300);
+    },300);
 
-    // ✅ 3. bouton paiement
+    // 3. paiement
     const payBtn = document.getElementById('payBtn');
 
     if(parseFloat(record.donation) > 0){
@@ -749,6 +763,11 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
 
 
 
+
+
+
+/* ── Actions ── */
+
 function downloadQR(){
 
   const canvas = document.querySelector('#qrcode canvas');
@@ -767,6 +786,7 @@ function downloadQR(){
 function printTicket(){
 
   const canvas = document.querySelector('#qrcode canvas');
+
   if(!canvas){
     showToast("QR not ready yet");
     return;
@@ -783,7 +803,7 @@ function printTicket(){
   document.getElementById('printArea').innerHTML = `
     <div style="text-align:center;font-family:Arial;padding:30px;">
       <h2>Rahma Eid Ticket</h2>
-      ${qrImg}
+      <img src="${qrImg}" style="width:200px;margin:20px 0;">
       <p><strong>Name:</strong> ${name}</p>
       <p><strong>Session:</strong> ${session}</p>
       <p><strong>Prayer:</strong> ${time}</p>
@@ -795,16 +815,24 @@ function printTicket(){
   window.print();
 }
 
-function resetForm(){
-  document.getElementById('eidForm').reset();
-  document.getElementById('successOverlay').classList.remove('show');
-}
+
+
+
+
+
+
+/* ── Init ── */
 
 document.addEventListener('DOMContentLoaded', function(){
-  document.getElementById('donation')
-    .addEventListener('change', toggleCustomDonation);
-});
-</script>
 
+  // ✅ active le champ donation "other"
+  const donation = document.getElementById('donation');
+  if(donation){
+    donation.addEventListener('change', toggleCustomDonation);
+  }
+
+});
+
+ <script>
 </body>
 </html>
