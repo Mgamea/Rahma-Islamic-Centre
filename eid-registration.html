@@ -523,14 +523,26 @@
     <script src="shared.js"></script>
 
 
-  <script>
+<script>
 
+function adjustCount(type, delta){   // ✅ DOIT ÊTRE ICI (tout en haut)
+  const input = document.getElementById(type);
+  if(!input) return;
 
-console.log("SCRIPT OK");
+  let value = parseInt(input.value) || 0;
+  value += delta;
+
+  if(type === "adults" && value < 1) value = 1;
+  if(type === "children" && value < 0) value = 0;
+
+  input.value = value;
+}
+
+console.log("SCRIPT OK ✅");
+
 
 const STORAGE_KEY = 'rahma-eid-2026-v2';
 const GS_URL = 'https://script.google.com/macros/s/AKfycbzPzsMF0FMcokZIfrZKEZhIByH1bU3rolA784UaMtIYNv2BMJISZExNI0iKeyQqjH-d7g/exec';
-
 
 
 
