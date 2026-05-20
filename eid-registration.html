@@ -523,21 +523,15 @@
     <script src="shared.js"></script>
 
 
-    <script>
-/* ═══════════════════════════════════════════════════════
-   SCRIPT CLEAN — SAME LOGIC, FIXED BUGS
-═══════════════════════════════════════════════════════ */
-
+   <script>
 const STORAGE_KEY = 'rahma-eid-2026-v2';
 const GS_URL = 'https://script.google.com/macros/s/AKfycbzPzsMF0FMcokZIfrZKEZhIByH1bU3rolA784UaMtIYNv2BMJISZExNI0iKeyQqjH-d7g/exec';
 
-/* ── Helper: set text safely ── */
 function setText(id, value){
   const el = document.getElementById(id);
   if(el) el.textContent = value;
 }
 
-/* ── LocalStorage ── */
 function loadRegs(){
   try{
     return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
@@ -552,7 +546,6 @@ function saveReg(rec){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(r));
 }
 
-/* ── QR Code ── */
 function generateQR(rec){
   const el = document.getElementById('qrcode');
   el.innerHTML = '';
@@ -563,17 +556,16 @@ function generateQR(rec){
     height:190
   });
 
-// ✅ attendre que le canvas soit créé
   setTimeout(() => {
     const canvas = el.querySelector("canvas");
-
     if(canvas){
-      rec.qrImage = canvas.toDataURL("image/png"); // ✅ IMPORTANT
+      try{
+        rec.qrImage = canvas.toDataURL("image/png");
+      }catch(e){}
     }
   }, 300);
 }
 
-/* ✅ Populate ticket (FIXED version) */
 function populateTicket(rec){
 
   const adults = parseInt(rec.adults) || 1;
@@ -593,26 +585,19 @@ function populateTicket(rec){
   generateQR(rec);
 }
 
-/* ── Toast message ── */
 function showToast(msg){
   const t = document.getElementById('regToast');
   t.textContent = msg;
   t.classList.add('visible');
-
-  setTimeout(()=>{
-    t.classList.remove('visible');
-  },3000);
+  setTimeout(()=>{ t.classList.remove('visible'); },3000);
 }
 
-/* ✅ Toggle custom donation */
 function toggleCustomDonation(){
   const val = document.getElementById('donation').value;
   const div = document.getElementById('customDonationGroup');
-
   div.style.display = (val === 'other') ? 'block' : 'none';
 }
 
-/* ── Form submit ── */
 document.getElementById('eidForm').addEventListener('submit', function(e){
   e.preventDefault();
 
@@ -620,27 +605,22 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
   const lastName  = document.getElementById('lastName').value.trim();
   const email     = document.getElementById('email').value.trim();
 
-  /* ✅ Validation FIXED */
   if(!firstName || !lastName || !email){
     showToast("Fill all required fields");
     return;
   }
 
-  /* ✅ Donation logic */
   let donationValue = document.getElementById('donation').value;
 
   if(donationValue === "other"){
     const val = document.getElementById('customDonation').value;
-
     if(!val){
       showToast("Enter donation amount");
       return;
     }
-
     donationValue = val;
   }
 
-  /* ✅ FULL record (FIXED) */
   const record = {
     ref: "EID26-" + Math.random().toString(36).substring(2,8).toUpperCase(),
     firstName,
@@ -652,43 +632,37 @@ document.getElementById('eidForm').addEventListener('submit', function(e){
     donation: donationValue
   };
 
-  /* Save locally */
-saveReg(record);
+  saveReg(record);
 
-/* ✅ GENERATE + SEND QR */
-setTimeout(() => {
-
-  generateQR(record);
-
-  // attendre que le QR soit créé
   setTimeout(() => {
 
-    const canvas = document.querySelector('#qrcode canvas');
+    generateQR(record);
 
-    if(canvas){
-      record.qrImage = canvas.toDataURL("image/png");
-    }
+    setTimeout(() => {
 
-    // ✅ ENVOI AVEC QR
-    fetch(GS_URL,{
-      method:'POST',
-      mode:'no-cors',
-      body: JSON.stringify(record)
-    });
+      const canvas = document.querySelector('#qrcode canvas');
 
-  }, 300);
+      if(canvas){
+        try{
+          record.qrImage = canvas.toDataURL("image/png");
+        }catch(e){}
+      }
 
-}, 100);
+      fetch(GS_URL,{
+        method:'POST',
+        mode:'no-cors',
+        body: JSON.stringify(record)
+      });
 
+    }, 300);
 
+  }, 100);
 
-  /* Show success */
   setTimeout(()=>{
 
     populateTicket(record);
     document.getElementById('successOverlay').classList.add('show');
 
-    /* ✅ Pay button */
     const payBtn = document.getElementById('payBtn');
 
     if(parseFloat(record.donation) > 0){
@@ -713,7 +687,6 @@ setTimeout(() => {
 
 });
 
-/* ── downloadQR ── */
 function downloadQR(){
 
   const canvas = document.querySelector('#qrcode canvas');
@@ -726,11 +699,9 @@ function downloadQR(){
   const link = document.createElement('a');
   link.href = canvas.toDataURL('image/png');
   link.download = "EID-TICKET.png";
-
   link.click();
 }
 
-/* ── print Ticket ── */
 function printTicket(){
 
   const canvas = document.querySelector('#qrcode canvas');
@@ -762,13 +733,11 @@ function printTicket(){
   window.print();
 }
 
-/* ── Reset form ── */
 function resetForm(){
   document.getElementById('eidForm').reset();
   document.getElementById('successOverlay').classList.remove('show');
 }
 
-/* ── Init ── */
 document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('donation')
     .addEventListener('change', toggleCustomDonation);
