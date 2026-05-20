@@ -796,22 +796,28 @@ setTimeout(function() {
 
     updateUI(loadRegs());
 
-    // ✅ REDIRECTION ZEFFY AVEC MONTANT + INFOS
-    if (parseFloat(donationValue) > 0) {
 
-        const amount = parseFloat(donationValue);
+    // ✅ Activer bouton paiement
+const payBtn = document.getElementById('payBtn');
 
-        const zeffyURL =
-            "https://www.zeffy.com/en-CA/donation-form/donate-to-your-masjid-2"
-            + "?amount=" + amount
-            + "&firstName=" + encodeURIComponent(firstName)
-            + "&lastName=" + encodeURIComponent(lastName)
-            + "&email=" + encodeURIComponent(email);
+if (parseFloat(record.donation) > 0) {
+  payBtn.style.display = 'inline-flex';
 
-        window.location.href = zeffyURL; // ✅ redirection propre
-    }
+  payBtn.onclick = function () {
+    const zeffyURL =
+      "https://www.zeffy.com/en-CA/donation-form/donate-to-your-masjid-2"
+      + "?amount=" + record.donation
+      + "&firstName=" + encodeURIComponent(record.firstName)
+      + "&lastName=" + encodeURIComponent(record.lastName)
+      + "&email=" + encodeURIComponent(record.email);
 
-}, 900);
+    window.open(zeffyURL, '_blank'); // ✅ ouvre nouvelle tab
+  };
+
+} else {
+  payBtn.style.display = 'none';
+}
+
 
 /* ── Reset form ─────────────────────────────────────── */
 function resetForm() {
