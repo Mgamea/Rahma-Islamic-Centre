@@ -311,14 +311,21 @@
                         </div>
                     </div>
 
-                    <div class="qr-actions">
-                        <button class="qr-btn qr-btn-dark" onclick="downloadQR()">
-                            <i class="fas fa-download"></i> Download QR
-                        </button>
-                        <button class="qr-btn qr-btn-outline" onclick="printTicket()">
-                            <i class="fas fa-print"></i> Print Ticket
-                        </button>
-                    </div>
+                <div class="qr-actions">
+                    <button class="qr-btn qr-btn-dark" onclick="downloadQR()">
+                        <i class="fas fa-download"></i> Download QR
+                    </button>
+
+                    <button class="qr-btn qr-btn-outline" onclick="printTicket()">
+                        <i class="fas fa-print"></i> Print Ticket
+                    </button>
+
+                    <button class="qr-btn qr-btn-dark" id="ziffyPayBtn" style="display:none;" onclick="goToZiffy()">
+                        <i class="fas fa-donate"></i> Complete Donation
+                    </button>
+                </div>
+
+
                     <button class="btn-reset" onclick="resetForm()">Register Another Family</button>
                 </div>
 
@@ -539,6 +546,10 @@ const SESSION_INFO  = {
     '1': { label: 'session', time: 'Takbeer 8:30 · Prayer 9:00 AM', short: '9:00 AM' },
 };
 
+
+let lastRecord = null;
+
+
 /* ── LocalStorage helpers ───────────────────────────── */
 function loadRegs() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
@@ -587,18 +598,13 @@ function handleDonationChange() {
 
 
 function goToZiffy() {
-    let donation = document.getElementById('donation').value;
-
-    if (donation === "other") {
-        donation = document.getElementById('customDonation').value;
-    }
+    let donation = lastRecord.donation;
 
     if (!donation || donation <= 0) {
-        alert("Please enter a valid amount");
+        alert("Invalid amount");
         return;
     }
 
-    // 🔴 remplace par ton vrai lien Ziffy
     window.location.href = "https://www.zeffy.com/en-CA/donation-form/donate-to-your-masjid-2" + donation;
 }
 
@@ -760,8 +766,11 @@ function showToast(msg, color) {
 }
 
 /* ── Form submit ────────────────────────────────────── */
+
 document.getElementById('eidForm').addEventListener('submit', function(e) {
     e.preventDefault();
+
+lastRecord = record;
 
     const session = document.getElementById('selectedSession').value || "1"
 
@@ -813,6 +822,9 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
         document.getElementById('successOverlay').scrollTop = 0;
         btn.classList.remove('loading');
         updateUI(loadRegs());
+        if (record.donation > 0) {
+            document.getElementById('ziffyPayBtn').style.display = "inline-flex";
+        }
     }, 900);
 });
 
