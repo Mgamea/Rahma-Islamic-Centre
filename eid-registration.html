@@ -525,6 +525,14 @@
 
   <script>
 
+
+const STORAGE_KEY = 'rahma-eid-2026-v2';
+const GS_URL = 'https://script.google.com/macros/s/AKfycbzPzsMF0FMcokZIfrZKEZhIByH1bU3rolA784UaMtIYNv2BMJISZExNI0iKeyQqjH-d7g/exec';
+
+
+
+
+
 /* ✅ 1. Helpers → TOUJOURS EN PREMIER */
 function setText(id, value){
   const el = document.getElementById(id);
@@ -552,10 +560,15 @@ function showToast(msg){
 }
 
 
-/* ✅ 2. ensuite tes autres fonctions */
-function generateQR(){ ... }
+function toggleCustomDonation(){
+  const val = document.getElementById('donation')?.value;
+  const div = document.getElementById('customDonationGroup');
+  if(div){
+    div.style.display = (val === 'other') ? 'block' : 'none';
+  }
+}
 
-function populateTicket(){ ... }
+
 
 
 /* ✅ 3. ensuite le submit */
@@ -604,109 +617,6 @@ function saveReg(rec){
 
 
 
-/* ── QR ── */
-
-function generateQR(rec){
-
-  const el = document.getElementById('qrcode');
-
-  if(!el) return;
-
-  // ✅ nettoie avant génération
-  el.innerHTML = '';
-
-  // ✅ création QR
-  new QRCode(el,{
-    text: rec.ref,
-    width:190,
-    height:190
-  });
-
-  // ✅ extraire image pour email (très important)
-  setTimeout(()=>{
-
-    const canvas = el.querySelector('canvas');
-
-    if(canvas){
-      try{
-        rec.qrImage = canvas.toDataURL("image/png");
-      }catch(e){
-        console.warn("QR conversion failed");
-      }
-    }
-
-  },300);
-}
-
-
-
-
-
-
-/* ── UI ── */
-
-function populateTicket(rec){
-
-  const adults = parseInt(rec.adults) || 1;
-  const children = parseInt(rec.children) || 0;
-
-  const attendees =
-    adults + " adult" + (adults > 1 ? "s" : "") +
-    (children > 0 ? " + " + children + " children" : "");
-
-  // ✅ afficher infos ticket
-  setText('qrName', rec.firstName + " " + rec.lastName);
-  setText('qrRef', rec.ref);
-  setText('qrSession', "Session " + (rec.session || "1"));
-  setText('qrTime', "Takbeer 8:30 • Prayer 9:00 AM");
-  setText('qrAttendees', attendees);
-
-  // ✅ afficher numéro confirmation
-  setText('successRef', "Registration " + rec.ref);
-
-  // ✅ générer QR (visible + email)
-  generateQR(rec);
-}
-
-
-
-
-
-/* ── Submit ── */
-
-document.getElementById('eidForm').addEventListener('submit', function(e){
-  e.preventDefault();
-
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName  = document.getElementById('lastName').value.trim();
-  const email     = document.getElementById('email').value.trim();
-
-  if(!firstName || !lastName || !email){
-    showToast("Fill all required fields");
-    return;
-  }
-
-  let donationValue = document.getElementById('donation').value;
-
-  if(donationValue === "other"){
-    const val = document.getElementById('customDonation').value;
-    if(!val){
-      showToast("Enter donation amount");
-      return;
-    }
-    donationValue = val;
-  }
-
-  const record = {
-    ref: "EID26-" + Math.random().toString(36).substring(2,8).toUpperCase(),
-    firstName,
-    lastName,
-    email,
-    session: document.getElementById('selectedSession').value || "1",
-    adults: document.getElementById('adults').value,
-    children: document.getElementById('children').value,
-    donation: donationValue
-  };
 
   saveReg(record);
 
@@ -833,6 +743,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 });
 
- <script>
+ </script>
 </body>
 </html>
