@@ -72,8 +72,8 @@
     .family-counter { display: flex; align-items: center; border: 1px solid rgba(201,168,76,0.2); background: #fafaf8; border-radius: 2px; overflow: hidden; }
     .family-counter button { width: 44px; height: 44px; background: var(--navy); color: var(--gold); border: none; cursor: pointer; font-size: 1.2rem; transition: background 0.2s; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
     .family-counter button:hover { background: var(--navy-mid); }
-    .family-counter input { flex:1; text-align:center; border:none !important; box-shadow:none !important; border-radius:0 !important; background:white !important; color:black !important; font-size:1.1rem; font-weight:500; padding:10px 8px !important; }
-   
+    .family-counter input { flex: 1; text-align: center; border: none !important; box-shadow: none !important; border-radius: 0 !important; background: transparent !important; font-size: 1.1rem; font-weight: 500; padding: 10px 8px !important; }
+
     /* Session cards */
     .session-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
     .session-card { border: 1px solid rgba(201,168,76,0.2); padding: 16px 14px; cursor: pointer; transition: all 0.2s; border-radius: 2px; background: #fafaf8; position: relative; }
@@ -193,7 +193,7 @@
 
 
     
- 
+    
     </style>
 
 
@@ -318,9 +318,6 @@
                         <button class="qr-btn qr-btn-outline" onclick="printTicket()">
                             <i class="fas fa-print"></i> Print Ticket
                         </button>
-                        <button class="qr-btn qr-btn-dark" id="payBtn">
-                        <i class="fas fa-credit-card"></i> Pay Donation
-                        </button>
                     </div>
                     <button class="btn-reset" onclick="resetForm()">Register Another Family</button>
                 </div>
@@ -374,16 +371,16 @@
                         <div class="form-group">
                             <label>Number of Adults <span>*</span></label>
                             <div class="family-counter">
-                                <button type="button" onclick="adjustCount('adults',-1)">−</button>
-                                <input id="adults" value="1">
+                                <button type="button" onclick="adjustCount('adults',-1)">&#8722;</button>
+                                <input type="number" id="adults" value="1" min="1" max="20" readonly>
                                 <button type="button" onclick="adjustCount('adults',1)">+</button>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Number of Children</label>
                             <div class="family-counter">
-                                <button type="button" onclick="adjustCount('children',-1)">−</button>
-                                <input id="children" value="0">
+                                <button type="button" onclick="adjustCount('children',-1)">&#8722;</button>
+                                <input type="number" id="children" value="0" min="0" max="20" readonly>
                                 <button type="button" onclick="adjustCount('children',1)">+</button>
                             </div>
                         </div>
@@ -401,34 +398,25 @@
                         </select>
                     </div>
 
-                    <!-- DONATION -->
-                    <div class="form-group">
-                        <label for="donation">
-                            🌙 Support Your Masjid (Optional)
-                        </label>
-
-                        <select id="donation" onchange="toggleCustomDonation()">
-                            <option value="0">No donation</option>
-                            <option value="10">$10</option>
-                            <option value="25">$25</option>
-                            <option value="50">$50</option>
-                            <option value="100">$100</option>
-                            <option value="other">Other amount</option>
-                        </select>
-                    </div>
-
-                    <!-- CUSTOM AMOUNT -->
-                    <div class="form-group" id="customDonationGroup" style="display:none;">
-                    <label for="customDonation">Enter your amount ($)</label>
-                    <input type="number" id="customDonation" placeholder="e.g. 75">
-                    </div>
-
                     <!-- NOTES -->
                     <div class="form-group">
                         <label for="notes">Additional Notes</label>
                         <textarea id="notes" rows="3" placeholder="Any questions, requests, or information you'd like us to know..."></textarea>
                     </div>
 
+                    <div class="form-group">
+                        <label for="donation">
+                            🌙 Support Your Masjid (Optional)
+                        </label>
+
+                        <select id="donation">
+                            <option value="0">No donation</option>
+                            <option value="10">$10 - Support Eid setup</option>
+                            <option value="25">$25 - Help families</option>
+                            <option value="50">$50 - Sponsor a family</option>
+                            <option value="100">$100 - Eid contribution</option>
+                        </select>
+                    </div>
 
                     <!-- CHECKBOXES -->
                     <div class="check-group">
@@ -456,7 +444,7 @@
                     </div>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-clock"></i></div>
-                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong></strong> &mdash; Takbeer 8:30 &bull; Prayer 9:00 AM<br><strong></span></div>
+                        <div><span class="info-text-label">Prayer Times</span><span class="info-text-val"><strong>session</strong> &mdash; Takbeer 8:30 &bull; Prayer 9:00 AM<br><strong></span></div>
                     </div>
                     <div class="info-row">
                         <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
@@ -521,279 +509,274 @@
     </div></footer>
 
     <script src="shared.js"></script>
+    <script>
+/* ═══════════════════════════════════════════════════════
+   EID REGISTRATION v2 — Fully Functional + QR Code
+═══════════════════════════════════════════════════════ */
 
+const STORAGE_KEY   = 'rahma-eid-2026-v2';
+const CAPACITY      = { 1: 500, 2: 500 };
+const GS_URL        = 'https://script.google.com/macros/s/AKfycbzPzsMF0FMcokZIfrZKEZhIByH1bU3rolA784UaMtIYNv2BMJISZExNI0iKeyQqjH-d7g/exec';
+const SESSION_INFO  = {
+    '1': { label: 'session', time: 'Takbeer 8:30 · Prayer 9:00 AM', short: '9:00 AM' },
+};
 
-<script>
-
-function adjustCount(type, delta){   // ✅ DOIT ÊTRE ICI (tout en haut)
-  const input = document.getElementById(type);
-  if(!input) return;
-
-  let value = parseInt(input.value) || 0;
-  value += delta;
-
-  if(type === "adults" && value < 1) value = 1;
-  if(type === "children" && value < 0) value = 0;
-
-  input.value = value;
+/* ── LocalStorage helpers ───────────────────────────── */
+function loadRegs() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveReg(rec) {
+    try { const r = loadRegs(); r.push(rec); localStorage.setItem(STORAGE_KEY, JSON.stringify(r)); } catch(e) {}
 }
 
-console.log("SCRIPT OK ✅");
+/* ── Text helpers ───────────────────────────────────── */
+function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
+function setHTML(id, v) { const el = document.getElementById(id); if (el) el.innerHTML = v; }
 
+/* ── Update counters + capacity UI ─────────────────── */
+function updateUI(regs) {
+    const s1 = regs.filter(r => String(r.session) === '1').length;
+    const s2 = regs.filter(r => String(r.session) === '2').length;
+    const tot = regs.reduce((s, r) => s + (parseInt(r.adults)||0) + (parseInt(r.children)||0), 0);
 
-const STORAGE_KEY = 'rahma-eid-2026-v2';
-const GS_URL = 'https://script.google.com/macros/s/AKfycbzPzsMF0FMcokZIfrZKEZhIByH1bU3rolA784UaMtIYNv2BMJISZExNI0iKeyQqjH-d7g/exec';
+    setText('cntRegistered', regs.length);
+    setText('cntAttendees', tot);
+    setText('cntSession1', s1);
+    setText('cntSession2', s2);
 
-
-
-
-/* ✅ 1. Helpers → TOUJOURS EN PREMIER */
-function setText(id, value){
-  const el = document.getElementById(id);
-  if(!el){
-    console.warn("Element introuvable :", id);
-    return;
-  }
-  el.textContent = value ? value : "—";
+    updateSession(1, s1);
+    updateSession(2, s2);
 }
 
-function showToast(msg){
-  const t = document.getElementById('regToast');
-  if(!t) return;
+function updateSession(num, count) {
+    const cap = CAPACITY[num];
+    const rem = cap - count;
+    const pct = Math.min(100, Math.round(count / cap * 100));
 
-  t.textContent = msg;
-  t.classList.add('visible');
+    // Counter strip
+    setText('cntSession' + num, count);
 
-  if(window._toastTimer){
-    clearTimeout(window._toastTimer);
-  }
+    // Capacity bar
+    const bar = document.getElementById('cap' + num + 'Bar');
+    if (bar) bar.style.width = pct + '%';
+    setText('cap' + num + 'Pct', pct + '%');
 
-  window._toastTimer = setTimeout(()=>{
-    t.classList.remove('visible');
-  }, 3000);
-}
+    // Session card availability
+    const card = document.getElementById('sessionCard' + num);
+    const badge = document.getElementById('badge' + num);
+    const spots = document.getElementById('spots' + num);
+    if (!card) return;
 
-
-
-function toggleCustomDonation(){
-  const val = document.getElementById('donation').value;
-  const div = document.getElementById('customDonationGroup');
-
-  if(!div) return;
-
-  div.style.display = (val === 'other') ? 'block' : 'none';
-}
-
-
-
-
-function adjustCount(type, delta){
-  const input = document.getElementById(type);
-  if(!input) return;
-
-  let value = parseInt(input.value) || 0;
-  value += delta;
-
-  if(type === "adults" && value < 1) value = 1;
-  if(type === "children" && value < 0) value = 0;
-
-  input.value = value;
-}
-
-function toggleCustomDonation(){
-  const val = document.getElementById('donation').value;
-  const div = document.getElementById('customDonationGroup');
-
-  if(div){
-    div.style.display = (val === 'other') ? 'block' : 'none';
-  }
-}
-
-
-
-function toggleCustomDonation(){
-  const val = document.getElementById('donation')?.value;
-  const div = document.getElementById('customDonationGroup');
-  if(div){
-    div.style.display = (val === 'other') ? 'block' : 'none';
-  }
-}
-
-
-
-
-/* ✅ 3. ensuite le submit */
-document.getElementById('eidForm').addEventListener('submit', function(e){
-  ...
-});
-
-
-/* ✅ 4. init à la fin */
-document.addEventListener('DOMContentLoaded', function(){
-  ...
-});
-
-
-
-
-
-/* ── Storage ── */
-
-function loadRegs(){
-  try{
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-  }catch(e){
-    return [];
-  }
-}
-
-function saveReg(rec){
-  try{
-    const regs = loadRegs();
-
-    // ✅ éviter doublons (sécurité)
-    const exists = regs.find(r => r.ref === rec.ref);
-    if(!exists){
-      regs.push(rec);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(regs));
-    }
-
-  }catch(e){
-    console.warn("Storage error");
-  }
-}
-
-
-
-
-
-
-  saveReg(record);
-
-  /* ✅ flow correct */
-  setTimeout(()=>{
-
-    // 1. afficher ticket + générer QR
-    populateTicket(record);
-    document.getElementById('successOverlay').classList.add('show');
-
-    // 2. attendre QR puis envoyer email
-    setTimeout(()=>{
-
-      const canvas = document.querySelector('#qrcode canvas');
-
-      if(canvas){
-        try{
-          record.qrImage = canvas.toDataURL("image/png");
-        }catch(e){}
-      }
-
-      fetch(GS_URL,{
-        method:'POST',
-        mode:'no-cors',
-        body: JSON.stringify(record)
-      });
-
-    },300);
-
-    // 3. paiement
-    const payBtn = document.getElementById('payBtn');
-
-    if(parseFloat(record.donation) > 0){
-      payBtn.style.display='inline-flex';
-
-      payBtn.onclick = function(){
-        const url =
-          "https://www.zeffy.com/en-CA/donation-form/donate-to-your-masjid-2"
-          + "?amount=" + record.donation
-          + "&firstName=" + encodeURIComponent(record.firstName)
-          + "&lastName=" + encodeURIComponent(record.lastName)
-          + "&email=" + encodeURIComponent(record.email);
-
-        window.open(url,'_blank');
-      };
-
+    if (rem <= 0) {
+        card.classList.add('full');
+        if (badge) { badge.textContent = 'Full'; badge.className = 'session-status status-full'; }
+        if (spots) spots.textContent = 'No spots remaining';
     } else {
-      payBtn.style.display='none';
+        card.classList.remove('full');
+        if (badge) { badge.textContent = 'Open'; badge.className = 'session-status status-open'; }
+        if (spots) spots.textContent = rem + ' spots available';
+    }
+}
+
+/* ── Load counters (Google Sheets → localStorage fallback) ── */
+async function loadCounters() {
+    try {
+        const r = await fetch(GS_URL, { method: 'GET', mode: 'cors', signal: AbortSignal.timeout(5000) });
+        const json = await r.json();
+        if (json.result === 'success' && Array.isArray(json.data)) { updateUI(json.data); return; }
+    } catch(e) {}
+    updateUI(loadRegs());
+}
+
+/* ── Session selection ──────────────────────────────── */
+function selectSession(card) {
+    if (card.classList.contains('full')) return;
+    document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    document.getElementById('selectedSession').value = card.dataset.session;
+}
+
+/* ── Counter buttons ────────────────────────────────── */
+function adjustCount(field, d) {
+    const el = document.getElementById(field);
+    el.value = Math.max(+el.min || 0, Math.min(+el.max || 99, (+el.value || 0) + d));
+}
+
+/* ── Reference generator ────────────────────────────── */
+function genRef() {
+    const c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let s = '';
+    for (let i = 0; i < 6; i++) s += c[Math.floor(Math.random() * c.length)];
+    return 'EID26-' + s;
+}
+
+/* ── QR code generator ──────────────────────────────── */
+let _qrGenerated = false;
+function generateQR(rec) {
+    const el = document.getElementById('qrcode');
+    el.innerHTML = '';
+    _qrGenerated = false;
+    const payload = JSON.stringify({
+        ref: rec.ref,
+        name: rec.firstName + ' ' + rec.lastName,
+        session: rec.session,
+        adults: rec.adults,
+        children: rec.children,
+        event: 'EidAlFitr2026-Rahma-Winnipeg'
+    });
+    new QRCode(el, {
+        text: payload,
+        width: 190, height: 190,
+        colorDark: '#0B1F3A',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+    });
+    _qrGenerated = true;
+}
+
+/* ── Populate ticket overlay ────────────────────────── */
+function populateTicket(rec) {
+    const si = SESSION_INFO[String(rec.session)] || { label: 'Session ' + rec.session, time: '—', short: '—' };
+    const adults = parseInt(rec.adults) || 1;
+    const children = parseInt(rec.children) || 0;
+    const attendeeStr = adults + (children > 0 ? ' adult' + (adults > 1 ? 's' : '') + ' + ' + children + ' child' + (children > 1 ? 'ren' : '') : ' adult' + (adults > 1 ? 's' : ''));
+
+    setText('successRef', 'Registration ' + rec.ref);
+    setText('qrRef', rec.ref);
+    setText('qrName', rec.firstName + ' ' + rec.lastName);
+    setText('qrSession', si.label);
+    setText('qrTime', si.time);
+    setText('qrAttendees', attendeeStr);
+    setHTML('qrSessionPill', '<i class="fas fa-clock"></i> ' + si.label + ' &bull; ' + si.short);
+
+    generateQR(rec);
+}
+
+/* ── Download QR as PNG ─────────────────────────────── */
+function downloadQR() {
+    const canvas = document.querySelector('#qrcode canvas');
+    if (!canvas) { showToast('QR code is not ready yet — please wait a moment.', '#c0392b'); return; }
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'Rahma-Eid2026-' + (document.getElementById('qrRef').textContent || 'ticket') + '.png';
+    a.click();
+}
+
+/* ── Print ticket ───────────────────────────────────── */
+function printTicket() {
+    const canvas = document.querySelector('#qrcode canvas');
+    const qrImg = canvas ? canvas.toDataURL('image/png') : '';
+    const ref = document.getElementById('qrRef').textContent || '';
+    const name = document.getElementById('qrName').textContent || '';
+    const session = document.getElementById('qrSession').textContent || '';
+    const time = document.getElementById('qrTime').textContent || '';
+    const attendees = document.getElementById('qrAttendees').textContent || '';
+
+    document.getElementById('printArea').innerHTML = `
+        <div style="font-family:'Georgia',serif;max-width:400px;margin:30px auto;border:2.5px solid #C9A84C;padding:30px;text-align:center;color:#0B1F3A;box-shadow:0 2px 20px rgba(0,0,0,0.1);">
+            <div style="font-size:1.6rem;margin-bottom:2px;">&#9789; Rahma Islamic Centre</div>
+            <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:18px;border-bottom:1px solid #C9A84C;padding-bottom:14px;">Eid Al-Adha Prayer 2026 &bull; Entry Ticket</div>
+            <div style="background:#0B1F3A;color:#C9A84C;padding:7px 18px;border-radius:20px;display:inline-block;font-size:0.7rem;letter-spacing:0.14em;margin-bottom:16px;">${session}</div><br>
+            ${qrImg ? `<img src="${qrImg}" width="180" height="180" style="border:3px solid #0B1F3A;padding:7px;margin-bottom:14px;">` : ''}
+            <p style="font-size:0.7rem;color:#888;margin:0 0 16px;">Present this QR code at the entrance on the day of Eid</p>
+            <hr style="border:none;border-top:1px solid #C9A84C;margin:0 0 14px;">
+            <table style="width:100%;font-size:0.84rem;border-collapse:collapse;">
+                <tr><td style="color:#888;text-align:left;padding:5px 0;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;">Name</td><td style="text-align:right;font-weight:bold;">${name}</td></tr>
+                <tr><td style="color:#888;text-align:left;padding:5px 0;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;">Prayer</td><td style="text-align:right;">${time}</td></tr>
+                <tr><td style="color:#888;text-align:left;padding:5px 0;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;">Attendees</td><td style="text-align:right;">${attendees}</td></tr>
+                <tr><td style="color:#888;text-align:left;padding:5px 0;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;">Reference</td><td style="text-align:right;color:#C9A84C;font-weight:bold;">${ref}</td></tr>
+            </table>
+            <hr style="border:none;border-top:1px solid #C9A84C;margin:14px 0;">
+            <div style="font-size:0.68rem;color:#888;line-height:1.6;">1717 Gateway RD, Winnipeg, MB R2G 4H1<br>Please arrive 15 minutes before prayer time &bull; rahmacentre.ca</div>
+        </div>`;
+    window.print();
+}
+
+/* ── Toast message ──────────────────────────────────── */
+function showToast(msg, color) {
+    const t = document.getElementById('regToast');
+    t.textContent = msg;
+    t.style.background = color || '#c0392b';
+    t.classList.add('visible');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => t.classList.remove('visible'), 3600);
+}
+
+/* ── Form submit ────────────────────────────────────── */
+document.getElementById('eidForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const session = document.getElementById('selectedSession').value || "1"
+
+    if (!document.getElementById('agreeTerms').checked) {
+        showToast('Please confirm you will attend in person.'); return;
     }
 
-  },500);
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    if (!firstName || !lastName || !email) {
+        showToast('Please fill in First Name, Last Name and Email.'); return;
+    }
 
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px"></i>Registering&hellip;';
+
+    const ref = genRef();
+    const record = {
+        ref, timestamp: new Date().toISOString(),
+        firstName, lastName, email,
+        phone:         document.getElementById('phone').value.trim(),
+        session,
+        adults:        document.getElementById('adults').value,
+        children:      document.getElementById('children').value,
+        accessibility: document.getElementById('accessibility').value,
+        notes:         document.getElementById('notes').value.trim(),
+        newsletter:    document.getElementById('newsletter').checked,
+        donation: document.getElementById('donation').value
+    };
+
+    // Save locally
+    saveReg(record);
+
+    // Send to Google Sheets (fire & forget)
+    fetch(GS_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(record)
+    }).catch(() => {});
+
+    // Show success after brief animation
+    setTimeout(function() {
+        populateTicket(record);
+        document.getElementById('successOverlay').classList.add('show');
+        document.getElementById('successOverlay').scrollTop = 0;
+        btn.classList.remove('loading');
+        updateUI(loadRegs());
+    }, 900);
 });
 
-
-
-
-
-
-/* ── Actions ── */
-
-function downloadQR(){
-
-  const canvas = document.querySelector('#qrcode canvas');
-
-  if(!canvas){
-    showToast("QR not ready yet");
-    return;
-  }
-
-  const link = document.createElement('a');
-  link.href = canvas.toDataURL('image/png');
-  link.download = "EID-TICKET.png";
-  link.click();
+/* ── Reset form ─────────────────────────────────────── */
+function resetForm() {
+    document.getElementById('eidForm').reset();
+    document.getElementById('adults').value = 1;
+    document.getElementById('children').value = 0;
+    document.getElementById('selectedSession').value = '';
+    document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('newsletter').checked = true;
+    document.getElementById('successOverlay').classList.remove('show');
+    document.getElementById('qrcode').innerHTML = '';
+    const btn = document.getElementById('submitBtn');
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:10px"></i>Complete Registration';
 }
 
-function printTicket(){
-
-  const canvas = document.querySelector('#qrcode canvas');
-
-  if(!canvas){
-    showToast("QR not ready yet");
-    return;
-  }
-
-  const qrImg = canvas.toDataURL('image/png');
-
-  const name = document.getElementById('qrName').textContent;
-  const session = document.getElementById('qrSession').textContent;
-  const time = document.getElementById('qrTime').textContent;
-  const attendees = document.getElementById('qrAttendees').textContent;
-  const ref = document.getElementById('qrRef').textContent;
-
-  document.getElementById('printArea').innerHTML = `
-    <div style="text-align:center;font-family:Arial;padding:30px;">
-      <h2>Rahma Eid Ticket</h2>
-      <img src="${qrImg}" style="width:200px;margin:20px 0;">
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Session:</strong> ${session}</p>
-      <p><strong>Prayer:</strong> ${time}</p>
-      <p><strong>Attendees:</strong> ${attendees}</p>
-      <p><strong>Ref:</strong> ${ref}</p>
-    </div>
-  `;
-
-  window.print();
-}
-
-
-
-
-
-
-
-/* ── Init ── */
-
-document.addEventListener('DOMContentLoaded', function(){
-
-  // ✅ active le champ donation "other"
-  const donation = document.getElementById('donation');
-  if(donation){
-    donation.addEventListener('change', toggleCustomDonation);
-  }
-
+/* ── Init ───────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function () {
+  loadCounters();
+  document.getElementById('selectedSession').value = "1";
 });
-
- </script>
+    </script>
 </body>
 </html>
