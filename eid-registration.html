@@ -559,6 +559,19 @@ function showToast(msg){
   }, 3000);
 }
 
+function adjustCount(type, delta){
+  const input = document.getElementById(type);
+  if(!input) return;
+
+  let value = parseInt(input.value) || 0;
+  value += delta;
+
+  if(type === "adults" && value < 1) value = 1;
+  if(type === "children" && value < 0) value = 0;
+
+  input.value = value;
+}
+
 
 function toggleCustomDonation(){
   const val = document.getElementById('donation')?.value;
