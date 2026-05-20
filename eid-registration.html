@@ -572,6 +572,16 @@ function adjustCount(type, delta){
   input.value = value;
 }
 
+function toggleCustomDonation(){
+  const val = document.getElementById('donation').value;
+  const div = document.getElementById('customDonationGroup');
+
+  if(div){
+    div.style.display = (val === 'other') ? 'block' : 'none';
+  }
+}
+
+
 
 function toggleCustomDonation(){
   const val = document.getElementById('donation')?.value;
