@@ -320,7 +320,10 @@
                         <i class="fas fa-print"></i> Print Ticket
                     </button>
 
-                    <button class="qr-btn qr-btn-dark" id="ziffyPayBtn" style="display:none;" onclick="goToZiffy()">
+                    <button class="qr-btn qr-btn-dark"
+                        id="ziffyPayBtn"
+                        style="display:none;"
+                        onclick="goToZiffy()">
                         <i class="fas fa-donate"></i> Complete Donation
                     </button>
                 </div>
@@ -537,7 +540,6 @@ const SESSION_INFO  = {
 };
 
 
-let lastRecord = null;
 
 
 /* ── LocalStorage helpers ───────────────────────────── */
@@ -587,17 +589,25 @@ function handleDonationChange() {
 }
 
 
-function goToZiffy() {
-    let donation = lastRecord.donation;
 
-    if (!donation || donation <= 0) {
-        alert("Invalid amount");
+function goToZiffy() {
+    if (!lastRecord) {
+        alert("Error: registration not found");
         return;
     }
 
-    window.location.href = "https://www.zeffy.com/en-CA/donation-form/donate-to-your-masjid-2" + donation;
-}
+    let donation = lastRecord.donation;
 
+    if (!donation || donation <= 0) {
+        alert("No donation selected");
+        return;
+    }
+
+    // ✅ remplace avec TON lien Zeffy réel
+    const url = "https://www.zeffy.com/en-CA/donation-form/donate-to-your-masjid-2" + donation;
+
+    window.open(url, "_blank"); // ✅ ouvre dans un nouvel onglet
+}
 
 
 
@@ -760,8 +770,6 @@ function showToast(msg, color) {
 document.getElementById('eidForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-lastRecord = record;
-
     const session = document.getElementById('selectedSession').value || "1"
 
     if (!document.getElementById('agreeTerms').checked) {
@@ -812,11 +820,17 @@ lastRecord = record;
         document.getElementById('successOverlay').scrollTop = 0;
         btn.classList.remove('loading');
         updateUI(loadRegs());
-        if (record.donation > 0) {
+        if (record.donation && record.donation > 0) {
             document.getElementById('ziffyPayBtn').style.display = "inline-flex";
         }
     }, 900);
 });
+
+
+let lastRecord = null;
+
+lastRecord = record;
+
 
 /* ── Reset form ─────────────────────────────────────── */
 function resetForm() {
