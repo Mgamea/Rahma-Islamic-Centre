@@ -13,6 +13,10 @@
     <!-- QR Code library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+
     <style>
     /* ═══ DROPDOWN NAV ═══ */
     .nav-links li { position: relative; }
@@ -572,6 +576,16 @@ function updateUI(regs) {
 
 
 
+
+
+(function(){
+    emailjs.init("TON_PUBLIC_KEY");
+})();
+
+
+
+
+
 function handleDonationChange() {
     const donation = document.getElementById('donation').value;
     const box = document.getElementById('customDonationBox');
@@ -827,6 +841,19 @@ lastRecord = record;
             document.getElementById('ziffyPayBtn').style.display = "inline-flex";
         }
     }, 900);
+
+        const canvas = document.querySelector('#qrcode canvas');
+
+        if (canvas) {
+            const qrImage = canvas.toDataURL("image/png");
+
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                name: record.firstName + " " + record.lastName,
+                email: record.email,
+                qr_code: qrImage
+     });
+}
+
 });
 
 /* ── Reset form ─────────────────────────────────────── */
