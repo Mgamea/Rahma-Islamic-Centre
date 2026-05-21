@@ -540,7 +540,7 @@ const SESSION_INFO  = {
 };
 
 
-
+let lastRecord = null;
 
 /* ── LocalStorage helpers ───────────────────────────── */
 function loadRegs() {
@@ -803,6 +803,8 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
             : document.getElementById('donation').value
     };
 
+lastRecord = record;
+
     // Save locally
     saveReg(record);
 
@@ -825,12 +827,6 @@ document.getElementById('eidForm').addEventListener('submit', function(e) {
         }
     }, 900);
 });
-
-
-let lastRecord = null;
-
-lastRecord = record;
-
 
 /* ── Reset form ─────────────────────────────────────── */
 function resetForm() {
